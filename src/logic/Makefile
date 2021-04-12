@@ -8,3 +8,6 @@ listen_all: entry.cpp
 
 test: test.cpp
 	g++ -std=c++17 test.cpp -o test -lpaho-mqtt3a -lpaho-mqttpp3
+
+clean:
+	rm test listen_all mock_publish

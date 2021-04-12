@@ -6,3 +6,6 @@
 *.out
 *.app
 app
+test
+mock_publish
+listen_all
