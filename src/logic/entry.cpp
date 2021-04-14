@@ -138,6 +138,8 @@ void print_tree(TopicNode& root){ // todo overload <<
 	}
 }
 
+const std::string SERVER_ADDRESS	{ "tcp://localhost:1888" };
+
 class MessageSystem
 {
 public:
@@ -146,7 +148,6 @@ public:
 	TopicNode messages_root;
 	std::vector<std::string> topics; // maybe list/map na odstranovani
 
-	const std::string SERVER_ADDRESS	{ "tcp://localhost:1888" };
 	const int QOS {1};
 	const std::string client_id;
 
@@ -154,17 +155,26 @@ public:
 
 	mqtt::async_client client;
 
-    MessageSystem() : client_id{ "clientid" }, client(SERVER_ADDRESS, client_id)
-    { }
+    MessageSystem() : MessageSystem("clientid", "tcp://localhost:1888" ) { }
 
 	MessageSystem(std::string client_name, std::string server_address) : client_id{ client_name }, client(server_address, client_id)
-    { }
+    {
+		client.set_message_callback([this](const mqtt::const_message_ptr message){
+		auto topic = message->get_topic();
+		auto msg = message->get_payload();
+		std::cerr 
+			<< "Callback: " << topic
+			<< " : " << msg << std::endl;
+		this->add_message(message);
+		print_tree(this->messages_root);
+		});
+	}
 
 	int connect_client(); //todo do konstruktoru?
 	int get_messages();
 	bool is_subscribed_topic(std::string);
 	TopicNode *get_node_by_topic(std::string);
-	bool add_message(std::string, mqtt::const_message_ptr);
+	bool add_message(mqtt::const_message_ptr);
 
 	void set_subscribe_all(bool subscribeAll){
 		SubscribeAll = subscribeAll;
@@ -207,12 +217,12 @@ TopicNode *MessageSystem::get_node_by_topic(std::string topic){
 	return node;
 }
 
-bool MessageSystem::add_message(std::string topic, mqtt::const_message_ptr message){
-	if(!is_subscribed_topic(topic)){
+bool MessageSystem::add_message(mqtt::const_message_ptr message){
+	if(!is_subscribed_topic(message->get_topic())){
 		return false;
 	}
 
-	TopicNode *correct_node = get_node_by_topic(topic); // pripadne vytvori node
+	TopicNode *correct_node = get_node_by_topic(message->get_topic()); // pripadne vytvori node
 	if(correct_node == nullptr){
 		return false;
 	}
@@ -262,35 +272,9 @@ int MessageSystem::connect_client(){
 		}
 */
 
-int MessageSystem::get_messages(){
-
-	std::cerr << "get_messages begin: " << std::endl;
-
-	try {
-		auto topic_node = messages_root;
-
-		// Consume messages
-		// This just exits if the client is disconnected.
-		// (See some other examples for auto or manual reconnect)
-
-		std::cerr << "Waiting for messages on topic: '" << "'" << std::endl;
-
-		auto msg = client.consume_message();
-
-		if(is_subscribed_topic(msg->get_topic()) ){
-			add_message(msg->get_topic(), msg);
-		} else {
-			std::cerr << "Topic not subscribed to" << std::endl;
-		}
-
-		std::cerr << "got: " << msg->get_topic() << ": " << msg->to_string() << std::endl;
-
-	}
-	catch (const mqtt::exception& exc) {
-		std::cerr << "\n  " << exc << std::endl;
-		return 1;
-	}
-	return 0;
+void f(const mqtt::const_message_ptr cause){
+	std::cout << "Cause be: " << cause << std::endl;
+	//print_tree(sys.messages_root);
 }
 
 /////////////////////////////////////////////////////////////////////////////
@@ -310,9 +294,13 @@ int main(int argc, char* argv[])
 
 	while(true){
 		std::this_thread::sleep_for(std::chrono::milliseconds(1000));
+	}
+
+	/*while(true){
+		std::this_thread::sleep_for(std::chrono::milliseconds(1000));
 		sys.get_messages();
 		print_tree(sys.messages_root);
-	}
+	}*/
 
  	return 0;
 }
