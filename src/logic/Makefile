@@ -1,13 +1,26 @@
-all: mock_publish listen_all test
+CC = g++
+CXXFLAGS = -std=c++17 -pedantic -Wall -Wextra -O2
+LDFLAGS = -lpaho-mqtt3a -lpaho-mqttpp3
 
-mock_publish: mock_publish.cpp
-	g++ -std=c++17 mock_publish.cpp -o mock_publish -lpaho-mqtt3a -lpaho-mqttpp3
+CPP_FILES = entry.cpp message_system.cpp
 
-listen_all: entry.cpp
-	g++ -std=c++17 entry.cpp -o listen_all -lpaho-mqtt3a -lpaho-mqttpp3
+all: listen_all test
+
+# Object files dependencies
+
+message_system.o: message_system.cpp message_system.hpp
+entry.o: entry.cpp
+
+%.o: %.cpp
+	$(CC) $(CXXFLAGS) -c $< -o $@
+
+listen_all: entry.o message_system.o
+	$(CC) $(CXXFLAGS) $^ -o $@ $(LDFLAGS)
 
 test: test.cpp
-	g++ -std=c++17 test.cpp -o test -lpaho-mqtt3a -lpaho-mqttpp3
+	$(CC) -o $@ $^ -std=c++17 $(LDFLAGS)
+
+.PHONY: clean
 
 clean:
-	rm test listen_all mock_publish
+	rm -f test listen_all message_system.o entry.o
