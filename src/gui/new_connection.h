@@ -15,6 +15,7 @@
 #include <QApplication>
 #include <QStandardItemModel>
 #include <QStandardItem>
+#include <QSortFilterProxyModel>
 
 namespace Ui {
 class new_connection;
@@ -33,8 +34,11 @@ private slots:
 
     void on_save_f_clicked();
 
+    void on_delete_button_clicked();
+
 private:
     Ui::new_connection *ui;
+    QStringListModel *model_con;
 };
 
 #endif // NEW_CONNECTION_H

@@ -2,6 +2,10 @@
 
 #include <QApplication>
 #include <QFile>
+#include <QFileSystemModel>
+#include <QtGui>
+#include <QTreeView>
+#include <QApplication>
 
 int main(int argc, char *argv[])
 {

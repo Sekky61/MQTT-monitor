@@ -15,6 +15,9 @@
 #include <QApplication>
 #include <QStandardItemModel>
 #include <QStandardItem>
+#include <QSortFilterProxyModel>
+#include <QTreeView>
+#include <QFileSystemModel>
 
 QT_BEGIN_NAMESPACE
 namespace Ui { class MainWindow; }
@@ -28,6 +31,7 @@ class MainWindow : public QMainWindow
 public:
     MainWindow(QWidget *parent = nullptr);
     ~MainWindow(); //destruktor
+    QSortFilterProxyModel * proxy_tree;
 
 private slots:
     void on_actionQuit_triggered();
@@ -49,6 +53,8 @@ private slots:
     void on_actionDefault_size_triggered();
 
     void on_buttonConnect_clicked();
+
+    void on_searchButton_clicked();
 
 private:
     Ui::MainWindow *ui;

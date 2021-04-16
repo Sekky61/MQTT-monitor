@@ -3,6 +3,7 @@
 #include "aboutapplication.h"
 #include "new_connection.h"
 
+
 MainWindow::MainWindow(QWidget *parent):
     QMainWindow(parent) ,
     ui(new Ui::MainWindow)
@@ -38,8 +39,6 @@ MainWindow::MainWindow(QWidget *parent):
     auto broker_publish_bytes = new QStandardItem("bytes");
     auto broker_bytes_recieved = new QStandardItem("messages");
     auto broker_bytes_sent = new QStandardItem("bytes");
-
-
 
 
     broker->appendRow(new QStandardItem("version"));
@@ -119,7 +118,6 @@ MainWindow::MainWindow(QWidget *parent):
 
     list.push_back(item);
     model.appendRow(list);
-
     ui->treeView->setModel(&model);
 
 }
@@ -186,4 +184,14 @@ void MainWindow::on_buttonConnect_clicked()
     new_connection connection;
     connection.setModal(true);
     connection.exec();
+}
+
+void MainWindow::on_searchButton_clicked()
+{
+    //filtrování stromové struktury
+    proxy_tree = new QSortFilterProxyModel(this);
+    proxy_tree->setSourceModel(&model);
+    proxy_tree->setFilterCaseSensitivity(Qt::CaseInsensitive);
+    proxy_tree->setFilterKeyColumn(-1); //If the value is -1, the keys will be read from all columns
+    proxy_tree->setFilterFixedString("broker");
 }
