@@ -6,6 +6,8 @@ int main(int argc, char* argv[])
 {
 	MessageSystem sys;
 
+	//std::cerr << "sys constructed. client name: " << sys.client.get_client_id() << "\n";
+
 	int ret = sys.connect_client();
 	if(ret != 0){
 		std::cerr << "Client se nemohl pripojit.\n";

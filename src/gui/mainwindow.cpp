@@ -3,6 +3,7 @@
 #include "aboutapplication.h"
 #include "new_connection.h"
 
+#include <iostream>
 
 MainWindow::MainWindow(QWidget *parent):
     QMainWindow(parent) ,
@@ -130,6 +131,12 @@ MainWindow::~MainWindow()
     //this->setCentralWidget(ui->textEdit);
 }
 
+void MainWindow::connect_to_client_from_dialog(QString client_name, QString server_address)
+{
+    std::cout << "Slot connect_to_client_from_dialog activated\n";
+    emit connect_client_mainwindow(client_name, server_address);
+}
+
 
 void MainWindow::on_actionQuit_triggered()
 {
@@ -181,7 +188,9 @@ void MainWindow::on_actionDefault_size_triggered()
 
 void MainWindow::on_buttonConnect_clicked()
 {
-    new_connection connection;
+    new_connection connection(this);
+
+    QObject::connect(&connection, &new_connection::connect_to_server, this, &MainWindow::connect_to_client_from_dialog);
     connection.setModal(true);
     connection.exec();
 }

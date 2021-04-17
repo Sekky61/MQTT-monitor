@@ -29,6 +29,9 @@ public:
     explicit new_connection(QWidget *parent = nullptr);
     ~new_connection();
 
+signals:
+    void connect_to_server(QString server_name, QString client_id);
+
 private slots:
     void on_connect_f_clicked();
 

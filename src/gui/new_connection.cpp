@@ -58,7 +58,7 @@ void new_connection::on_connect_f_clicked()
         QMessageBox::warning(this, "Connect", "username and password is incorrect");
     }
 
-
+    emit connect_to_server(username, protocol + "://" + host + ":" + port);
 }
 
 void new_connection::on_save_f_clicked()

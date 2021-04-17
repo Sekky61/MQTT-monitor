@@ -2,7 +2,7 @@ QT       += core gui
 
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 
-CONFIG += c++11
+CONFIG += c++17
 
 # You can make your code fail to compile if it uses deprecated APIs.
 # In order to do so, uncomment the following line.
@@ -10,14 +10,20 @@ CONFIG += c++11
 
 SOURCES += \
     aboutapplication.cpp \
+    client.cpp \
     main.cpp \
     mainwindow.cpp \
     new_connection.cpp
 
 HEADERS += \
     aboutapplication.h \
+    client.h \
     mainwindow.h \
     new_connection.h
+
+
+HEADERS += ../logic/message_system.hpp
+SOURCES += ../logic/message_system.cpp
 
 FORMS += \
     aboutapplication.ui \
@@ -31,3 +37,5 @@ else: unix:!android: target.path = /opt/$${TARGET}/bin
 
 RESOURCES += \
     Resources.qrc
+
+unix|win32: LIBS += -lpaho-mqttpp3 -lpaho-mqtt3as

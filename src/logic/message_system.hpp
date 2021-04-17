@@ -104,7 +104,7 @@ public:
 
 	mqtt::async_client client;
 
-    MessageSystem() : MessageSystem("clientid", DEFAULT_SERVER_ADDRESS ) { }
+    MessageSystem() : MessageSystem("DEFAULT_CLIENT_NAME", DEFAULT_SERVER_ADDRESS ) { }
 
 	MessageSystem(std::string client_name, std::string server_address) : client_id{ client_name }, client(server_address, client_id)
     {
