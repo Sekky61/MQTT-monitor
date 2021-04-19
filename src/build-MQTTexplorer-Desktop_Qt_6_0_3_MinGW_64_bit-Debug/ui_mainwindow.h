@@ -13,6 +13,7 @@
 #include <QtGui/QAction>
 #include <QtWidgets/QApplication>
 #include <QtWidgets/QFrame>
+#include <QtWidgets/QGraphicsView>
 #include <QtWidgets/QHBoxLayout>
 #include <QtWidgets/QHeaderView>
 #include <QtWidgets/QLabel>
@@ -57,6 +58,12 @@ public:
     QFrame *line;
     QScrollArea *scrollArea;
     QWidget *scrollAreaWidgetContents_2;
+    QWidget *layoutWidget_main;
+    QHBoxLayout *horizontalLayout_2;
+    QPushButton *copy_topic_2;
+    QLineEdit *topic_search;
+    QPushButton *delete_topic_2;
+    QPushButton *add_topic;
     QTextEdit *textEdit;
     QWidget *layoutWidget;
     QVBoxLayout *verticalLayout;
@@ -65,13 +72,10 @@ public:
     QLabel *label_2;
     QLabel *label_3;
     QPushButton *publish_button;
-    QWidget *widget;
-    QHBoxLayout *horizontalLayout;
-    QHBoxLayout *horizontalLayout_2;
-    QLabel *topic_label_2;
-    QPushButton *copy_topic_2;
-    QPushButton *delete_topic_2;
-    QPushButton *newtopic_button;
+    QLineEdit *path_message;
+    QLabel *Message_label;
+    QLabel *value_label;
+    QGraphicsView *graphicsView;
     QMenuBar *menubar;
     QMenu *menuFile;
     QMenu *menuEdit;
@@ -138,8 +142,13 @@ public:
         lineEdit = new QLineEdit(frame);
         lineEdit->setObjectName(QString::fromUtf8("lineEdit"));
         lineEdit->setGeometry(QRect(280, 20, 341, 41));
-        lineEdit->setStyleSheet(QString::fromUtf8("background-color: rgb(121, 162, 180);"));
+        lineEdit->setStyleSheet(QString::fromUtf8("QLineEdit{\n"
+"background-color: rgb(121, 162, 180);\n"
+"border: 2px solid rgb(255,255,255);\n"
+"border-radius: 20px;\n"
+"}"));
         lineEdit->setReadOnly(false);
+        lineEdit->setClearButtonEnabled(true);
         searchButton = new QPushButton(frame);
         searchButton->setObjectName(QString::fromUtf8("searchButton"));
         searchButton->setGeometry(QRect(630, 20, 91, 41));
@@ -183,9 +192,53 @@ public:
         scrollAreaWidgetContents_2 = new QWidget();
         scrollAreaWidgetContents_2->setObjectName(QString::fromUtf8("scrollAreaWidgetContents_2"));
         scrollAreaWidgetContents_2->setGeometry(QRect(0, 0, 529, 709));
+        layoutWidget_main = new QWidget(scrollAreaWidgetContents_2);
+        layoutWidget_main->setObjectName(QString::fromUtf8("layoutWidget_main"));
+        layoutWidget_main->setGeometry(QRect(10, 10, 501, 71));
+        horizontalLayout_2 = new QHBoxLayout(layoutWidget_main);
+        horizontalLayout_2->setObjectName(QString::fromUtf8("horizontalLayout_2"));
+        horizontalLayout_2->setContentsMargins(0, 0, 0, 0);
+        copy_topic_2 = new QPushButton(layoutWidget_main);
+        copy_topic_2->setObjectName(QString::fromUtf8("copy_topic_2"));
+        copy_topic_2->setAutoFillBackground(false);
+        copy_topic_2->setStyleSheet(QString::fromUtf8("color: rgb(255, 255, 255);\n"
+"background-color: rgb(77, 121, 140);"));
+        copy_topic_2->setFlat(false);
+
+        horizontalLayout_2->addWidget(copy_topic_2);
+
+        topic_search = new QLineEdit(layoutWidget_main);
+        topic_search->setObjectName(QString::fromUtf8("topic_search"));
+        topic_search->setStyleSheet(QString::fromUtf8("QLineEdit{\n"
+"border: 2px solid rgb(37,39,48);\n"
+"border-left:none;\n"
+"border-right:none;\n"
+"border-top:none;\n"
+"border-radius: 20px;\n"
+"}"));
+        topic_search->setClearButtonEnabled(true);
+
+        horizontalLayout_2->addWidget(topic_search);
+
+        delete_topic_2 = new QPushButton(layoutWidget_main);
+        delete_topic_2->setObjectName(QString::fromUtf8("delete_topic_2"));
+        delete_topic_2->setAutoFillBackground(false);
+        delete_topic_2->setStyleSheet(QString::fromUtf8("color: rgb(255, 255, 255);\n"
+"background-color: rgb(77, 121, 140);"));
+        delete_topic_2->setFlat(false);
+
+        horizontalLayout_2->addWidget(delete_topic_2);
+
+        add_topic = new QPushButton(layoutWidget_main);
+        add_topic->setObjectName(QString::fromUtf8("add_topic"));
+        add_topic->setStyleSheet(QString::fromUtf8("color: rgb(255, 255, 255);\n"
+"background-color: rgb(77, 121, 140);"));
+
+        horizontalLayout_2->addWidget(add_topic);
+
         textEdit = new QTextEdit(scrollAreaWidgetContents_2);
         textEdit->setObjectName(QString::fromUtf8("textEdit"));
-        textEdit->setGeometry(QRect(10, 130, 511, 221));
+        textEdit->setGeometry(QRect(10, 150, 511, 211));
         layoutWidget = new QWidget(scrollAreaWidgetContents_2);
         layoutWidget->setObjectName(QString::fromUtf8("layoutWidget"));
         layoutWidget->setGeometry(QRect(10, 560, 131, 111));
@@ -197,6 +250,7 @@ public:
         QFont font3;
         font3.setPointSize(12);
         Stats_label->setFont(font3);
+        Stats_label->setStyleSheet(QString::fromUtf8("color:rgb(191, 191, 191);"));
 
         verticalLayout->addWidget(Stats_label);
 
@@ -220,50 +274,31 @@ public:
         publish_button->setGeometry(QRect(410, 310, 101, 31));
         publish_button->setStyleSheet(QString::fromUtf8("color: rgb(255, 255, 255);\n"
 "background-color: rgb(77, 121, 140);"));
-        widget = new QWidget(scrollAreaWidgetContents_2);
-        widget->setObjectName(QString::fromUtf8("widget"));
-        widget->setGeometry(QRect(10, 10, 321, 81));
-        horizontalLayout = new QHBoxLayout(widget);
-        horizontalLayout->setObjectName(QString::fromUtf8("horizontalLayout"));
-        horizontalLayout->setContentsMargins(0, 0, 0, 0);
-        horizontalLayout_2 = new QHBoxLayout();
-        horizontalLayout_2->setObjectName(QString::fromUtf8("horizontalLayout_2"));
-        topic_label_2 = new QLabel(widget);
-        topic_label_2->setObjectName(QString::fromUtf8("topic_label_2"));
-        topic_label_2->setAutoFillBackground(false);
-        topic_label_2->setStyleSheet(QString::fromUtf8("font: 12pt \"MS Shell Dlg 2\";"));
-        topic_label_2->setAlignment(Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter);
-
-        horizontalLayout_2->addWidget(topic_label_2);
-
-        copy_topic_2 = new QPushButton(widget);
-        copy_topic_2->setObjectName(QString::fromUtf8("copy_topic_2"));
-        copy_topic_2->setAutoFillBackground(false);
-        copy_topic_2->setStyleSheet(QString::fromUtf8("color: rgb(255, 255, 255);\n"
-"background-color: rgb(77, 121, 140);"));
-        copy_topic_2->setFlat(false);
-
-        horizontalLayout_2->addWidget(copy_topic_2);
-
-        delete_topic_2 = new QPushButton(widget);
-        delete_topic_2->setObjectName(QString::fromUtf8("delete_topic_2"));
-        delete_topic_2->setAutoFillBackground(false);
-        delete_topic_2->setStyleSheet(QString::fromUtf8("color: rgb(255, 255, 255);\n"
-"background-color: rgb(77, 121, 140);"));
-        delete_topic_2->setFlat(false);
-
-        horizontalLayout_2->addWidget(delete_topic_2);
-
-
-        horizontalLayout->addLayout(horizontalLayout_2);
-
-        newtopic_button = new QPushButton(widget);
-        newtopic_button->setObjectName(QString::fromUtf8("newtopic_button"));
-        newtopic_button->setStyleSheet(QString::fromUtf8("color: rgb(255, 255, 255);\n"
-"background-color: rgb(77, 121, 140);"));
-
-        horizontalLayout->addWidget(newtopic_button);
-
+        path_message = new QLineEdit(scrollAreaWidgetContents_2);
+        path_message->setObjectName(QString::fromUtf8("path_message"));
+        path_message->setGeometry(QRect(10, 120, 181, 20));
+        path_message->setAutoFillBackground(false);
+        path_message->setStyleSheet(QString::fromUtf8("QLineEdit{\n"
+"border: 2px solid rgb(37,39,48);\n"
+"border-left:none;\n"
+"border-right:none;\n"
+"border-top:none;\n"
+"border-radius: 20px;\n"
+"}"));
+        path_message->setClearButtonEnabled(true);
+        Message_label = new QLabel(scrollAreaWidgetContents_2);
+        Message_label->setObjectName(QString::fromUtf8("Message_label"));
+        Message_label->setGeometry(QRect(10, 95, 61, 21));
+        Message_label->setFont(font3);
+        Message_label->setStyleSheet(QString::fromUtf8("color:rgb(191, 191, 191);"));
+        value_label = new QLabel(scrollAreaWidgetContents_2);
+        value_label->setObjectName(QString::fromUtf8("value_label"));
+        value_label->setGeometry(QRect(10, 370, 71, 21));
+        value_label->setFont(font3);
+        value_label->setStyleSheet(QString::fromUtf8("color:rgb(191, 191, 191);"));
+        graphicsView = new QGraphicsView(scrollAreaWidgetContents_2);
+        graphicsView->setObjectName(QString::fromUtf8("graphicsView"));
+        graphicsView->setGeometry(QRect(15, 400, 501, 151));
         scrollArea->setWidget(scrollAreaWidgetContents_2);
         MainWindow->setCentralWidget(centralwidget);
         menubar = new QMenuBar(MainWindow);
@@ -324,19 +359,22 @@ public:
         sing_label->setText(QCoreApplication::translate("MainWindow", "MQTT Explorer", nullptr));
         lineEdit->setInputMask(QString());
         lineEdit->setText(QString());
-        lineEdit->setPlaceholderText(QString());
+        lineEdit->setPlaceholderText(QCoreApplication::translate("MainWindow", " Search...", nullptr));
         searchButton->setText(QCoreApplication::translate("MainWindow", "Search", nullptr));
         buttonConnect->setText(QCoreApplication::translate("MainWindow", "CONNECT", nullptr));
         button_disconnect->setText(QCoreApplication::translate("MainWindow", "DISCONNECT", nullptr));
+        copy_topic_2->setText(QCoreApplication::translate("MainWindow", "Copy path", nullptr));
+        topic_search->setPlaceholderText(QCoreApplication::translate("MainWindow", " Insert tree path...", nullptr));
+        delete_topic_2->setText(QCoreApplication::translate("MainWindow", "Delete sub-topics", nullptr));
+        add_topic->setText(QCoreApplication::translate("MainWindow", "Add topic", nullptr));
         Stats_label->setText(QCoreApplication::translate("MainWindow", "Stats", nullptr));
         label->setText(QCoreApplication::translate("MainWindow", "Messages:", nullptr));
         label_2->setText(QCoreApplication::translate("MainWindow", "Subtopics:", nullptr));
         label_3->setText(QCoreApplication::translate("MainWindow", "Messages Subtopics:", nullptr));
         publish_button->setText(QCoreApplication::translate("MainWindow", "PUBLISH", nullptr));
-        topic_label_2->setText(QCoreApplication::translate("MainWindow", "Topic", nullptr));
-        copy_topic_2->setText(QCoreApplication::translate("MainWindow", "Copy path", nullptr));
-        delete_topic_2->setText(QCoreApplication::translate("MainWindow", "Delete sub-topics", nullptr));
-        newtopic_button->setText(QCoreApplication::translate("MainWindow", "Add topic", nullptr));
+        path_message->setPlaceholderText(QCoreApplication::translate("MainWindow", "Where to send your message?...", nullptr));
+        Message_label->setText(QCoreApplication::translate("MainWindow", "Topic", nullptr));
+        value_label->setText(QCoreApplication::translate("MainWindow", "Value", nullptr));
         menuFile->setTitle(QCoreApplication::translate("MainWindow", "Application", nullptr));
         menuEdit->setTitle(QCoreApplication::translate("MainWindow", "Edit", nullptr));
         menuView->setTitle(QCoreApplication::translate("MainWindow", "View", nullptr));
