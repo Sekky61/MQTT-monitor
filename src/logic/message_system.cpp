@@ -126,6 +126,10 @@ int MessageSystem::connect_client(){
 	return 0;
 }
 
+void MessageSystem::send_message(std::string topic, void *data, size_t data_len){
+	client.publish(topic, data, data_len);
+}
+
 
 std::vector<std::string> cut_topic_path(std::string topic_name){
 	std::istringstream input;

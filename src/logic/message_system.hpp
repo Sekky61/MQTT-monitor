@@ -44,8 +44,11 @@ public:
 		Children(),
 		Parent(parent_ptr) {} // const T& value // todo move && ?
 
-	T get_latest_msg(){
-		return Msgs.back();
+	T *get_latest_msg(){
+		if (Msgs.empty()){
+			return nullptr;
+		}
+		return &Msgs.back();
 	}
 
 	void set_topic(std::string topic){
@@ -166,6 +169,8 @@ public:
 	void add_topic(std::string topic_name);
 
 	void remove_topic(std::string topic_name);
+
+	void send_message(std::string topic, void *data, size_t data_len);
 
 };
 
