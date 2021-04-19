@@ -12,6 +12,10 @@ MainWindow::MainWindow(QWidget *parent):
 {
     ui->setupUi(this);
 
+    QObject::connect(ui->treeView, &QAbstractItemView::clicked, this, &MainWindow::display_message);
+
+    //ui->treeView->selectionModel()->selectedIndexes();
+    ui->treeView->currentIndex();
 }
 
 
@@ -25,6 +29,18 @@ MainWindow::~MainWindow()
 void MainWindow::set_tree_model(TopicModel *mod)
 {
     ui->treeView->setModel(mod);
+}
+
+void MainWindow::display_message(const QModelIndex &index)
+{
+    auto msg_ptr = static_cast<TopicNode*>(index.internalPointer())->get_latest_msg();
+    if(msg_ptr == nullptr){
+        std::cerr << "zadne zpravy\n";
+        return;
+    }
+    std::string payload = (*msg_ptr)->get_payload();
+    QString qmsg = QString::fromStdString(payload);
+    ui->label_4->setText(qmsg);
 }
 
 void MainWindow::connect_to_client_from_dialog(QString client_name, QString server_address)
@@ -105,6 +121,7 @@ void MainWindow::on_add_topic_clicked()
 {
     //tree path - zde chceme přidat topic
     QString topic_path = ui->topic_search->text();
+    emit add_topic_clicked(topic_path);
 }
 
 void MainWindow::on_copy_topic_2_clicked()
@@ -118,8 +135,11 @@ void MainWindow::on_delete_topic_2_clicked()
     QString topic_path = ui->topic_search->text();
 }
 
+// Publish message
 void MainWindow::on_publish_button_clicked()
 {
-    QString message_path = ui->path_message->text(); //pošle zprávu na zadanou adresu
+    QString topic = ui->path_message->text(); //pošle zprávu na zadanou adresu
     QString text = ui->textEdit->toPlainText(); //zpráva
+
+    emit publish_clicked(topic, text);
 }

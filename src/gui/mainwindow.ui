@@ -191,6 +191,9 @@ background-color: rgb(77, 121, 140);</string>
     <property name="frameShadow">
      <enum>QFrame::Raised</enum>
     </property>
+    <property name="selectionBehavior">
+     <enum>QAbstractItemView::SelectItems</enum>
+    </property>
     <attribute name="headerVisible">
      <bool>false</bool>
     </attribute>
@@ -464,6 +467,19 @@ border-radius: 20px;
         <width>501</width>
         <height>151</height>
        </rect>
+      </property>
+     </widget>
+     <widget class="QLabel" name="label_4">
+      <property name="geometry">
+       <rect>
+        <x>240</x>
+        <y>580</y>
+        <width>67</width>
+        <height>17</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>TextLabel</string>
       </property>
      </widget>
     </widget>

@@ -13,6 +13,10 @@ int TopicModel::rowCount(const QModelIndex &parent) const
 
     TopicNode *parentItem;
     if (!parent.isValid()){
+        if(cli.sys == nullptr){
+            std::cout << "\treturning no sys " << 0 << "\n";
+            return 0;
+        }
         parentItem = cli.sys->messages_root;
         if(parentItem == nullptr){
             std::cout << "\treturning no root " << 0 << "\n";
@@ -34,6 +38,10 @@ int TopicModel::columnCount(const QModelIndex &parent) const
     auto *node = static_cast<TopicNode*>(parent.internalPointer());
 
     if(!parent.isValid()){
+        if(cli.sys == nullptr){
+            std::cout << "\treturning no sys " << 0 << "\n";
+            return 0;
+        }
         node = cli.sys->messages_root;
         if(node == nullptr){
             std::cout << "\treturning no root " << 0 << "\n";

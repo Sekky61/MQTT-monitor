@@ -41,7 +41,14 @@ signals:
 
     void connect_client_mainwindow(QString client_name, QString server_address);
 
+    void add_topic_clicked(QString topic_string);
+
+    void publish_clicked(QString topic_string, QString content_string);
+
 private slots:
+
+    void display_message(const QModelIndex &index);
+
     void connect_to_client_from_dialog(QString client_name, QString server_address);
 
     void on_actionQuit_triggered();
