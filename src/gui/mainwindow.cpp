@@ -100,3 +100,26 @@ void MainWindow::on_searchButton_clicked()
     proxy_tree->setFilterKeyColumn(-1); //If the value is -1, the keys will be read from all columns
     proxy_tree->setFilterFixedString("broker");
 }
+
+void MainWindow::on_add_topic_clicked()
+{
+    //tree path - zde chceme přidat topic
+    QString topic_path = ui->topic_search->text();
+}
+
+void MainWindow::on_copy_topic_2_clicked()
+{
+    ui->topic_search->setText("naše pozice ve stromové struktuře");
+}
+
+void MainWindow::on_delete_topic_2_clicked()
+{
+    //vymaže subtopics na této pozici
+    QString topic_path = ui->topic_search->text();
+}
+
+void MainWindow::on_publish_button_clicked()
+{
+    QString message_path = ui->path_message->text(); //pošle zprávu na zadanou adresu
+    QString text = ui->textEdit->toPlainText(); //zpráva
+}

@@ -66,6 +66,14 @@ private slots:
 
     void on_searchButton_clicked();
 
+    void on_add_topic_clicked();
+
+    void on_copy_topic_2_clicked();
+
+    void on_delete_topic_2_clicked();
+
+    void on_publish_button_clicked();
+
 private:
     Ui::MainWindow *ui;
     QString current_file = ""; //jméno souboru ve kterém pracujeme

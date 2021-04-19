@@ -11,3 +11,4 @@ mock_publish
 listen_all
 
 build*
+*.user
