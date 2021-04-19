@@ -34,12 +34,12 @@ std::ostream& operator<< (std::ostream &out, TopicNode const& node) {
     return out;
 }
 
-void print_tree(TopicNode& root){ // todo overload <<
-	std::cerr << "printing: " << root.Topic << std::endl;
+void print_tree(TopicNode *root){ // todo overload <<
+    std::cerr << "printing: " << root->Topic << std::endl;
 	std::cerr << root << '\n';
-	for (auto &child : root.Children){
-		std::cerr << "\tprinting child: " << child.Topic << std::endl;
-		print_tree(child);
+    for (auto child : root->Children){
+		std::cerr << "\tprinting child: " << child->Topic << std::endl;
+        print_tree(child);
 	}
 }
 
@@ -50,7 +50,13 @@ void MessageSystem::set_subscribe_all(bool subscribeAll){
 void MessageSystem::add_topic(std::string topic_name){
 		topics.emplace_back(topic_name);
 		client.subscribe(topic_name, QOS)->wait();
-		messages_root.grow_tree(topic_name);
+		if(messages_root != nullptr){
+			messages_root->grow_tree(topic_name);
+		} else {
+			messages_root = new TopicNode();
+			messages_root->grow_tree(topic_name);
+		}
+        
 	}
 
 void MessageSystem::remove_topic(std::string topic_name){
@@ -68,7 +74,7 @@ bool MessageSystem::is_subscribed_topic(std::string topic){
 
 // muze i vytvorit node nody
 TopicNode *MessageSystem::get_node_by_topic(std::string topic){
-	auto *node = &messages_root;
+    auto *node = messages_root;
 
 	auto cut = cut_topic_path(topic);
 
@@ -99,7 +105,6 @@ bool MessageSystem::add_message(mqtt::const_message_ptr message){
 int MessageSystem::connect_client(){
 
 	auto connOpts = mqtt::connect_options_builder()
-		.clean_session(false)
 		.finalize();
 
 	client.start_consuming();
@@ -115,7 +120,7 @@ int MessageSystem::connect_client(){
 		std::cerr << "OK" << std::endl;
 	}
 	catch (const mqtt::exception& exc) {
-		std::cerr << "connect_client exc:\n  " << exc << std::endl;
+		std::cerr << "connect_client exc:\n\t" << exc << std::endl;
 		return 1;
 	}
 	return 0;

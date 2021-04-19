@@ -32,11 +32,17 @@ public:
 
 	std::string Topic;
 	std::vector<T> Msgs;
-    std::vector<TreeNode<T> > Children;
+    std::vector<TreeNode<T> *> Children;
 
-	TreeNode() {}
+	TreeNode<T> *Parent;
 
-    TreeNode(std::string topic_name) : Topic(topic_name) {} // const T& value // todo move && ?
+        TreeNode(): Parent(nullptr)  {}
+
+    TreeNode(TreeNode<T> *parent_ptr, std::string topic_name) :
+		Topic(topic_name),
+		Msgs(),
+		Children(),
+		Parent(parent_ptr) {} // const T& value // todo move && ?
 
 	T get_latest_msg(){
 		return Msgs.back();
@@ -52,19 +58,48 @@ public:
 	}
 
 	TreeNode<T> *get_child(std::string name){
-		auto x = std::find_if(Children.begin(), Children.end(), [&] (const TreeNode<T>& s) { return s.Topic == name; });
+		auto x = std::find_if(Children.begin(), Children.end(), [&] (const TreeNode<T> *s) { return s->Topic == name; });
 		if (x != Children.end()){
 			// child exists
-			return &(*x);
+			return *x;
 		}
 		return nullptr;
+	}
+
+	TreeNode<T> *get_child_by_index(int index){
+		if (index >= 0 && index < Children.size()){
+			// child exists
+			return Children[index];
+		}
+		return nullptr;
+	}
+
+	int get_number_of_children(){
+		
+		return Children.size();
+	}
+
+	int get_own_index(){
+		if(!Parent){
+			return -1;
+		}
+		auto it = find(Parent->Children.begin(), Parent->Children.end(), this);
+		if (it != Parent->Children.end())
+    	{
+			// found
+        	return it - Parent->Children.begin();
+    	}
+    	else {
+        	return -1;
+    	}
 	}
 
 	TreeNode<T> *get_create_child(std::string name){
 		auto *child_node = get_child(name);
 		if (child_node == nullptr){
 			// child does not exists
-			return &Children.emplace_back(name);
+			TreeNode<T> *new_node = new TreeNode<T>(this, name);
+			return Children.emplace_back(new_node);
 		}
 		return child_node;
 	}
@@ -85,7 +120,7 @@ using TopicNode = TreeNode<mqtt::const_message_ptr>;
 
 std::ostream& operator<< (std::ostream &out, TopicNode const& node);
 
-void print_tree(TopicNode& root);
+void print_tree(TopicNode *root);
 
 extern const std::string DEFAULT_SERVER_ADDRESS;
 
@@ -94,7 +129,7 @@ class MessageSystem
 public:
 
 	bool SubscribeAll;
-	TopicNode messages_root;
+    TopicNode *messages_root;
 	std::vector<std::string> topics; // maybe list/map na odstranovani
 
 	const int QOS {1};
@@ -104,10 +139,11 @@ public:
 
 	mqtt::async_client client;
 
-    MessageSystem() : MessageSystem("DEFAULT_CLIENT_NAME", DEFAULT_SERVER_ADDRESS ) { }
-
-	MessageSystem(std::string client_name, std::string server_address) : client_id{ client_name }, client(server_address, client_id)
+	MessageSystem(std::string client_name, std::string server_address):
+		client_id{ client_name },
+		client(server_address, client_id)
     {
+		messages_root = new TopicNode();
 		client.set_message_callback([this](const mqtt::const_message_ptr message){
 			auto topic = message->get_topic();
 			auto msg = message->get_payload();

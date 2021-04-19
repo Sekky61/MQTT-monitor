@@ -4,7 +4,7 @@
 
 int main(int argc, char* argv[])
 {
-	MessageSystem sys;
+	MessageSystem sys("name7", DEFAULT_SERVER_ADDRESS);
 
 	//std::cerr << "sys constructed. client name: " << sys.client.get_client_id() << "\n";
 
@@ -14,8 +14,10 @@ int main(int argc, char* argv[])
 		return 1;
 	}
 
+	std::cerr << "About to sub" << std::endl;
 	sys.add_topic("t1");
 	sys.add_topic("t2/sub1");
+	std::cerr << "subbed" << std::endl;
 
 	while(true){
 		std::this_thread::sleep_for(std::chrono::milliseconds(1000));
