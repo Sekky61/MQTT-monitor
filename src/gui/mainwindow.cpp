@@ -2,6 +2,7 @@
 #include "ui_mainwindow.h"
 #include "aboutapplication.h"
 #include "new_connection.h"
+#include "topicmodel.h"
 
 #include <iostream>
 
@@ -11,116 +12,6 @@ MainWindow::MainWindow(QWidget *parent):
 {
     ui->setupUi(this);
 
-    QList<QStandardItem*> list;
-    auto item = new QStandardItem("localhost");
-    auto sys = new QStandardItem("$SYS");
-
-    auto broker = new QStandardItem("broker");
-    auto clients = new QStandardItem("clients");
-    auto load = new QStandardItem("load");
-    auto broker_messages = new QStandardItem("messages");
-    auto store = new QStandardItem("store");
-    auto subscriptions = new QStandardItem("subscriptions");
-    auto retained_messages = new QStandardItem("retained_messages");
-    auto broker_publish = new QStandardItem("publish");
-    auto broker_bytes = new QStandardItem("bytes");
-
-    auto messages = new QStandardItem("messages");
-    auto recieved = new QStandardItem("recieved");
-    auto sent = new QStandardItem("sent");
-    auto publish = new QStandardItem("publish");
-    auto sockets = new QStandardItem("sockets");
-    auto connections = new QStandardItem("connections");
-    auto p_sent = new QStandardItem("sent");
-    auto bytes = new QStandardItem("bytes");
-    auto b_recieved = new QStandardItem("recieved");
-    auto b_sent = new QStandardItem("sent");
-    auto store_messages = new QStandardItem("messages");
-    auto broker_publish_messages = new QStandardItem("messages");
-    auto broker_publish_bytes = new QStandardItem("bytes");
-    auto broker_bytes_recieved = new QStandardItem("messages");
-    auto broker_bytes_sent = new QStandardItem("bytes");
-
-
-    broker->appendRow(new QStandardItem("version"));
-    broker->appendRow(new QStandardItem("uptime"));
-
-    clients->appendRow(new QStandardItem("total"));
-    clients->appendRow(new QStandardItem("maximum"));
-    clients->appendRow(new QStandardItem("active"));
-    clients->appendRow(new QStandardItem("connected"));
-
-
-    recieved->appendRow(new QStandardItem("1min"));
-    recieved->appendRow(new QStandardItem("5min"));
-    recieved->appendRow(new QStandardItem("15min"));
-    sent->appendRow(new QStandardItem("1min"));
-    sent->appendRow(new QStandardItem("5min"));
-    sent->appendRow(new QStandardItem("15min"));
-
-    p_sent->appendRow(new QStandardItem("1min"));
-    p_sent->appendRow(new QStandardItem("5min"));
-    p_sent->appendRow(new QStandardItem("15min"));
-
-    b_recieved->appendRow(new QStandardItem("1min"));
-    b_recieved->appendRow(new QStandardItem("5min"));
-    b_recieved->appendRow(new QStandardItem("15min"));
-    b_sent->appendRow(new QStandardItem("1min"));
-    b_sent->appendRow(new QStandardItem("5min"));
-    b_sent->appendRow(new QStandardItem("15min"));
-
-    sockets->appendRow(new QStandardItem("1min"));
-    sockets->appendRow(new QStandardItem("5min"));
-    sockets->appendRow(new QStandardItem("15min"));
-
-    connections->appendRow(new QStandardItem("1min"));
-    connections->appendRow(new QStandardItem("5min"));
-    connections->appendRow(new QStandardItem("15min"));
-
-    broker_messages->appendRow(new QStandardItem("stored"));
-    broker_messages->appendRow(new QStandardItem("recieved"));
-    broker_messages->appendRow(new QStandardItem("sent"));
-
-    store_messages->appendRow(new QStandardItem("count"));
-    store_messages->appendRow(new QStandardItem("bytes"));
-
-    subscriptions->appendRow(new QStandardItem("count"));
-    retained_messages->appendRow(new QStandardItem("count"));
-
-    broker_publish_messages->appendRow(new QStandardItem("sent"));
-    broker_publish_bytes->appendRow(new QStandardItem("sent"));
-
-    item->appendRow(sys);
-    sys->appendRow(broker);
-    broker->appendRow(clients);
-    broker->appendRow(load);
-    broker->appendRow(broker_messages);
-    broker->appendRow(store);
-    broker->appendRow(subscriptions);
-    broker->appendRow(retained_messages);
-    broker->appendRow(broker_publish);
-    broker->appendRow(broker_bytes);
-    load->appendRow(messages);
-    load->appendRow(publish);
-    load->appendRow(bytes);
-    load->appendRow(sockets);
-    store->appendRow(store_messages);
-    load->appendRow(connections);
-    messages->appendRow(recieved);
-    messages->appendRow(sent);
-    publish->appendRow(p_sent);
-    bytes->appendRow(b_recieved);
-    bytes->appendRow(b_sent);
-    broker_publish->appendRow(broker_publish_messages);
-    broker_publish->appendRow(broker_publish_bytes);
-    broker_bytes->appendRow(broker_bytes_recieved);
-    broker_bytes->appendRow(broker_bytes_sent);
-
-
-    list.push_back(item);
-    model.appendRow(list);
-    ui->treeView->setModel(&model);
-
 }
 
 
@@ -129,6 +20,11 @@ MainWindow::~MainWindow()
 {
     delete ui;
     //this->setCentralWidget(ui->textEdit);
+}
+
+void MainWindow::set_tree_model(TopicModel *mod)
+{
+    ui->treeView->setModel(mod);
 }
 
 void MainWindow::connect_to_client_from_dialog(QString client_name, QString server_address)

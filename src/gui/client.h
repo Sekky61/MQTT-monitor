@@ -16,7 +16,8 @@ public:
 
     int connect_to_server(QString, QString);
 
-signals:
+public: signals:
+    void mqtt_data_changed();
 
 public slots:
     void user_clicked_connect(QString client_name, QString server_address);

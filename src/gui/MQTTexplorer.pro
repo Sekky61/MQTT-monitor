@@ -13,13 +13,15 @@ SOURCES += \
     client.cpp \
     main.cpp \
     mainwindow.cpp \
-    new_connection.cpp
+    new_connection.cpp \
+    topicmodel.cpp
 
 HEADERS += \
     aboutapplication.h \
     client.h \
     mainwindow.h \
-    new_connection.h
+    new_connection.h \
+    topicmodel.h
 
 
 HEADERS += ../logic/message_system.hpp
