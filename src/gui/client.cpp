@@ -20,14 +20,20 @@ int client::connect_to_server(QString client_name, QString server_address){
                 print_tree(this->sys->messages_root);
             });
 
-    return sys->connect_client();
+    int status = sys->connect_client();
+
+    return status;
 }
 
 void client::user_clicked_connect(QString client_name, QString server_address)
 {
     std::cout << "Signal in its destination. name:" << client_name.toStdString() << "\n";
-    connect_to_server(client_name, server_address);
+    int status = connect_to_server(client_name, server_address);
 
-    sys->add_topic("t1");
-    sys->add_topic("t2/sub1");
+    if(status==0){
+        sys->add_topic("t1");
+        sys->add_topic("t2/sub1");
+    } else {
+        // todo zobrazit zpravu ze se nepodarilo pripojit
+    }
 }

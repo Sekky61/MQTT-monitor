@@ -112,9 +112,9 @@ int MessageSystem::connect_client(){
 	// Connect to the server
 
 	std::cerr << "Connecting to the MQTT server... name: " << client.get_client_id() << std::endl;
-	auto tok = client.connect(connOpts);
+    try {
+        auto tok = client.connect(connOpts);
 
-	try {
 		auto rsp = tok->get_connect_response();
 
 		std::cerr << "OK" << std::endl;

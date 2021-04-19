@@ -132,7 +132,7 @@ background-color: rgb(218, 206, 112);</string>
       <x>20</x>
       <y>120</y>
       <width>81</width>
-      <height>41</height>
+      <height>50</height>
      </rect>
     </property>
     <layout class="QVBoxLayout" name="verticalLayout_5">
@@ -158,7 +158,7 @@ background-color: rgb(218, 206, 112);</string>
       <x>320</x>
       <y>120</y>
       <width>71</width>
-      <height>41</height>
+      <height>50</height>
      </rect>
     </property>
     <layout class="QVBoxLayout" name="verticalLayout_6">
@@ -210,7 +210,7 @@ background-color: rgb(218, 206, 112);</string>
       <x>20</x>
       <y>30</y>
       <width>135</width>
-      <height>41</height>
+      <height>50</height>
      </rect>
     </property>
     <layout class="QVBoxLayout" name="verticalLayout">
@@ -236,7 +236,7 @@ background-color: rgb(218, 206, 112);</string>
       <x>114</x>
       <y>120</y>
       <width>191</width>
-      <height>41</height>
+      <height>50</height>
      </rect>
     </property>
     <layout class="QVBoxLayout" name="verticalLayout_2">
@@ -262,7 +262,7 @@ background-color: rgb(218, 206, 112);</string>
       <x>20</x>
       <y>200</y>
       <width>135</width>
-      <height>41</height>
+      <height>50</height>
      </rect>
     </property>
     <layout class="QVBoxLayout" name="verticalLayout_3">
@@ -288,7 +288,7 @@ background-color: rgb(218, 206, 112);</string>
       <x>170</x>
       <y>200</y>
       <width>135</width>
-      <height>41</height>
+      <height>50</height>
      </rect>
     </property>
     <layout class="QVBoxLayout" name="verticalLayout_4">
@@ -368,6 +368,20 @@ background-color: rgb(218, 206, 112);</string>
    </property>
   </widget>
  </widget>
+ <tabstops>
+  <tabstop>connectionName_line</tabstop>
+  <tabstop>check_validate</tabstop>
+  <tabstop>check_encryption</tabstop>
+  <tabstop>protocol_line</tabstop>
+  <tabstop>host_line</tabstop>
+  <tabstop>port_line</tabstop>
+  <tabstop>username_line</tabstop>
+  <tabstop>password_line</tabstop>
+  <tabstop>save_f</tabstop>
+  <tabstop>connect_f</tabstop>
+  <tabstop>delete_button</tabstop>
+  <tabstop>listView</tabstop>
+ </tabstops>
  <resources/>
  <connections/>
 </ui>
