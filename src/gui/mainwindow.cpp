@@ -184,7 +184,15 @@ void MainWindow::on_buttonConnect_clicked()
     new_connection connection;
     connection.setModal(true);
     connection.exec();
+
+    //načtení uložených connections
+    read_file();
 }
+
+void MainWindow::read_file(){
+    QTextStream(stdout) << "read";
+}
+
 
 void MainWindow::on_searchButton_clicked()
 {

@@ -31,10 +31,11 @@ public:
 
 private slots:
     void on_connect_f_clicked();
-
-    void on_save_f_clicked();
-
+    QStringList on_save_f_clicked();
     void on_delete_button_clicked();
+    void writeToFile(QString, QString,QString,QString,QString,QString);
+
+    void on_loadButton_clicked();
 
 private:
     Ui::new_connection *ui;

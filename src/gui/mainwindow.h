@@ -33,28 +33,20 @@ public:
     ~MainWindow(); //destruktor
     QSortFilterProxyModel * proxy_tree;
 
+//použité funkce
 private slots:
     void on_actionQuit_triggered();
-
     void on_actionCopy_triggered();
-
     void on_actionPaste_triggered();
-
     void on_actionCut_triggered();
-
     void on_actionUndo_triggered();
-
     void on_actionRedo_triggered();
-
     void on_actionSelect_All_triggered();
-
     void on_actionAbout_Aplication_triggered();
-
     void on_actionDefault_size_triggered();
-
     void on_buttonConnect_clicked();
-
     void on_searchButton_clicked();
+    void read_file();
 
 private:
     Ui::MainWindow *ui;

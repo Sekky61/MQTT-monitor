@@ -1,0 +1,7 @@
+con;pro;host;port;name;pass
+con2;pro2;host2;port2;name2;pass
+con3;pro3;host3;port3;name3;passpnon;non;111;911;1981;11
+name;protokolek;host;port;name ;heslo
+;uhhíhno;;;;
+
+;ggiági;;;;
