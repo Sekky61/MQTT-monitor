@@ -21,12 +21,12 @@
 
 const std::string DEFAULT_SERVER_ADDRESS	{ "tcp://localhost:1888" };
 
-std::ostream& operator<< (std::ostream &out, TopicNode const& node) {
-    out << node.Topic << ": (";
-    out << node.Msgs.size() << " msgs; " << node.Children.size() << " chldrn)";
-    if(node.Msgs.size() != 0){
+std::ostream& operator<< (std::ostream &out, TopicNode *node) {
+    out << node->Topic << ": (";
+    out << node->Msgs.size() << " msgs; " << node->Children.size() << " chldrn)";
+    if(node->Msgs.size() != 0){
 		out << "\n\tmsgs: ";
-		for( auto msg : node.Msgs){
+		for( auto msg : node->Msgs){
 			out << msg->get_payload() << " | ";
 		}
 		out << "\n";
@@ -45,7 +45,11 @@ void print_tree(TopicNode *root){ // todo overload <<
 
 void MessageSystem::set_subscribe_all(bool subscribeAll){
 		SubscribeAll = subscribeAll;
-	}
+}
+
+void MessageSystem::set_limit_all(int new_limit){
+	messages_root->set_limit_recursive(new_limit);
+}
 
 void MessageSystem::add_topic(std::string topic_name){
 		topics.emplace_back(topic_name);

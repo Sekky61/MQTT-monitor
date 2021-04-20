@@ -17,6 +17,7 @@
 #include <chrono>
 #include <vector>
 #include <string>
+#include <deque>
 
 #include <sstream>
 #include <algorithm>
@@ -31,15 +32,18 @@ class TreeNode
 public:
 
 	std::string Topic;
-	std::vector<T> Msgs;
-    std::vector<TreeNode<T> *> Children;
 
+	unsigned long limit;
+	std::deque<T> Msgs;
+
+    std::vector<TreeNode<T> *> Children;
 	TreeNode<T> *Parent;
 
         TreeNode(): Parent(nullptr)  {}
 
     TreeNode(TreeNode<T> *parent_ptr, std::string topic_name) :
 		Topic(topic_name),
+		limit(0),
 		Msgs(),
 		Children(),
 		Parent(parent_ptr) {} // const T& value // todo move && ?
@@ -51,13 +55,35 @@ public:
 		return &Msgs.back();
 	}
 
+	void set_limit_recursive(int new_limit){
+		limit = new_limit;
+
+		for(auto child : Children){
+			child->set_limit_recursive(limit);
+		}
+	}
+
+	void set_limit(int new_limit){
+		limit = new_limit;
+
+		while(limit != 0 && limit < Msgs.size()){
+			std::cerr << "set_limit: Size is " << Msgs.size() << " limit is " << limit << " and I must pop\n";
+			Msgs.pop_front();
+		}
+	}
+
 	void set_topic(std::string topic){
 		// todo checks
 		Topic = topic;
 	}
 
 	void add_message(T message){
-		Msgs.emplace_back(message);
+		if(limit != 0 && limit <= Msgs.size()){
+			Msgs.pop_front();
+			Msgs.push_back(message);
+		} else {
+			Msgs.push_back(message);
+		}
 	}
 
 	TreeNode<T> *get_child(std::string name){
@@ -165,6 +191,7 @@ public:
 	bool add_message(mqtt::const_message_ptr);
 
 	void set_subscribe_all(bool subscribeAll);
+	void set_limit_all(int new_limit);
 
 	void add_topic(std::string topic_name);
 
