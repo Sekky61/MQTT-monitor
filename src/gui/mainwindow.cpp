@@ -168,6 +168,7 @@ void MainWindow::on_actionSelect_All_triggered()
 
 void MainWindow::on_actionAbout_Aplication_triggered()
 {
+    //QApplication::aboutQt;
     AboutApplication aboutapplication;
     aboutapplication.setModal(true);
     aboutapplication.exec();
@@ -217,4 +218,14 @@ void MainWindow::on_publish_button_clicked()
 {
     QString message_path = ui->path_message->text(); //pošle zprávu na zadanou adresu
     QString text = ui->textEdit->toPlainText(); //zpráva
+}
+
+void MainWindow::on_Explorer_button_clicked()
+{
+    ui->Pages->setCurrentIndex(0);
+}
+
+void MainWindow::on_Dash_button_clicked()
+{
+    ui->Pages->setCurrentIndex(1);
 }
