@@ -61,8 +61,8 @@ public:
     QLineEdit *password_line;
     QFrame *frame_2;
     QPushButton *delete_button;
-    QListWidget *listWidget;
     QPushButton *loadButton;
+    QListWidget *listWidget;
     QFrame *separate_line;
 
     void setupUi(QDialog *new_connection)
@@ -221,16 +221,16 @@ public:
         frame_2->setFrameShadow(QFrame::Raised);
         delete_button = new QPushButton(frame_2);
         delete_button->setObjectName(QString::fromUtf8("delete_button"));
-        delete_button->setGeometry(QRect(124, 322, 81, 31));
-        listWidget = new QListWidget(frame_2);
-        listWidget->setObjectName(QString::fromUtf8("listWidget"));
-        listWidget->setGeometry(QRect(-5, 1, 221, 361));
+        delete_button->setGeometry(QRect(124, 332, 81, 21));
         loadButton = new QPushButton(frame_2);
         loadButton->setObjectName(QString::fromUtf8("loadButton"));
-        loadButton->setGeometry(QRect(130, 10, 75, 23));
+        loadButton->setGeometry(QRect(124, 302, 81, 21));
+        listWidget = new QListWidget(frame_2);
+        listWidget->setObjectName(QString::fromUtf8("listWidget"));
+        listWidget->setGeometry(QRect(0, 0, 211, 361));
         listWidget->raise();
-        delete_button->raise();
         loadButton->raise();
+        delete_button->raise();
         separate_line = new QFrame(new_connection);
         separate_line->setObjectName(QString::fromUtf8("separate_line"));
         separate_line->setGeometry(QRect(220, -20, 20, 461));

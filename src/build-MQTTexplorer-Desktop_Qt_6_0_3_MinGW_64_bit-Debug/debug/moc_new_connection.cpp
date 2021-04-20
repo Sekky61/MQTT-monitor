@@ -36,13 +36,13 @@ QT_MOC_LITERAL(15, 20), // "on_connect_f_clicked"
 QT_MOC_LITERAL(36, 0), // ""
 QT_MOC_LITERAL(37, 17), // "on_save_f_clicked"
 QT_MOC_LITERAL(55, 24), // "on_delete_button_clicked"
-QT_MOC_LITERAL(80, 11), // "writeToFile"
-QT_MOC_LITERAL(92, 21) // "on_loadButton_clicked"
+QT_MOC_LITERAL(80, 21), // "on_loadButton_clicked"
+QT_MOC_LITERAL(102, 11) // "writeToFile"
 
     },
     "new_connection\0on_connect_f_clicked\0"
     "\0on_save_f_clicked\0on_delete_button_clicked\0"
-    "writeToFile\0on_loadButton_clicked"
+    "on_loadButton_clicked\0writeToFile"
 };
 #undef QT_MOC_LITERAL
 
@@ -63,15 +63,15 @@ static const uint qt_meta_data_new_connection[] = {
        1,    0,   44,    2, 0x08,    0 /* Private */,
        3,    0,   45,    2, 0x08,    1 /* Private */,
        4,    0,   46,    2, 0x08,    2 /* Private */,
-       5,    6,   47,    2, 0x08,    3 /* Private */,
-       6,    0,   60,    2, 0x08,   10 /* Private */,
+       5,    0,   47,    2, 0x08,    3 /* Private */,
+       6,    6,   48,    2, 0x08,    4 /* Private */,
 
  // slots: parameters
     QMetaType::Void,
     QMetaType::Void,
     QMetaType::Void,
-    QMetaType::Void, QMetaType::QString, QMetaType::QString, QMetaType::QString, QMetaType::QString, QMetaType::QString, QMetaType::QString,    2,    2,    2,    2,    2,    2,
     QMetaType::Void,
+    QMetaType::Void, QMetaType::QString, QMetaType::QString, QMetaType::QString, QMetaType::QString, QMetaType::QString, QMetaType::QString,    2,    2,    2,    2,    2,    2,
 
        0        // eod
 };
@@ -85,8 +85,8 @@ void new_connection::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _
         case 0: _t->on_connect_f_clicked(); break;
         case 1: _t->on_save_f_clicked(); break;
         case 2: _t->on_delete_button_clicked(); break;
-        case 3: _t->writeToFile((*reinterpret_cast< QString(*)>(_a[1])),(*reinterpret_cast< QString(*)>(_a[2])),(*reinterpret_cast< QString(*)>(_a[3])),(*reinterpret_cast< QString(*)>(_a[4])),(*reinterpret_cast< QString(*)>(_a[5])),(*reinterpret_cast< QString(*)>(_a[6]))); break;
-        case 4: _t->on_loadButton_clicked(); break;
+        case 3: _t->on_loadButton_clicked(); break;
+        case 4: _t->writeToFile((*reinterpret_cast< QString(*)>(_a[1])),(*reinterpret_cast< QString(*)>(_a[2])),(*reinterpret_cast< QString(*)>(_a[3])),(*reinterpret_cast< QString(*)>(_a[4])),(*reinterpret_cast< QString(*)>(_a[5])),(*reinterpret_cast< QString(*)>(_a[6]))); break;
         default: ;
         }
     }
@@ -100,7 +100,7 @@ const QMetaObject new_connection::staticMetaObject = { {
     nullptr,
 qt_incomplete_metaTypeArray<qt_meta_stringdata_new_connection_t
 
-, QtPrivate::TypeAndForceComplete<void, std::false_type>, QtPrivate::TypeAndForceComplete<void, std::false_type>, QtPrivate::TypeAndForceComplete<void, std::false_type>, QtPrivate::TypeAndForceComplete<void, std::false_type>, QtPrivate::TypeAndForceComplete<QString, std::false_type>, QtPrivate::TypeAndForceComplete<QString, std::false_type>, QtPrivate::TypeAndForceComplete<QString, std::false_type>, QtPrivate::TypeAndForceComplete<QString, std::false_type>, QtPrivate::TypeAndForceComplete<QString, std::false_type>, QtPrivate::TypeAndForceComplete<QString, std::false_type>, QtPrivate::TypeAndForceComplete<void, std::false_type>
+, QtPrivate::TypeAndForceComplete<void, std::false_type>, QtPrivate::TypeAndForceComplete<void, std::false_type>, QtPrivate::TypeAndForceComplete<void, std::false_type>, QtPrivate::TypeAndForceComplete<void, std::false_type>, QtPrivate::TypeAndForceComplete<void, std::false_type>, QtPrivate::TypeAndForceComplete<QString, std::false_type>, QtPrivate::TypeAndForceComplete<QString, std::false_type>, QtPrivate::TypeAndForceComplete<QString, std::false_type>, QtPrivate::TypeAndForceComplete<QString, std::false_type>, QtPrivate::TypeAndForceComplete<QString, std::false_type>, QtPrivate::TypeAndForceComplete<QString, std::false_type>
 
 
 >,

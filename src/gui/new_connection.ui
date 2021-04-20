@@ -327,29 +327,31 @@ background-color: rgb(218, 206, 112);</string>
    <property name="frameShadow">
     <enum>QFrame::Raised</enum>
    </property>
-   <widget class="QListView" name="listView">
-    <property name="geometry">
-     <rect>
-      <x>-5</x>
-      <y>1</y>
-      <width>221</width>
-      <height>361</height>
-     </rect>
-    </property>
-   </widget>
    <widget class="QPushButton" name="delete_button">
     <property name="geometry">
      <rect>
       <x>124</x>
-      <y>322</y>
+      <y>332</y>
       <width>81</width>
-      <height>31</height>
+      <height>21</height>
      </rect>
     </property>
     <property name="text">
      <string>DELETE</string>
     </property>
    </widget>
+   <widget class="QListView" name="listView">
+    <property name="geometry">
+     <rect>
+      <x>0</x>
+      <y>0</y>
+      <width>211</width>
+      <height>361</height>
+     </rect>
+    </property>
+   </widget>
+   <zorder>listView</zorder>
+   <zorder>delete_button</zorder>
   </widget>
   <widget class="Line" name="separate_line">
    <property name="geometry">
@@ -370,8 +372,6 @@ background-color: rgb(218, 206, 112);</string>
  </widget>
  <tabstops>
   <tabstop>connectionName_line</tabstop>
-  <tabstop>check_validate</tabstop>
-  <tabstop>check_encryption</tabstop>
   <tabstop>protocol_line</tabstop>
   <tabstop>host_line</tabstop>
   <tabstop>port_line</tabstop>
@@ -379,8 +379,9 @@ background-color: rgb(218, 206, 112);</string>
   <tabstop>password_line</tabstop>
   <tabstop>save_f</tabstop>
   <tabstop>connect_f</tabstop>
+  <tabstop>check_validate</tabstop>
+  <tabstop>check_encryption</tabstop>
   <tabstop>delete_button</tabstop>
-  <tabstop>listView</tabstop>
  </tabstops>
  <resources/>
  <connections/>

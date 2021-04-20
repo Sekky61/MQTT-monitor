@@ -87,6 +87,7 @@ void MainWindow::on_actionSelect_All_triggered()
 
 void MainWindow::on_actionAbout_Aplication_triggered()
 {
+    //QApplication::aboutQt;
     AboutApplication aboutapplication;
     aboutapplication.setModal(true);
     aboutapplication.exec();
@@ -142,4 +143,14 @@ void MainWindow::on_publish_button_clicked()
     QString text = ui->textEdit->toPlainText(); //zpráva
 
     emit publish_clicked(topic, text);
+}
+
+void MainWindow::on_Explorer_button_clicked()
+{
+    ui->Pages->setCurrentIndex(0);
+}
+
+void MainWindow::on_Dash_button_clicked()
+{
+    ui->Pages->setCurrentIndex(1);
 }
