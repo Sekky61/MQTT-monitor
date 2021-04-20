@@ -1,92 +1,107 @@
 #include "topicmodel.h"
 
 #include <iostream>
+#include <QFont>
 
 int TopicModel::rowCount(const QModelIndex &parent) const
 {
-    std::cout << "rowCount called. parent: " << parent.row() << " : " << parent.column() << " and " << parent.isValid() << "\n";
+    //std::cout << "rowCount called. parent: " << parent.row() << " : " << parent.column() << " and " << parent.isValid() << "\n";
 
     if (parent.column() > 0){
-        std::cout << "\treturning (column > 0)" << 0<< "\n";
+        //std::cout << "\treturning (column > 0)" << 0<< "\n";
         return 0;
     }
 
     TopicNode *parentItem;
     if (!parent.isValid()){
         if(cli.sys == nullptr){
-            std::cout << "\treturning no sys " << 0 << "\n";
+            //std::cout << "\treturning no sys " << 0 << "\n";
             return 0;
         }
         parentItem = cli.sys->messages_root;
         if(parentItem == nullptr){
-            std::cout << "\treturning no root " << 0 << "\n";
+            //std::cout << "\treturning no root " << 0 << "\n";
             return 0;
         }
     } else {
         parentItem = static_cast<TopicNode*>(parent.internalPointer());
     }
 
-    std::cout << "\treturning " << parentItem->get_number_of_children() << "\n";
+    //std::cout << "\treturning " << parentItem->get_number_of_children() << "\n";
     return parentItem->get_number_of_children();
 }
 
 int TopicModel::columnCount(const QModelIndex &parent) const
 {
-    std::cout << "columnCount called. parent: " << parent.row() << " : " << parent.column() << " and " << parent.isValid() << "\n";
-    //return 1;
+    //std::cout << "columnCount called. parent: " << parent.row() << " : " << parent.column() << " and " << parent.isValid() << "\n";
 
     auto *node = static_cast<TopicNode*>(parent.internalPointer());
 
     if(!parent.isValid()){
         if(cli.sys == nullptr){
-            std::cout << "\treturning no sys " << 0 << "\n";
+            //std::cout << "\treturning no sys " << 0 << "\n";
             return 0;
         }
         node = cli.sys->messages_root;
         if(node == nullptr){
-            std::cout << "\treturning no root " << 0 << "\n";
+            //std::cout << "\treturning no root " << 0 << "\n";
             return 0;
         }
     }
 
-    auto n = node->Msgs.size();
     int has_children = node->Children.size() > 0 ? 1 : 0;
-    std::cout << "\treturning " << n + has_children << "\n";
-    return n + has_children;
-
-
-
-    //std::cout << "\treturning " << cli.sys->messages_root->get_number_of_children() << "\n";
-    //return cli.sys->messages_root->get_number_of_children();
+    return has_children;
 }
 
 QVariant TopicModel::data(const QModelIndex &index, int role) const
 {
-    std::cout << "data called. index: " << index.row() << " : " << index.column() << " role " << role << " isvalid " << index.isValid() << "\n";
-
 
     if (!index.isValid())
         return QVariant();
+
+    if(role == Qt::FontRole){
+        QFont f;
+
+        TopicNode *item = static_cast<TopicNode*>(index.internalPointer());
+        if(item != nullptr){
+            std::string full_topic = item->fullTopic;
+            if(cli.sys != nullptr){
+                if(cli.sys->is_subscribed_topic(full_topic)){
+                    f.setWeight(QFont::Weight::Bold);
+                    return QVariant(f);
+                }
+            }
+        }
+
+        f.setWeight(QFont::Weight::Light);
+        return QVariant(f);
+    }
 
     if (role != Qt::DisplayRole){
         return QVariant();
     }
 
+    std::cout << "Valid data called. index: " << index.row() << " : " << index.column() << "\n";
+
     TopicNode *item = static_cast<TopicNode*>(index.internalPointer());
 
-    int n_of_msgs = item->Msgs.size();
+    /*int n_of_msgs = item->Msgs.size();
 
     if(n_of_msgs < index.column() || index.column() < 0 ){
         std::cout << "\treturning bad column index (" << index.column() << ") size (" << n_of_msgs << ")" << std::endl;
         return QVariant();
-    }
+    }*/
 
     std::string str;
 
-    if(index.column() == 0){
-        str = item->Topic;
+    if(index.row() == 0 && index.column() != 0){
+        if(index.column() - 1 < item->Msgs.size() && index.column() > 0){
+            str = item->Msgs[index.column() - 1]->get_payload();
+        } else {
+            return QVariant();
+        }
     } else {
-        str = item->Msgs[index.column()]->get_payload();
+        str = item->Topic;
     }
 
     std::cout << "\treturning " << str << std::endl;
@@ -97,7 +112,11 @@ QVariant TopicModel::headerData(int section, Qt::Orientation orientation, int ro
 {
     std::cout << "headerData called. section: " << section << " orientation " << orientation<< " role " << role  << "\n";
 
-    return QVariant("vv1");
+    if (orientation == Qt::Horizontal && role == Qt::DisplayRole){
+        return QVariant(QStringList("Topics", "Messages"));
+    }
+
+    return QVariant();
 }
 
 QModelIndex TopicModel::index(int row, int column, const QModelIndex &parent) const
@@ -109,10 +128,14 @@ QModelIndex TopicModel::index(int row, int column, const QModelIndex &parent) co
 
     TopicNode *parentItem;
 
-    if (!parent.isValid())
+    if (!parent.isValid()){
         parentItem = cli.sys->messages_root;
-    else
+        if(parentItem == nullptr){
+            return QModelIndex();
+        }
+    } else {
         parentItem = static_cast<TopicNode*>(parent.internalPointer());
+    }
 
     TopicNode *childItem = parentItem->get_child_by_index(row);
 
@@ -124,6 +147,7 @@ QModelIndex TopicModel::index(int row, int column, const QModelIndex &parent) co
 
 }
 
+//Returns the parent of the model item with the given index.
 QModelIndex TopicModel::parent(const QModelIndex &index) const
 {
     std::cout << "parent called. index: " << index.row() << " : " << index.column() << "\n";
@@ -142,7 +166,6 @@ QModelIndex TopicModel::parent(const QModelIndex &index) const
     TopicNode *parentItem = childItem->Parent;
 
     if (parentItem == cli.sys->messages_root){
-        std::cout << "null child root\n";
         return QModelIndex();
     }
 

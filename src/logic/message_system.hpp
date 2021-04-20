@@ -32,6 +32,7 @@ class TreeNode
 public:
 
 	std::string Topic;
+	std::string fullTopic;
 
 	unsigned long limit;
 	std::deque<T> Msgs;
@@ -41,8 +42,9 @@ public:
 
         TreeNode(): Parent(nullptr)  {}
 
-    TreeNode(TreeNode<T> *parent_ptr, std::string topic_name) :
+    TreeNode(TreeNode<T> *parent_ptr, std::string topic_name, std::string full_topic) :
 		Topic(topic_name),
+		fullTopic(full_topic),
 		limit(0),
 		Msgs(),
 		Children(),
@@ -127,7 +129,8 @@ public:
 		auto *child_node = get_child(name);
 		if (child_node == nullptr){
 			// child does not exists
-			TreeNode<T> *new_node = new TreeNode<T>(this, name);
+			std::string new_full = (fullTopic == "" ? "" : fullTopic + "/" ) + name;
+			TreeNode<T> *new_node = new TreeNode<T>(this, name, new_full);
 			return Children.emplace_back(new_node);
 		}
 		return child_node;
