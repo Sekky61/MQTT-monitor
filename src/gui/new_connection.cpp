@@ -7,30 +7,103 @@
 #include <QListWidget>
 #include <QPlainTextEdit>
 
-void new_connection::writeToFile(QString(connection), QString(protocol),QString(host), QString(port),QString(username), QString(password)){
-    QString path = qApp->applicationDirPath();
-    QString filename = path + "//saved_connections.txt";
-    QFile file(filename);
+#include <QIODevice>
+#include <QXmlStreamReader>
+#include <QXmlStreamWriter>
+#include <iostream>
+
+void new_connection::save_profile(Profile profile_obj){
+    //QString path = qApp->applicationDirPath();
+    //QString filename = path + "//saved_connections.txt";
+    QFile file("connection_profiles.csv");
+
+    if(!file.exists()){
+        std::cerr << "No existo\n";
+    }
 
     if(file.open(QIODevice::Append | QIODevice::Text)){ //append zajistí nepřepisování souboru
         QTextStream stream(&file);
+        stream << profile_obj.name;
+        stream << ";";
+        stream << profile_obj.username;
+        stream << ";";
+        stream << profile_obj.password;
+        stream << ";";
+        stream << profile_obj.protocol;
+        stream << ";";
+        stream << profile_obj.host;
+        stream << ";";
+        stream << profile_obj.port;
         stream << "\n";
-        stream << connection;
-        stream << ";";
-        stream << protocol;
-        stream << ";";
-        stream << host;
-        stream << ";";
-        stream << port;
-        stream << ";";
-        stream << username;
-        stream << ";";
-        stream << password;
-        stream << "\n";
+
+        file.close();
     }
-    file.close();
 }
 
+QList<Profile> load_profiles(){
+    //otevřeme soubor s uloženými connections
+    QFile file("connection_profiles.csv");
+
+    if(!file.exists()){
+        std::cerr << "load: csv neexistuje\n";
+        return QList<Profile>();
+    }
+
+    QList<Profile> profiles;
+
+    if(file.open(QIODevice::ReadOnly | QIODevice::Text)){
+        QTextStream in(&file);
+        while (!in.atEnd()){
+            QString line = in.readLine();
+            Profile prof = Profile(line);
+            profiles.append(prof);
+        }
+        file.close();
+    } else {
+        std::cerr << "load: open hodil false\n";
+        return QList<Profile>();
+    }
+
+    return profiles;
+}
+
+void remove_profile(int index){
+    //otevřeme soubor s uloženými connections
+    QFile file("connection_profiles.csv");
+
+    if(!file.exists()){
+        std::cerr << "load: csv neexistuje\n";
+        return;
+    }
+
+    QStringList lines;
+
+    if(file.open(QIODevice::ReadOnly | QIODevice::Text)){
+        QTextStream in(&file);
+        while (!in.atEnd()){
+            lines.append(in.readLine());
+        }
+        file.close();
+    } else {
+        std::cerr << "remove, load: open hodil false\n";
+        return;
+    }
+
+    if(file.open(QIODevice::WriteOnly | QIODevice::Text)){
+        QTextStream out(&file);
+        for(int i = 0; i < lines.size();i++){
+            if(i != index){
+                std::cerr << "Writing back line " << i << " " << lines[i].toStdString() << std::endl;
+                out << lines[i];
+            }
+        }
+        file.close();
+    } else {
+        std::cerr << "remove, store: open hodil false\n";
+        return;
+    }
+
+}
 
 new_connection::new_connection(QWidget *parent) :
     QDialog(parent),
@@ -40,12 +113,11 @@ new_connection::new_connection(QWidget *parent) :
     //ui->password_line->setPlaceholderText("Password"); //druhá možnost - místo labelů
 
     //ukládání connections
-    model_con = new QStringListModel(this);
-    QStringList list_con; //array uložených connections
+    model_con = new ProfilesListModel();
+    model_con->profile_list = load_profiles();
 
-    model_con->setStringList(list_con);
- //   ui->listWidget->setModel(model_con);
-    ui->listWidget->setEditTriggers(QAbstractItemView::AnyKeyPressed | QAbstractItemView::DoubleClicked);
+    ui->listView->setModel(model_con);
+    ui->listView->setEditTriggers(QAbstractItemView::AnyKeyPressed | QAbstractItemView::DoubleClicked);
 
 
     //delete button enable
@@ -89,6 +161,7 @@ void new_connection::on_connect_f_clicked()
 
 void new_connection::on_save_f_clicked()
 {
+
     QString username = ui->username_line->text();
     QString password = ui->password_line->text();
     QString connection = ui->connectionName_line->text();
@@ -96,52 +169,52 @@ void new_connection::on_save_f_clicked()
     QString host = ui->host_line->text();
     QString port = ui->port_line->text();
 
+    Profile new_profile;
+    new_profile.username = username;
+    new_profile.password = password;
+    new_profile.name = connection;
+    new_profile.protocol = protocol;
+    new_profile.host = host;
+    new_profile.port = port;
 
-
-    writeToFile(connection, protocol, host, port, username, password);
-
-    //index kam uložit nové spojení
-    int row = model_con->rowCount();
-    model_con->insertRows(row,1);
-    QModelIndex index = model_con->index(row);
-    ui->listWidget->setCurrentIndex(index);
-
-    //uložení protokolu do Qlist widget, příště už se načte ze souboru
-    ui->listWidget->addItem(protocol);
+    save_profile(new_profile);
+    model_con->profile_list = load_profiles();
+    emit model_con->dataChanged(QModelIndex(), QModelIndex());
 }
 
 void new_connection::on_delete_button_clicked()
 {
-    QListWidgetItem *it = ui->listWidget->takeItem(ui->listWidget->currentRow());
-    delete it;
+    QModelIndex index = ui->listView->selectionModel()->selectedIndexes()[0];
+
+    remove_profile(index.row());
+    model_con->profile_list = load_profiles();
+    emit model_con->dataChanged(QModelIndex(), QModelIndex());
 }
 
-void new_connection::on_loadButton_clicked()
+int ProfilesListModel::rowCount(const QModelIndex &parent) const
 {
+    return profile_list.length();
+}
 
-    //otevřeme soubor s uloženými connections
-    QString path = qApp->applicationDirPath();
-    QString filename = path + "//saved_connections.txt";
-    QFile file(filename);
-    QStringList fields;
-    if(file.open(QIODevice::ReadOnly | QIODevice::Text)){
-        QTextStream in(&file);
-        while (!in.atEnd()){
-            QString line = in.readLine();
-            fields.append(line);
-        }
-        file.close();
+QVariant ProfilesListModel::data(const QModelIndex &index, int role) const
+{
+    if(role == Qt::DisplayRole){
+        return QVariant(profile_list[index.row()].name);
     }
+    return QVariant();
+}
 
-    QTextStream(stdout) << fields[0];
-    QStringList attributes;
-    for (int i = 0; i < fields.size(); ++i){
-        //QTextStream(stdout) << fields.at(i).toLocal8Bit().constData() << Qt::endl;
-        QString one_con = fields.at(i).toLocal8Bit().constData();
-        attributes = one_con.split(";");
-        for (int i = 0; i < attributes.size(); ++i){
-            QTextStream(stdout) << attributes.at(i).toLocal8Bit().constData() << Qt::endl;
-        }
-        ui->listWidget->addItem(attributes.at(0));
-    }
+void new_connection::on_listView_doubleClicked(const QModelIndex &index)
+{
+    Profile prof = model_con->profile_list[index.row()];
+
+    std::cerr << "Protocol: " << prof.protocol.toStdString() << std::endl;
+    std::cerr << "Host: " << prof.host.toStdString() << std::endl;
+
+    ui->username_line->setText(prof.username);
+    ui->password_line->setText(prof.password);
+    ui->connectionName_line->setText(prof.name);
+    ui->protocol_line->setText(prof.protocol);
+    ui->host_line->setText(prof.host);
+    ui->port_line->setText(prof.port);
 }

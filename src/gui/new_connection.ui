@@ -132,7 +132,7 @@ background-color: rgb(218, 206, 112);</string>
       <x>20</x>
       <y>120</y>
       <width>81</width>
-      <height>41</height>
+      <height>50</height>
      </rect>
     </property>
     <layout class="QVBoxLayout" name="verticalLayout_5">
@@ -158,7 +158,7 @@ background-color: rgb(218, 206, 112);</string>
       <x>320</x>
       <y>120</y>
       <width>71</width>
-      <height>41</height>
+      <height>50</height>
      </rect>
     </property>
     <layout class="QVBoxLayout" name="verticalLayout_6">
@@ -210,7 +210,7 @@ background-color: rgb(218, 206, 112);</string>
       <x>20</x>
       <y>30</y>
       <width>135</width>
-      <height>41</height>
+      <height>50</height>
      </rect>
     </property>
     <layout class="QVBoxLayout" name="verticalLayout">
@@ -236,7 +236,7 @@ background-color: rgb(218, 206, 112);</string>
       <x>114</x>
       <y>120</y>
       <width>191</width>
-      <height>41</height>
+      <height>50</height>
      </rect>
     </property>
     <layout class="QVBoxLayout" name="verticalLayout_2">
@@ -262,7 +262,7 @@ background-color: rgb(218, 206, 112);</string>
       <x>20</x>
       <y>200</y>
       <width>135</width>
-      <height>41</height>
+      <height>50</height>
      </rect>
     </property>
     <layout class="QVBoxLayout" name="verticalLayout_3">
@@ -288,7 +288,7 @@ background-color: rgb(218, 206, 112);</string>
       <x>170</x>
       <y>200</y>
       <width>135</width>
-      <height>41</height>
+      <height>50</height>
      </rect>
     </property>
     <layout class="QVBoxLayout" name="verticalLayout_4">
@@ -340,20 +340,7 @@ background-color: rgb(218, 206, 112);</string>
      <string>DELETE</string>
     </property>
    </widget>
-   <widget class="QPushButton" name="loadButton">
-    <property name="geometry">
-     <rect>
-      <x>124</x>
-      <y>302</y>
-      <width>81</width>
-      <height>21</height>
-     </rect>
-    </property>
-    <property name="text">
-     <string>LOAD</string>
-    </property>
-   </widget>
-   <widget class="QListWidget" name="listWidget">
+   <widget class="QListView" name="listView">
     <property name="geometry">
      <rect>
       <x>0</x>
@@ -363,8 +350,7 @@ background-color: rgb(218, 206, 112);</string>
      </rect>
     </property>
    </widget>
-   <zorder>listWidget</zorder>
-   <zorder>loadButton</zorder>
+   <zorder>listView</zorder>
    <zorder>delete_button</zorder>
   </widget>
   <widget class="Line" name="separate_line">
