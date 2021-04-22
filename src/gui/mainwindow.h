@@ -68,6 +68,8 @@ private slots:
 
     void on_Dash_button_clicked();
 
+    void on_img_msg_clicked();
+
 private:
     Ui::MainWindow *ui;
     QString current_file = ""; //jméno souboru ve kterém pracujeme

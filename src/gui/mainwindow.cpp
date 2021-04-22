@@ -9,6 +9,7 @@ MainWindow::MainWindow(QWidget *parent):
     ui(new Ui::MainWindow)
 {
     ui->setupUi(this);
+    ui->value_text->setReadOnly(true);
 
     QList<QStandardItem*> list;
     auto item = new QStandardItem("localhost");
@@ -123,7 +124,6 @@ MainWindow::MainWindow(QWidget *parent):
 }
 
 
-
 MainWindow::~MainWindow()
 {
     delete ui;
@@ -228,4 +228,12 @@ void MainWindow::on_Explorer_button_clicked()
 void MainWindow::on_Dash_button_clicked()
 {
     ui->Pages->setCurrentIndex(1);
+}
+
+//bude zobrazovat obrázek
+void MainWindow::on_img_msg_clicked()
+{
+    //tohle patří do funkce kde budeš zpracovávat zprávu
+    ui->img_msg->setEnabled(false);
+    ui->img_msg->setVisible(false);
 }

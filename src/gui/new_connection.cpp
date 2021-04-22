@@ -11,6 +11,17 @@
 #include <QXmlStreamReader>
 #include <QXmlStreamWriter>
 #include <iostream>
+#include <QTimer>
+
+
+
+void error_message(QString(text)){
+
+    //QTimer::singleShot(2500, mbox, SLOT(hide()));
+    QMessageBox msgBox(QMessageBox::Warning, "ERROR!!", text, QMessageBox::Ok);
+    msgBox.exec();
+}
+
 
 void new_connection::save_profile(Profile profile_obj){
     //QString path = qApp->applicationDirPath();
@@ -18,7 +29,7 @@ void new_connection::save_profile(Profile profile_obj){
     QFile file("connection_profiles.csv");
 
     if(!file.exists()){
-        std::cerr << "No existo\n";
+        error_message("Chyba při otevírání souboru");
     }
 
     if(file.open(QIODevice::Append | QIODevice::Text)){ //append zajistí nepřepisování souboru
@@ -45,7 +56,7 @@ QList<Profile> load_profiles(){
     QFile file("connection_profiles.csv");
 
     if(!file.exists()){
-        std::cerr << "load: csv neexistuje\n";
+        error_message("Chyba při otevírání souboru");
         return QList<Profile>();
     }
 
@@ -60,7 +71,7 @@ QList<Profile> load_profiles(){
         }
         file.close();
     } else {
-        std::cerr << "load: open hodil false\n";
+        error_message("Chyba při otevírání souboru");
         return QList<Profile>();
     }
 
@@ -72,7 +83,7 @@ void remove_profile(int index){
     QFile file("connection_profiles.csv");
 
     if(!file.exists()){
-        std::cerr << "load: csv neexistuje\n";
+        error_message("Chyba při otevírání souboru");
         return;
     }
 
@@ -85,7 +96,7 @@ void remove_profile(int index){
         }
         file.close();
     } else {
-        std::cerr << "remove, load: open hodil false\n";
+        error_message("Chyba při otevírání souboru");
         return;
     }
 
@@ -99,7 +110,7 @@ void remove_profile(int index){
         }
         file.close();
     } else {
-        std::cerr << "remove, store: open hodil false\n";
+        error_message("Chyba při otevírání souboru");
         return;
     }
 
@@ -135,6 +146,7 @@ new_connection::~new_connection()
     delete ui;
 }
 
+
 //zde bude kontrola připojení
 void new_connection::on_connect_f_clicked()
 {
@@ -145,15 +157,12 @@ void new_connection::on_connect_f_clicked()
     QString host = ui->host_line->text();
     QString port = ui->port_line->text();
 
+    //ui->check_validate->isChecked()
     if(username=="test" && password=="12345"){
-        QMessageBox::information(this, "Connect", "username and password is correct");
-        if (ui->check_validate->isChecked()) {
-            QMessageBox::information(this, "Check", "check validate certificate is on");
-        }else{
-            QMessageBox::information(this, "Check", "check validate certificate is off");
-        }
+        error_message("username and password is correct");
+
     }else{
-        QMessageBox::warning(this, "Connect", "username and password is incorrect");
+        error_message("username and password is incorrect");
     }
 
 
@@ -184,6 +193,11 @@ void new_connection::on_save_f_clicked()
 
 void new_connection::on_delete_button_clicked()
 {
+    if (ui->listView->model()->rowCount() == 0){
+        error_message("Nelze smazat");
+        return;
+    }
+
     QModelIndex index = ui->listView->selectionModel()->selectedIndexes()[0];
 
     remove_profile(index.row());
