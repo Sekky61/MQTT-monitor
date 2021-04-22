@@ -17,7 +17,7 @@
 #include <QtWidgets/QGroupBox>
 #include <QtWidgets/QLabel>
 #include <QtWidgets/QLineEdit>
-#include <QtWidgets/QListWidget>
+#include <QtWidgets/QListView>
 #include <QtWidgets/QPushButton>
 #include <QtWidgets/QVBoxLayout>
 #include <QtWidgets/QWidget>
@@ -61,8 +61,7 @@ public:
     QLineEdit *password_line;
     QFrame *frame_2;
     QPushButton *delete_button;
-    QPushButton *loadButton;
-    QListWidget *listWidget;
+    QListView *listView;
     QFrame *separate_line;
 
     void setupUi(QDialog *new_connection)
@@ -107,7 +106,7 @@ public:
 "background-color: rgb(218, 206, 112);"));
         layoutWidget5 = new QWidget(connection_data);
         layoutWidget5->setObjectName(QString::fromUtf8("layoutWidget5"));
-        layoutWidget5->setGeometry(QRect(20, 120, 81, 41));
+        layoutWidget5->setGeometry(QRect(20, 120, 81, 50));
         verticalLayout_5 = new QVBoxLayout(layoutWidget5);
         verticalLayout_5->setObjectName(QString::fromUtf8("verticalLayout_5"));
         verticalLayout_5->setContentsMargins(0, 0, 0, 0);
@@ -124,7 +123,7 @@ public:
 
         layout = new QWidget(connection_data);
         layout->setObjectName(QString::fromUtf8("layout"));
-        layout->setGeometry(QRect(320, 120, 71, 41));
+        layout->setGeometry(QRect(320, 120, 71, 50));
         verticalLayout_6 = new QVBoxLayout(layout);
         verticalLayout_6->setObjectName(QString::fromUtf8("verticalLayout_6"));
         verticalLayout_6->setContentsMargins(0, 0, 0, 0);
@@ -147,7 +146,7 @@ public:
         check_encryption->setGeometry(QRect(380, 30, 91, 41));
         layoutWidget4 = new QWidget(connection_data);
         layoutWidget4->setObjectName(QString::fromUtf8("layoutWidget4"));
-        layoutWidget4->setGeometry(QRect(20, 30, 135, 41));
+        layoutWidget4->setGeometry(QRect(20, 30, 135, 50));
         verticalLayout = new QVBoxLayout(layoutWidget4);
         verticalLayout->setObjectName(QString::fromUtf8("verticalLayout"));
         verticalLayout->setContentsMargins(0, 0, 0, 0);
@@ -164,7 +163,7 @@ public:
 
         layoutWidget3 = new QWidget(connection_data);
         layoutWidget3->setObjectName(QString::fromUtf8("layoutWidget3"));
-        layoutWidget3->setGeometry(QRect(114, 120, 191, 41));
+        layoutWidget3->setGeometry(QRect(114, 120, 191, 50));
         verticalLayout_2 = new QVBoxLayout(layoutWidget3);
         verticalLayout_2->setObjectName(QString::fromUtf8("verticalLayout_2"));
         verticalLayout_2->setContentsMargins(0, 0, 0, 0);
@@ -181,7 +180,7 @@ public:
 
         layoutWidget2 = new QWidget(connection_data);
         layoutWidget2->setObjectName(QString::fromUtf8("layoutWidget2"));
-        layoutWidget2->setGeometry(QRect(20, 200, 135, 41));
+        layoutWidget2->setGeometry(QRect(20, 200, 135, 50));
         verticalLayout_3 = new QVBoxLayout(layoutWidget2);
         verticalLayout_3->setObjectName(QString::fromUtf8("verticalLayout_3"));
         verticalLayout_3->setContentsMargins(0, 0, 0, 0);
@@ -198,7 +197,7 @@ public:
 
         layoutWidget1 = new QWidget(connection_data);
         layoutWidget1->setObjectName(QString::fromUtf8("layoutWidget1"));
-        layoutWidget1->setGeometry(QRect(170, 200, 135, 41));
+        layoutWidget1->setGeometry(QRect(170, 200, 135, 50));
         verticalLayout_4 = new QVBoxLayout(layoutWidget1);
         verticalLayout_4->setObjectName(QString::fromUtf8("verticalLayout_4"));
         verticalLayout_4->setContentsMargins(0, 0, 0, 0);
@@ -222,14 +221,10 @@ public:
         delete_button = new QPushButton(frame_2);
         delete_button->setObjectName(QString::fromUtf8("delete_button"));
         delete_button->setGeometry(QRect(124, 332, 81, 21));
-        loadButton = new QPushButton(frame_2);
-        loadButton->setObjectName(QString::fromUtf8("loadButton"));
-        loadButton->setGeometry(QRect(124, 302, 81, 21));
-        listWidget = new QListWidget(frame_2);
-        listWidget->setObjectName(QString::fromUtf8("listWidget"));
-        listWidget->setGeometry(QRect(0, 0, 211, 361));
-        listWidget->raise();
-        loadButton->raise();
+        listView = new QListView(frame_2);
+        listView->setObjectName(QString::fromUtf8("listView"));
+        listView->setGeometry(QRect(0, 0, 211, 361));
+        listView->raise();
         delete_button->raise();
         separate_line = new QFrame(new_connection);
         separate_line->setObjectName(QString::fromUtf8("separate_line"));
@@ -270,7 +265,6 @@ public:
         label_4->setText(QCoreApplication::translate("new_connection", "Username", nullptr));
         label_5->setText(QCoreApplication::translate("new_connection", "Password", nullptr));
         delete_button->setText(QCoreApplication::translate("new_connection", "DELETE", nullptr));
-        loadButton->setText(QCoreApplication::translate("new_connection", "LOAD", nullptr));
     } // retranslateUi
 
 };

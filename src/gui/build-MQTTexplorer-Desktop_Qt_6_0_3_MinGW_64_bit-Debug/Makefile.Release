@@ -1158,15 +1158,7 @@ release/aboutapplication.o: ../MQTTexplorer/aboutapplication.cpp ../MQTTexplorer
 		D:/Qt/6.0.3/mingw81_64/include/QtCore/QSize \
 		D:/Qt/6.0.3/mingw81_64/include/QtCore/QSizeF \
 		D:/Qt/6.0.3/mingw81_64/include/QtGui/QTransform \
-		ui_aboutapplication.h \
-		D:/Qt/6.0.3/mingw81_64/include/QtCore/QVariant \
-		D:/Qt/6.0.3/mingw81_64/include/QtWidgets/QApplication \
-		D:/Qt/6.0.3/mingw81_64/include/QtWidgets/qapplication.h \
-		D:/Qt/6.0.3/mingw81_64/include/QtCore/qcoreapplication.h \
-		D:/Qt/6.0.3/mingw81_64/include/QtCore/qeventloop.h \
-		D:/Qt/6.0.3/mingw81_64/include/QtGui/qguiapplication.h \
-		D:/Qt/6.0.3/mingw81_64/include/QtGui/qinputmethod.h \
-		D:/Qt/6.0.3/mingw81_64/include/QtCore/qlocale.h
+		ui_aboutapplication.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o release\aboutapplication.o ..\MQTTexplorer\aboutapplication.cpp
 
 release/main.o: ../MQTTexplorer/main.cpp ../MQTTexplorer/mainwindow.h \
@@ -1916,38 +1908,6 @@ release/mainwindow.o: ../MQTTexplorer/mainwindow.cpp ../MQTTexplorer/mainwindow.
 		D:/Qt/6.0.3/mingw81_64/include/QtWidgets/qrubberband.h \
 		D:/Qt/6.0.3/mingw81_64/include/QtGui/QFileSystemModel \
 		ui_mainwindow.h \
-		D:/Qt/6.0.3/mingw81_64/include/QtCore/QVariant \
-		D:/Qt/6.0.3/mingw81_64/include/QtGui/QAction \
-		D:/Qt/6.0.3/mingw81_64/include/QtWidgets/QFrame \
-		D:/Qt/6.0.3/mingw81_64/include/QtWidgets/QGraphicsView \
-		D:/Qt/6.0.3/mingw81_64/include/QtWidgets/qgraphicsview.h \
-		D:/Qt/6.0.3/mingw81_64/include/QtWidgets/qscrollarea.h \
-		D:/Qt/6.0.3/mingw81_64/include/QtWidgets/qgraphicsscene.h \
-		D:/Qt/6.0.3/mingw81_64/include/QtWidgets/QHBoxLayout \
-		D:/Qt/6.0.3/mingw81_64/include/QtWidgets/qboxlayout.h \
-		D:/Qt/6.0.3/mingw81_64/include/QtWidgets/qlayout.h \
-		D:/Qt/6.0.3/mingw81_64/include/QtWidgets/qlayoutitem.h \
-		D:/Qt/6.0.3/mingw81_64/include/QtWidgets/qgridlayout.h \
-		D:/Qt/6.0.3/mingw81_64/include/QtWidgets/QHeaderView \
-		D:/Qt/6.0.3/mingw81_64/include/QtWidgets/qheaderview.h \
-		D:/Qt/6.0.3/mingw81_64/include/QtWidgets/QLabel \
-		D:/Qt/6.0.3/mingw81_64/include/QtWidgets/qlabel.h \
-		D:/Qt/6.0.3/mingw81_64/include/QtWidgets/QLineEdit \
-		D:/Qt/6.0.3/mingw81_64/include/QtWidgets/qlineedit.h \
-		D:/Qt/6.0.3/mingw81_64/include/QtWidgets/QMenu \
-		D:/Qt/6.0.3/mingw81_64/include/QtWidgets/qmenu.h \
-		D:/Qt/6.0.3/mingw81_64/include/QtWidgets/QMenuBar \
-		D:/Qt/6.0.3/mingw81_64/include/QtWidgets/qmenubar.h \
-		D:/Qt/6.0.3/mingw81_64/include/QtWidgets/QPushButton \
-		D:/Qt/6.0.3/mingw81_64/include/QtWidgets/qpushbutton.h \
-		D:/Qt/6.0.3/mingw81_64/include/QtWidgets/qabstractbutton.h \
-		D:/Qt/6.0.3/mingw81_64/include/QtWidgets/QScrollArea \
-		D:/Qt/6.0.3/mingw81_64/include/QtWidgets/QStatusBar \
-		D:/Qt/6.0.3/mingw81_64/include/QtWidgets/qstatusbar.h \
-		D:/Qt/6.0.3/mingw81_64/include/QtWidgets/QTextEdit \
-		D:/Qt/6.0.3/mingw81_64/include/QtWidgets/qtextedit.h \
-		D:/Qt/6.0.3/mingw81_64/include/QtWidgets/QVBoxLayout \
-		D:/Qt/6.0.3/mingw81_64/include/QtWidgets/QWidget \
 		../MQTTexplorer/aboutapplication.h \
 		../MQTTexplorer/new_connection.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o release\mainwindow.o ..\MQTTexplorer\mainwindow.cpp
@@ -2310,23 +2270,12 @@ release/new_connection.o: ../MQTTexplorer/new_connection.cpp ../MQTTexplorer/new
 		D:/Qt/6.0.3/mingw81_64/include/QtGui/QStandardItemModel \
 		D:/Qt/6.0.3/mingw81_64/include/QtGui/QStandardItem \
 		D:/Qt/6.0.3/mingw81_64/include/QtCore/QSortFilterProxyModel \
-		ui_new_connection.h \
-		D:/Qt/6.0.3/mingw81_64/include/QtCore/QVariant \
-		D:/Qt/6.0.3/mingw81_64/include/QtWidgets/QCheckBox \
-		D:/Qt/6.0.3/mingw81_64/include/QtWidgets/qcheckbox.h \
-		D:/Qt/6.0.3/mingw81_64/include/QtWidgets/qabstractbutton.h \
-		D:/Qt/6.0.3/mingw81_64/include/QtWidgets/QFrame \
-		D:/Qt/6.0.3/mingw81_64/include/QtWidgets/qframe.h \
-		D:/Qt/6.0.3/mingw81_64/include/QtWidgets/QGroupBox \
-		D:/Qt/6.0.3/mingw81_64/include/QtWidgets/qgroupbox.h \
-		D:/Qt/6.0.3/mingw81_64/include/QtWidgets/QLabel \
-		D:/Qt/6.0.3/mingw81_64/include/QtWidgets/qlabel.h \
-		D:/Qt/6.0.3/mingw81_64/include/QtWidgets/QLineEdit \
-		D:/Qt/6.0.3/mingw81_64/include/QtWidgets/qlineedit.h \
-		D:/Qt/6.0.3/mingw81_64/include/QtWidgets/QListView \
-		D:/Qt/6.0.3/mingw81_64/include/QtWidgets/qlistview.h \
+		../MQTTexplorer/mainwindow.h \
+		D:/Qt/6.0.3/mingw81_64/include/QtWidgets/QTreeView \
+		D:/Qt/6.0.3/mingw81_64/include/QtWidgets/qtreeview.h \
 		D:/Qt/6.0.3/mingw81_64/include/QtWidgets/qabstractitemview.h \
 		D:/Qt/6.0.3/mingw81_64/include/QtWidgets/qabstractscrollarea.h \
+		D:/Qt/6.0.3/mingw81_64/include/QtWidgets/qframe.h \
 		D:/Qt/6.0.3/mingw81_64/include/QtWidgets/qabstractitemdelegate.h \
 		D:/Qt/6.0.3/mingw81_64/include/QtWidgets/qstyleoption.h \
 		D:/Qt/6.0.3/mingw81_64/include/QtWidgets/qabstractspinbox.h \
@@ -2335,18 +2284,19 @@ release/new_connection.o: ../MQTTexplorer/new_connection.cpp ../MQTTexplorer/new
 		D:/Qt/6.0.3/mingw81_64/include/QtWidgets/qstyle.h \
 		D:/Qt/6.0.3/mingw81_64/include/QtWidgets/qtabbar.h \
 		D:/Qt/6.0.3/mingw81_64/include/QtWidgets/qrubberband.h \
-		D:/Qt/6.0.3/mingw81_64/include/QtWidgets/QPushButton \
-		D:/Qt/6.0.3/mingw81_64/include/QtWidgets/qpushbutton.h \
-		D:/Qt/6.0.3/mingw81_64/include/QtWidgets/QVBoxLayout \
-		D:/Qt/6.0.3/mingw81_64/include/QtWidgets/qboxlayout.h \
-		D:/Qt/6.0.3/mingw81_64/include/QtWidgets/qlayout.h \
-		D:/Qt/6.0.3/mingw81_64/include/QtWidgets/qlayoutitem.h \
-		D:/Qt/6.0.3/mingw81_64/include/QtWidgets/qgridlayout.h \
-		D:/Qt/6.0.3/mingw81_64/include/QtWidgets/QWidget \
-		../MQTTexplorer/mainwindow.h \
-		D:/Qt/6.0.3/mingw81_64/include/QtWidgets/QTreeView \
-		D:/Qt/6.0.3/mingw81_64/include/QtWidgets/qtreeview.h \
-		D:/Qt/6.0.3/mingw81_64/include/QtGui/QFileSystemModel
+		D:/Qt/6.0.3/mingw81_64/include/QtGui/QFileSystemModel \
+		ui_new_connection.h \
+		D:/Qt/6.0.3/mingw81_64/include/QtCore/QAbstractItemModel \
+		D:/Qt/6.0.3/mingw81_64/include/QtWidgets/QListWidget \
+		D:/Qt/6.0.3/mingw81_64/include/QtWidgets/qlistwidget.h \
+		D:/Qt/6.0.3/mingw81_64/include/QtWidgets/qlistview.h \
+		D:/Qt/6.0.3/mingw81_64/include/QtWidgets/QPlainTextEdit \
+		D:/Qt/6.0.3/mingw81_64/include/QtWidgets/qplaintextedit.h \
+		D:/Qt/6.0.3/mingw81_64/include/QtWidgets/qtextedit.h \
+		D:/Qt/6.0.3/mingw81_64/include/QtCore/QIODevice \
+		D:/Qt/6.0.3/mingw81_64/include/QtCore/QXmlStreamReader \
+		D:/Qt/6.0.3/mingw81_64/include/QtCore/QXmlStreamWriter \
+		D:/Qt/6.0.3/mingw81_64/include/QtCore/QTimer
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o release\new_connection.o ..\MQTTexplorer\new_connection.cpp
 
 release/qrc_Resources.o: release/qrc_Resources.cpp 

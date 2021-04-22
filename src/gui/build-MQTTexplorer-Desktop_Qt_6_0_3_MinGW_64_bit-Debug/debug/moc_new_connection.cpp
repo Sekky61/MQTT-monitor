@@ -24,8 +24,8 @@ QT_BEGIN_MOC_NAMESPACE
 QT_WARNING_PUSH
 QT_WARNING_DISABLE_DEPRECATED
 struct qt_meta_stringdata_new_connection_t {
-    const uint offsetsAndSize[14];
-    char stringdata0[114];
+    const uint offsetsAndSize[20];
+    char stringdata0[145];
 };
 #define QT_MOC_LITERAL(ofs, len) \
     uint(offsetof(qt_meta_stringdata_new_connection_t, stringdata0) + ofs), len 
@@ -36,13 +36,17 @@ QT_MOC_LITERAL(15, 20), // "on_connect_f_clicked"
 QT_MOC_LITERAL(36, 0), // ""
 QT_MOC_LITERAL(37, 17), // "on_save_f_clicked"
 QT_MOC_LITERAL(55, 24), // "on_delete_button_clicked"
-QT_MOC_LITERAL(80, 21), // "on_loadButton_clicked"
-QT_MOC_LITERAL(102, 11) // "writeToFile"
+QT_MOC_LITERAL(80, 12), // "save_profile"
+QT_MOC_LITERAL(93, 7), // "Profile"
+QT_MOC_LITERAL(101, 25), // "on_listView_doubleClicked"
+QT_MOC_LITERAL(127, 11), // "QModelIndex"
+QT_MOC_LITERAL(139, 5) // "index"
 
     },
     "new_connection\0on_connect_f_clicked\0"
     "\0on_save_f_clicked\0on_delete_button_clicked\0"
-    "on_loadButton_clicked\0writeToFile"
+    "save_profile\0Profile\0on_listView_doubleClicked\0"
+    "QModelIndex\0index"
 };
 #undef QT_MOC_LITERAL
 
@@ -63,15 +67,15 @@ static const uint qt_meta_data_new_connection[] = {
        1,    0,   44,    2, 0x08,    0 /* Private */,
        3,    0,   45,    2, 0x08,    1 /* Private */,
        4,    0,   46,    2, 0x08,    2 /* Private */,
-       5,    0,   47,    2, 0x08,    3 /* Private */,
-       6,    6,   48,    2, 0x08,    4 /* Private */,
+       5,    1,   47,    2, 0x08,    3 /* Private */,
+       7,    1,   50,    2, 0x08,    5 /* Private */,
 
  // slots: parameters
     QMetaType::Void,
     QMetaType::Void,
     QMetaType::Void,
-    QMetaType::Void,
-    QMetaType::Void, QMetaType::QString, QMetaType::QString, QMetaType::QString, QMetaType::QString, QMetaType::QString, QMetaType::QString,    2,    2,    2,    2,    2,    2,
+    QMetaType::Void, 0x80000000 | 6,    2,
+    QMetaType::Void, 0x80000000 | 8,    9,
 
        0        // eod
 };
@@ -85,8 +89,8 @@ void new_connection::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _
         case 0: _t->on_connect_f_clicked(); break;
         case 1: _t->on_save_f_clicked(); break;
         case 2: _t->on_delete_button_clicked(); break;
-        case 3: _t->on_loadButton_clicked(); break;
-        case 4: _t->writeToFile((*reinterpret_cast< QString(*)>(_a[1])),(*reinterpret_cast< QString(*)>(_a[2])),(*reinterpret_cast< QString(*)>(_a[3])),(*reinterpret_cast< QString(*)>(_a[4])),(*reinterpret_cast< QString(*)>(_a[5])),(*reinterpret_cast< QString(*)>(_a[6]))); break;
+        case 3: _t->save_profile((*reinterpret_cast< Profile(*)>(_a[1]))); break;
+        case 4: _t->on_listView_doubleClicked((*reinterpret_cast< const QModelIndex(*)>(_a[1]))); break;
         default: ;
         }
     }
@@ -100,7 +104,7 @@ const QMetaObject new_connection::staticMetaObject = { {
     nullptr,
 qt_incomplete_metaTypeArray<qt_meta_stringdata_new_connection_t
 
-, QtPrivate::TypeAndForceComplete<void, std::false_type>, QtPrivate::TypeAndForceComplete<void, std::false_type>, QtPrivate::TypeAndForceComplete<void, std::false_type>, QtPrivate::TypeAndForceComplete<void, std::false_type>, QtPrivate::TypeAndForceComplete<void, std::false_type>, QtPrivate::TypeAndForceComplete<QString, std::false_type>, QtPrivate::TypeAndForceComplete<QString, std::false_type>, QtPrivate::TypeAndForceComplete<QString, std::false_type>, QtPrivate::TypeAndForceComplete<QString, std::false_type>, QtPrivate::TypeAndForceComplete<QString, std::false_type>, QtPrivate::TypeAndForceComplete<QString, std::false_type>
+, QtPrivate::TypeAndForceComplete<void, std::false_type>, QtPrivate::TypeAndForceComplete<void, std::false_type>, QtPrivate::TypeAndForceComplete<void, std::false_type>, QtPrivate::TypeAndForceComplete<void, std::false_type>, QtPrivate::TypeAndForceComplete<Profile, std::false_type>, QtPrivate::TypeAndForceComplete<void, std::false_type>, QtPrivate::TypeAndForceComplete<const QModelIndex &, std::false_type>
 
 
 >,

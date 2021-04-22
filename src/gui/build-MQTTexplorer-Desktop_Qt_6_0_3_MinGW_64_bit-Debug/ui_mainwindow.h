@@ -21,6 +21,7 @@
 #include <QtWidgets/QMainWindow>
 #include <QtWidgets/QMenu>
 #include <QtWidgets/QMenuBar>
+#include <QtWidgets/QPlainTextEdit>
 #include <QtWidgets/QPushButton>
 #include <QtWidgets/QScrollArea>
 #include <QtWidgets/QStackedWidget>
@@ -71,17 +72,16 @@ public:
     QLineEdit *path_message;
     QLabel *Message_label;
     QLabel *value_label;
-    QScrollArea *scrollArea_2;
-    QWidget *scrollAreaWidgetContents_3;
-    QPushButton *publish_button;
-    QTextEdit *textEdit;
     QScrollArea *scrollArea_3;
     QWidget *scrollAreaWidgetContents_4;
-    QGraphicsView *graphicsView;
+    QPushButton *img_msg;
+    QPlainTextEdit *value_text;
     QLabel *value_label_3;
     QScrollArea *scrollArea_4;
     QWidget *scrollAreaWidgetContents_8;
     QGraphicsView *graphicsView_3;
+    QTextEdit *textEdit;
+    QPushButton *publish_button;
     QTreeView *treeView;
     QFrame *frame;
     QLabel *sing_label;
@@ -291,24 +291,6 @@ public:
         value_label->setGeometry(QRect(70, 300, 71, 21));
         value_label->setFont(font1);
         value_label->setStyleSheet(QString::fromUtf8("color:rgb(191, 191, 191);"));
-        scrollArea_2 = new QScrollArea(scrollAreaWidgetContents_2);
-        scrollArea_2->setObjectName(QString::fromUtf8("scrollArea_2"));
-        scrollArea_2->setGeometry(QRect(70, 150, 531, 141));
-        scrollArea_2->setWidgetResizable(true);
-        scrollAreaWidgetContents_3 = new QWidget();
-        scrollAreaWidgetContents_3->setObjectName(QString::fromUtf8("scrollAreaWidgetContents_3"));
-        scrollAreaWidgetContents_3->setGeometry(QRect(0, 0, 529, 139));
-        publish_button = new QPushButton(scrollAreaWidgetContents_3);
-        publish_button->setObjectName(QString::fromUtf8("publish_button"));
-        publish_button->setGeometry(QRect(420, 100, 101, 31));
-        publish_button->setStyleSheet(QString::fromUtf8("color: rgb(255, 255, 255);\n"
-"background-color: rgb(77, 121, 140);"));
-        textEdit = new QTextEdit(scrollAreaWidgetContents_3);
-        textEdit->setObjectName(QString::fromUtf8("textEdit"));
-        textEdit->setGeometry(QRect(0, -10, 531, 151));
-        scrollArea_2->setWidget(scrollAreaWidgetContents_3);
-        textEdit->raise();
-        publish_button->raise();
         scrollArea_3 = new QScrollArea(scrollAreaWidgetContents_2);
         scrollArea_3->setObjectName(QString::fromUtf8("scrollArea_3"));
         scrollArea_3->setGeometry(QRect(70, 330, 531, 101));
@@ -316,10 +298,25 @@ public:
         scrollAreaWidgetContents_4 = new QWidget();
         scrollAreaWidgetContents_4->setObjectName(QString::fromUtf8("scrollAreaWidgetContents_4"));
         scrollAreaWidgetContents_4->setGeometry(QRect(0, 0, 529, 99));
-        graphicsView = new QGraphicsView(scrollAreaWidgetContents_4);
-        graphicsView->setObjectName(QString::fromUtf8("graphicsView"));
-        graphicsView->setGeometry(QRect(-10, -10, 561, 111));
+        img_msg = new QPushButton(scrollAreaWidgetContents_4);
+        img_msg->setObjectName(QString::fromUtf8("img_msg"));
+        img_msg->setEnabled(true);
+        img_msg->setGeometry(QRect(180, 20, 141, 51));
+        img_msg->setStyleSheet(QString::fromUtf8("background-color: rgb(203, 203, 203);"));
+        value_text = new QPlainTextEdit(scrollAreaWidgetContents_4);
+        value_text->setObjectName(QString::fromUtf8("value_text"));
+        value_text->setGeometry(QRect(0, 0, 531, 101));
+        value_text->setStyleSheet(QString::fromUtf8("QPlainTextEdit{\n"
+"border: 2px solid rgb(37,39,48);\n"
+"border-left:none;\n"
+"border-right:none;\n"
+"border-top:none;\n"
+"border-bottom:none;\n"
+"border-radius: 20px;\n"
+"}"));
         scrollArea_3->setWidget(scrollAreaWidgetContents_4);
+        value_text->raise();
+        img_msg->raise();
         value_label_3 = new QLabel(scrollAreaWidgetContents_2);
         value_label_3->setObjectName(QString::fromUtf8("value_label_3"));
         value_label_3->setGeometry(QRect(70, 440, 71, 21));
@@ -336,6 +333,14 @@ public:
         graphicsView_3->setObjectName(QString::fromUtf8("graphicsView_3"));
         graphicsView_3->setGeometry(QRect(-5, -9, 541, 111));
         scrollArea_4->setWidget(scrollAreaWidgetContents_8);
+        textEdit = new QTextEdit(scrollAreaWidgetContents_2);
+        textEdit->setObjectName(QString::fromUtf8("textEdit"));
+        textEdit->setGeometry(QRect(70, 150, 531, 131));
+        publish_button = new QPushButton(scrollAreaWidgetContents_2);
+        publish_button->setObjectName(QString::fromUtf8("publish_button"));
+        publish_button->setGeometry(QRect(490, 240, 101, 31));
+        publish_button->setStyleSheet(QString::fromUtf8("color: rgb(255, 255, 255);\n"
+"background-color: rgb(77, 121, 140);"));
         scrollArea->setWidget(scrollAreaWidgetContents_2);
         treeView = new QTreeView(page);
         treeView->setObjectName(QString::fromUtf8("treeView"));
@@ -499,8 +504,9 @@ public:
         path_message->setPlaceholderText(QCoreApplication::translate("MainWindow", "Where to send your message?...", nullptr));
         Message_label->setText(QCoreApplication::translate("MainWindow", "Topic", nullptr));
         value_label->setText(QCoreApplication::translate("MainWindow", "Value", nullptr));
-        publish_button->setText(QCoreApplication::translate("MainWindow", "PUBLISH", nullptr));
+        img_msg->setText(QCoreApplication::translate("MainWindow", "Zobrazit obr\303\241zek", nullptr));
         value_label_3->setText(QCoreApplication::translate("MainWindow", "History", nullptr));
+        publish_button->setText(QCoreApplication::translate("MainWindow", "PUBLISH", nullptr));
         sing_label->setText(QCoreApplication::translate("MainWindow", "MQTT Explorer", nullptr));
         lineEdit->setInputMask(QString());
         lineEdit->setText(QString());
