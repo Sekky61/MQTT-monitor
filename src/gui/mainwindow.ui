@@ -363,58 +363,6 @@ border-radius: 20px;
          <string>Value</string>
         </property>
        </widget>
-       <widget class="QScrollArea" name="scrollArea_2">
-        <property name="geometry">
-         <rect>
-          <x>70</x>
-          <y>150</y>
-          <width>531</width>
-          <height>141</height>
-         </rect>
-        </property>
-        <property name="widgetResizable">
-         <bool>true</bool>
-        </property>
-        <widget class="QWidget" name="scrollAreaWidgetContents_3">
-         <property name="geometry">
-          <rect>
-           <x>0</x>
-           <y>0</y>
-           <width>529</width>
-           <height>139</height>
-          </rect>
-         </property>
-         <widget class="QPushButton" name="publish_button">
-          <property name="geometry">
-           <rect>
-            <x>420</x>
-            <y>100</y>
-            <width>101</width>
-            <height>31</height>
-           </rect>
-          </property>
-          <property name="styleSheet">
-           <string notr="true">color: rgb(255, 255, 255);
-background-color: rgb(77, 121, 140);</string>
-          </property>
-          <property name="text">
-           <string>PUBLISH</string>
-          </property>
-         </widget>
-         <widget class="QTextEdit" name="textEdit">
-          <property name="geometry">
-           <rect>
-            <x>-10</x>
-            <y>-10</y>
-            <width>541</width>
-            <height>151</height>
-           </rect>
-          </property>
-         </widget>
-         <zorder>textEdit</zorder>
-         <zorder>publish_button</zorder>
-        </widget>
-       </widget>
        <widget class="QScrollArea" name="scrollArea_3">
         <property name="geometry">
          <rect>
@@ -436,29 +384,47 @@ background-color: rgb(77, 121, 140);</string>
            <height>99</height>
           </rect>
          </property>
-         <widget class="QGraphicsView" name="graphicsView">
+         <widget class="QPushButton" name="img_msg">
+          <property name="enabled">
+           <bool>true</bool>
+          </property>
           <property name="geometry">
            <rect>
-            <x>-10</x>
-            <y>-10</y>
-            <width>561</width>
-            <height>111</height>
+            <x>180</x>
+            <y>20</y>
+            <width>141</width>
+            <height>51</height>
            </rect>
           </property>
-         </widget>
-         <widget class="QLabel" name="label_4">
-          <property name="geometry">
-           <rect>
-            <x>360</x>
-            <y>20</y>
-            <width>67</width>
-            <height>17</height>
-           </rect>
+          <property name="styleSheet">
+           <string notr="true">background-color: rgb(203, 203, 203);</string>
           </property>
           <property name="text">
-           <string>TextLabel</string>
+           <string>Zobrazit obrázek</string>
           </property>
          </widget>
+         <widget class="QPlainTextEdit" name="value_text">
+          <property name="geometry">
+           <rect>
+            <x>0</x>
+            <y>0</y>
+            <width>531</width>
+            <height>101</height>
+           </rect>
+          </property>
+          <property name="styleSheet">
+           <string notr="true">QPlainTextEdit{
+border: 2px solid rgb(37,39,48);
+border-left:none;
+border-right:none;
+border-top:none;
+border-bottom:none;
+border-radius: 20px;
+}</string>
+          </property>
+         </widget>
+         <zorder>value_text</zorder>
+         <zorder>img_msg</zorder>
         </widget>
        </widget>
        <widget class="QLabel" name="value_label_3">
@@ -514,6 +480,33 @@ background-color: rgb(77, 121, 140);</string>
           </property>
          </widget>
         </widget>
+       </widget>
+       <widget class="QTextEdit" name="textEdit">
+        <property name="geometry">
+         <rect>
+          <x>70</x>
+          <y>150</y>
+          <width>531</width>
+          <height>131</height>
+         </rect>
+        </property>
+       </widget>
+       <widget class="QPushButton" name="publish_button">
+        <property name="geometry">
+         <rect>
+          <x>490</x>
+          <y>240</y>
+          <width>101</width>
+          <height>31</height>
+         </rect>
+        </property>
+        <property name="styleSheet">
+         <string notr="true">color: rgb(255, 255, 255);
+background-color: rgb(77, 121, 140);</string>
+        </property>
+        <property name="text">
+         <string>PUBLISH</string>
+        </property>
        </widget>
       </widget>
      </widget>

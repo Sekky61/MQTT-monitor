@@ -11,13 +11,13 @@ MainWindow::MainWindow(QWidget *parent):
     ui(new Ui::MainWindow)
 {
     ui->setupUi(this);
+    ui->value_text->setReadOnly(true);
 
     QObject::connect(ui->treeView, &QAbstractItemView::clicked, this, &MainWindow::display_message);
 
     //ui->treeView->selectionModel()->selectedIndexes();
     ui->treeView->currentIndex();
 }
-
 
 
 MainWindow::~MainWindow()
@@ -153,4 +153,12 @@ void MainWindow::on_Explorer_button_clicked()
 void MainWindow::on_Dash_button_clicked()
 {
     ui->Pages->setCurrentIndex(1);
+}
+
+//bude zobrazovat obrázek
+void MainWindow::on_img_msg_clicked()
+{
+    //tohle patří do funkce kde budeš zpracovávat zprávu
+    ui->img_msg->setEnabled(false);
+    ui->img_msg->setVisible(false);
 }

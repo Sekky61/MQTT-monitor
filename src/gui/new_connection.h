@@ -59,6 +59,7 @@ class new_connection : public QDialog
 {
     Q_OBJECT
 
+
 public:
     explicit new_connection(QWidget *parent = nullptr);
     ~new_connection();
@@ -70,14 +71,13 @@ private slots:
     void on_connect_f_clicked();
     void on_save_f_clicked();
     void on_delete_button_clicked();
-
     void save_profile(Profile);
-
     void on_listView_doubleClicked(const QModelIndex &index);
 
 private:
     Ui::new_connection *ui;
     ProfilesListModel *model_con;
+    //QMessageBox *mBox = new QMessageBox;
 };
 
 #endif // NEW_CONNECTION_H
