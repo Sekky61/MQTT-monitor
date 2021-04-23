@@ -17,7 +17,7 @@ public:
 
     int connect_to_server(QString, QString);
 
-public: signals:
+signals:
     void connection_succesful();
 
     void mqtt_data_changed();

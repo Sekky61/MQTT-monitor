@@ -508,6 +508,19 @@ background-color: rgb(77, 121, 140);</string>
          <string>PUBLISH</string>
         </property>
        </widget>
+       <widget class="QPushButton" name="dumpButton">
+        <property name="geometry">
+         <rect>
+          <x>10</x>
+          <y>220</y>
+          <width>89</width>
+          <height>25</height>
+         </rect>
+        </property>
+        <property name="text">
+         <string>DUMP</string>
+        </property>
+       </widget>
       </widget>
      </widget>
      <widget class="QTreeView" name="treeView">

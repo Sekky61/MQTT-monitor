@@ -31,6 +31,8 @@ int main(int argc, char *argv[])
     QObject::connect(&w, &MainWindow::add_topic_clicked, &cli, &client::add_topic_slot);
     QObject::connect(&w, &MainWindow::publish_clicked, &cli, &client::publish_slot);
 
+
+
     w.show();
     return a.exec();
 }

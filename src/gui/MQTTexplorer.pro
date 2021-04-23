@@ -15,6 +15,7 @@ SOURCES += \
     main.cpp \
     mainwindow.cpp \
     new_connection.cpp \
+    snapshot_manager.cpp \
     topicmodel.cpp
 
 HEADERS += \
@@ -23,6 +24,7 @@ HEADERS += \
     error_messages.h \
     mainwindow.h \
     new_connection.h \
+    snapshot_manager.h \
     topicmodel.h
 
 

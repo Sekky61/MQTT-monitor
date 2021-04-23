@@ -88,6 +88,8 @@ private slots:
 
     void on_img_msg_clicked();
 
+    void on_dumpButton_clicked();
+
 public slots:
 
     void connection_succesful_slot();
