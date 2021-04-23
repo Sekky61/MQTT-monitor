@@ -20,6 +20,7 @@
 #include <QFileSystemModel>
 
 #include "topicmodel.h"
+#include "new_connection.h"
 
 QT_BEGIN_NAMESPACE
 namespace Ui { class MainWindow; }
@@ -87,9 +88,16 @@ private slots:
 
     void on_img_msg_clicked();
 
+public slots:
+
+    void connection_succesful_slot();
+
 private:
     Ui::MainWindow *ui;
     QString current_file = ""; //jméno souboru ve kterém pracujeme
     QStandardItemModel model;
+    TopicModel *mod;
+
+    new_connection *connection_window;
 };
 #endif // MAINWINDOW_H

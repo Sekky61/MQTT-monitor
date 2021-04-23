@@ -1,6 +1,8 @@
 #include "new_connection.h"
 #include "mainwindow.h"
 #include "ui_new_connection.h"
+#include "error_messages.h"
+
 #include "mainwindow.h"
 #include <QMessageBox>
 #include <QAbstractItemModel>
@@ -12,15 +14,6 @@
 #include <QXmlStreamWriter>
 #include <iostream>
 #include <QTimer>
-
-
-
-void error_message(QString(text)){
-
-    //QTimer::singleShot(2500, mbox, SLOT(hide()));
-    QMessageBox msgBox(QMessageBox::Warning, "ERROR!!", text, QMessageBox::Ok);
-    msgBox.exec();
-}
 
 
 void new_connection::save_profile(Profile profile_obj){
@@ -157,13 +150,6 @@ void new_connection::on_connect_f_clicked()
     QString host = ui->host_line->text();
     QString port = ui->port_line->text();
 
-    //ui->check_validate->isChecked()
-    if(username=="test" && password=="12345"){
-        error_message("username and password is correct");
-
-    }else{
-        error_message("username and password is incorrect");
-    }
 
     emit connect_to_server(username, protocol + "://" + host + ":" + port);
 }

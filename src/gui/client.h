@@ -10,15 +10,16 @@ class client : public QObject
     Q_OBJECT
 public:
 
-    MessageSystem *sys;
-
     bool connected;
+    MessageSystem *sys;
 
     explicit client(QObject *parent = nullptr);
 
     int connect_to_server(QString, QString);
 
 public: signals:
+    void connection_succesful();
+
     void mqtt_data_changed();
 
 public slots:

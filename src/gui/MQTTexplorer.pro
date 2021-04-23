@@ -11,6 +11,7 @@ CONFIG += c++17
 SOURCES += \
     aboutapplication.cpp \
     client.cpp \
+    error_messages.cpp \
     main.cpp \
     mainwindow.cpp \
     new_connection.cpp \
@@ -19,6 +20,7 @@ SOURCES += \
 HEADERS += \
     aboutapplication.h \
     client.h \
+    error_messages.h \
     mainwindow.h \
     new_connection.h \
     topicmodel.h

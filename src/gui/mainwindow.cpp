@@ -5,6 +5,10 @@
 #include "topicmodel.h"
 
 #include <iostream>
+#include <QByteArray>
+#include <QDataStream>
+#include <QBuffer>
+#include <QImageReader>
 
 MainWindow::MainWindow(QWidget *parent):
     QMainWindow(parent) ,
@@ -26,9 +30,10 @@ MainWindow::~MainWindow()
     //this->setCentralWidget(ui->textEdit);
 }
 
-void MainWindow::set_tree_model(TopicModel *mod)
+void MainWindow::set_tree_model(TopicModel *new_model)
 {
-    ui->treeView->setModel(mod);
+    mod = new_model;
+    ui->treeView->setModel(new_model);
 }
 
 void MainWindow::display_message(const QModelIndex &index)
@@ -40,7 +45,23 @@ void MainWindow::display_message(const QModelIndex &index)
     }
     std::string payload = (*msg_ptr)->get_payload();
     QString qmsg = QString::fromStdString(payload);
-    ui->label_4->setText(qmsg);
+    ui->value_text->setPlainText(qmsg);
+
+    QByteArray arr = QByteArray(payload.data());
+
+    QDataStream stream = QDataStream(arr);
+
+    QBuffer buf = QBuffer(&arr);
+
+    QByteArray imageFormat = QImageReader::imageFormat(&buf);
+
+    if(imageFormat.size() == 0){
+        std::cerr << "SIZE 0\n";
+    } else {
+        std::cerr << "OK\n";
+    }
+
+    //on_img_msg_clicked
 }
 
 void MainWindow::connect_to_client_from_dialog(QString client_name, QString server_address)
@@ -101,21 +122,26 @@ void MainWindow::on_actionDefault_size_triggered()
 
 void MainWindow::on_buttonConnect_clicked()
 {
-    new_connection connection(this);
+    connection_window = new new_connection(this);
 
-    QObject::connect(&connection, &new_connection::connect_to_server, this, &MainWindow::connect_to_client_from_dialog);
-    connection.setModal(true);
-    connection.exec();
+    QObject::connect(connection_window, &new_connection::connect_to_server, this, &MainWindow::connect_to_client_from_dialog);
+    connection_window->setModal(true);
+    connection_window->exec();
 }
 
 void MainWindow::on_searchButton_clicked()
 {
+    QString val = ui->searchValue->text();
+    ui->searchValue->setText("");
     //filtrování stromové struktury
     proxy_tree = new QSortFilterProxyModel(this);
-    proxy_tree->setSourceModel(&model);
+    proxy_tree->setSourceModel(mod);
     proxy_tree->setFilterCaseSensitivity(Qt::CaseInsensitive);
-    proxy_tree->setFilterKeyColumn(-1); //If the value is -1, the keys will be read from all columns
-    proxy_tree->setFilterFixedString("broker");
+    proxy_tree->setRecursiveFilteringEnabled(true);
+    proxy_tree->setFilterKeyColumn(0); //If the value is -1, the keys will be read from all columns
+    proxy_tree->setFilterFixedString(val);
+
+    ui->treeView->setModel(proxy_tree);
 }
 
 void MainWindow::on_add_topic_clicked()
@@ -161,4 +187,13 @@ void MainWindow::on_img_msg_clicked()
     //tohle patří do funkce kde budeš zpracovávat zprávu
     ui->img_msg->setEnabled(false);
     ui->img_msg->setVisible(false);
+}
+
+void MainWindow::connection_succesful_slot()
+{
+    if(connection_window){
+        connection_window->close(); // todo disconnect signal
+        delete connection_window;
+        connection_window = nullptr;
+    }
 }

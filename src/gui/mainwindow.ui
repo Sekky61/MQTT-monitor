@@ -566,7 +566,7 @@ background-color: rgb(77, 121, 140);</string>
         <set>Qt::AlignCenter</set>
        </property>
       </widget>
-      <widget class="QLineEdit" name="lineEdit">
+      <widget class="QLineEdit" name="searchValue">
        <property name="geometry">
         <rect>
          <x>370</x>

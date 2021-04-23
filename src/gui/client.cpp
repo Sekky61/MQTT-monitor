@@ -1,4 +1,6 @@
 #include "client.h"
+#include "error_messages.h"
+#include <QMessageBox>
 
 #include <QByteArray>
 
@@ -37,9 +39,10 @@ void client::user_clicked_connect(QString client_name, QString server_address)
     if(connected){
         sys->add_topic("t1");
         sys->add_topic("t2/sub1");
+        emit connection_succesful();
         emit mqtt_data_changed();
     } else {
-        // todo zobrazit zpravu ze se nepodarilo pripojit
+        error_message("nepodarilo se pripojit");
     }
 }
 
