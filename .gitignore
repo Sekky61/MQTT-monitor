@@ -5,10 +5,12 @@
 *.exe
 *.out
 *.app
+
 app
 test
 mock_publish
 listen_all
+sim
 
 build*
 *.user
