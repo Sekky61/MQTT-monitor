@@ -1,6 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE QtCreatorProject>
+<<<<<<< HEAD:src/gui/gui/MQTTexplorer.pro.user
 <!-- Written by QtCreator 4.14.2, 2021-04-23T13:01:51. -->
+=======
+<!-- Written by QtCreator 4.14.2, 2021-04-20T20:39:43. -->
+>>>>>>> ea199fbf0084c9bae798a9a2480e0af8decd7945:src/gui/MQTTexplorer.pro.user
 <qtcreator>
  <data>
   <variable>EnvironmentId</variable>

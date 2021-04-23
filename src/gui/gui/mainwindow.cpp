@@ -10,6 +10,7 @@ MainWindow::MainWindow(QWidget *parent):
 {
     ui->setupUi(this);
     ui->value_text->setReadOnly(true);
+<<<<<<< HEAD:src/gui/gui/mainwindow.cpp
     ui->value_text_2->setReadOnly(true);
 
     ui->progressBar->setTextVisible(false);
@@ -19,6 +20,8 @@ MainWindow::MainWindow(QWidget *parent):
     int message_val = 13; //to si přepiš
     ui->lcdNumber->display(message_val);
     ui->progressBar->setValue(message_val);
+=======
+>>>>>>> ea199fbf0084c9bae798a9a2480e0af8decd7945:src/gui/mainwindow.cpp
 
     QList<QStandardItem*> list;
     auto item = new QStandardItem("localhost");
@@ -243,6 +246,7 @@ void MainWindow::on_img_msg_clicked()
     ui->img_msg->setEnabled(false);
     ui->img_msg->setVisible(false);
 }
+<<<<<<< HEAD:src/gui/gui/mainwindow.cpp
 
 void MainWindow::on_dial_valueChanged(int value)
 {
@@ -262,3 +266,5 @@ void MainWindow::on_dial_actionTriggered(int action)
 {
 
 }
+=======
+>>>>>>> ea199fbf0084c9bae798a9a2480e0af8decd7945:src/gui/mainwindow.cpp
