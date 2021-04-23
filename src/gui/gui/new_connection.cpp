@@ -156,16 +156,6 @@ void new_connection::on_connect_f_clicked()
     QString protocol = ui->protocol_line->text();
     QString host = ui->host_line->text();
     QString port = ui->port_line->text();
-
-    //ui->check_validate->isChecked()
-    if(username=="test" && password=="12345"){
-        error_message("username and password is correct");
-
-    }else{
-        error_message("username and password is incorrect");
-    }
-
-
 }
 
 void new_connection::on_save_f_clicked()

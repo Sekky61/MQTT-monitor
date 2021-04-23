@@ -10,6 +10,15 @@ MainWindow::MainWindow(QWidget *parent):
 {
     ui->setupUi(this);
     ui->value_text->setReadOnly(true);
+    ui->value_text_2->setReadOnly(true);
+
+    ui->progressBar->setTextVisible(false);
+    ui->dial->setWrapping(false);
+
+    //na záčátku bude nastaveno na hodnotu přijatou ze zprávy
+    int message_val = 13; //to si přepiš
+    ui->lcdNumber->display(message_val);
+    ui->progressBar->setValue(message_val);
 
     QList<QStandardItem*> list;
     auto item = new QStandardItem("localhost");
@@ -168,10 +177,7 @@ void MainWindow::on_actionSelect_All_triggered()
 
 void MainWindow::on_actionAbout_Aplication_triggered()
 {
-    //QApplication::aboutQt;
-    AboutApplication aboutapplication;
-    aboutapplication.setModal(true);
-    aboutapplication.exec();
+    QMessageBox::aboutQt(this);
 }
 
 void MainWindow::on_actionDefault_size_triggered()
@@ -236,4 +242,23 @@ void MainWindow::on_img_msg_clicked()
     //tohle patří do funkce kde budeš zpracovávat zprávu
     ui->img_msg->setEnabled(false);
     ui->img_msg->setVisible(false);
+}
+
+void MainWindow::on_dial_valueChanged(int value)
+{
+    //nastavuje se na hodnotu ciferníku
+    ui->lcdNumber->display(value);
+    ui->progressBar->setValue(value);
+
+}
+
+void MainWindow::on_temp_button_clicked()
+{
+    int new_val = ui->lcdNumber->value(); //získáme novou hodnotu zprávy
+    //TODO přepis zprávy
+}
+
+void MainWindow::on_dial_actionTriggered(int action)
+{
+
 }

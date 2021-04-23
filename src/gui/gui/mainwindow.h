@@ -70,6 +70,12 @@ private slots:
 
     void on_img_msg_clicked();
 
+    void on_dial_valueChanged(int value);
+
+    void on_dial_actionTriggered(int action);
+
+    void on_temp_button_clicked();
+
 private:
     Ui::MainWindow *ui;
     QString current_file = ""; //jméno souboru ve kterém pracujeme
