@@ -160,6 +160,7 @@ class MessageSystem
 {
 public:
 
+	bool connected;
 	bool SubscribeAll;
     TopicNode *messages_root;
 	std::vector<std::string> topics; // maybe list/map na odstranovani
@@ -172,6 +173,7 @@ public:
 	mqtt::async_client client;
 
 	MessageSystem(std::string client_name, std::string server_address):
+		connected(false),
 		client_id{ client_name },
 		client(server_address, client_id)
     {
@@ -200,7 +202,7 @@ public:
 
 	void remove_topic(std::string topic_name);
 
-	void send_message(std::string topic, void *data, size_t data_len);
+	void send_message(std::string topic, const void *data, size_t data_len);
 
 };
 

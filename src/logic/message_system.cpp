@@ -127,10 +127,12 @@ int MessageSystem::connect_client(){
 		std::cerr << "connect_client exc:\n\t" << exc << std::endl;
 		return 1;
 	}
+
+	connected = true;
 	return 0;
 }
 
-void MessageSystem::send_message(std::string topic, void *data, size_t data_len){
+void MessageSystem::send_message(std::string topic, const void *data, size_t data_len){
 	client.publish(topic, data, data_len);
 }
 
