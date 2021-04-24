@@ -10,23 +10,7 @@
 #include <fstream>
 #include <streambuf>
 
-class Device
-{
-public:
-    std::string name;
-    std::string topic;
-    int rate;
-
-    std::vector<std::string> values;
-    std::unordered_map<std::string, float> properties;
-
-public:
-    Device(std::string name) : name(name){};
-
-    std::string generate_msg(){
-        return "tha message";
-    };
-};
+#include "sim_device.hpp"
 
 class ConfigReader
 {
@@ -38,7 +22,10 @@ class ConfigReader
     {
         Header,
         Empty,
+        DeviceType,
         DeviceName,
+        Topic,
+        Rate,
         Param
     };
 
@@ -52,15 +39,18 @@ public:
         config_content = buffer.str();
     };
 
-    std::vector<Device> parse_file()
+    std::vector<sim_device *> parse_file()
     {
-        std::vector<Device> devices;
+        std::vector<sim_device *> devices;
 
         std::string line;
 
         Parser state = Parser::Header;
 
-        Device dev("");
+        sim_device *dev = nullptr;
+        std::string name;
+        std::string topic;
+        int rate;
 
         while (std::getline(buffer, line))
         {
@@ -79,13 +69,52 @@ public:
                 {
                     throw std::runtime_error("Parse error: empty line expected");
                 }
-                state = Parser::DeviceName;
+                state = Parser::DeviceType;
+                break;
+
+            case Parser::DeviceType:
+                if (line == "float-device")
+                {
+                    dev = new float_sim_device();
+                }
+                else if (line == "value-set-device")
+                {
+                    dev = new value_set_device();
+                }
+                else
+                {
+                    throw std::runtime_error("Parse error: unknown device kind");
+                }
+                state = Parser::Param;
                 break;
 
             case Parser::DeviceName:
-                dev = Device(line);
-                devices.push_back(dev);
-                state = Parser::Param;
+                name = line;
+                state = Parser::Topic;
+                break;
+
+            case Parser::Topic:
+                if (line.substr(0, 6) == "topic ")
+                {
+                    topic = line.substr(6);
+                    state = Parser::Rate;
+                }
+                else
+                {
+                    throw std::runtime_error("Parse error: topic<space> expected");
+                }
+                break;
+
+            case Parser::Rate:
+                if (line.substr(0, 5) == "rate ")
+                {
+                    rate = std::stoi(line.substr(5));
+                    state = Parser::Kind;
+                }
+                else
+                {
+                    throw std::runtime_error("Parse error: rate<space> expected");
+                }
                 break;
 
             case Parser::Param:
@@ -103,6 +132,20 @@ public:
                     {
                         tokens.push_back(token);
                     }
+
+                    // values muze mit libovolny pocet tokenu
+                    if (tokens[0] == "values")
+                    {
+                        std::vector<std::string>::const_iterator second_item = tokens.begin() + 1;
+                        std::vector<std::string>::const_iterator end = tokens.end();
+                        std::vector<std::string> string_values(second_item, end);
+                        devices.back().values = string_values;
+
+                        state = Parser::Param;
+                        continue;
+                    }
+
+                    // ostatni presne 2
                     if (tokens.size() != 2)
                     {
                         throw std::runtime_error("Parse error: key<space>value expected");
@@ -114,8 +157,8 @@ public:
                     if (prop_name == "rate")
                     {
                         devices.back().rate = std::stoi(prop_value);
-                    } 
-                    else if(prop_name == "topic")
+                    }
+                    else if (prop_name == "topic")
                     {
                         devices.back().topic = prop_value;
                     }
@@ -152,7 +195,7 @@ class SensorNetwork
 public:
     int transmitting;
     std::string config_file_path;
-    std::vector<Device> devices;
+    std::vector<sim_device> devices;
 
     SensorNetwork(MessageSystem &sys);
 
@@ -173,6 +216,8 @@ int SensorNetwork::get_devices(std::string file_path)
 
 int SensorNetwork::start_transmitting()
 {
+    using namespace std::chrono_literals;
+
     if (!system.connected)
     {
         int conn = system.connect_client();
@@ -199,7 +244,7 @@ int SensorNetwork::start_transmitting()
 
     while (true)
     {
-        std::this_thread::sleep_for(std::chrono::milliseconds(1000));
+        std::this_thread::sleep_for(1000ms);
         std::cerr << "Clock " << clock << "\n";
 
         for (auto &dev : devices)
@@ -225,7 +270,8 @@ int main(int argc, char *argv[])
     SensorNetwork network(sys);
 
     int ret = network.get_devices("test_config.cfg");
-    if(ret){
+    if (ret)
+    {
         return ret;
     }
 
