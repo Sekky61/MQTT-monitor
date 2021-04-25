@@ -178,7 +178,6 @@ public:
 		client_id{ client_name },
 		client(server_address, client_id)
     {
-		std::cout << "Constructed ms\n";
 		messages_root = std::make_unique<TopicNode>();
 		client.set_message_callback([this](const mqtt::const_message_ptr message){
 			auto topic = message->get_topic();
@@ -191,8 +190,19 @@ public:
 		});
 	}
 
-	~MessageSystem(){
-		std::cerr << "Destructed ms\n";
+	~MessageSystem() {
+		if (client.is_connected()) {
+			std::cerr << "\nShutting down and disconnecting from the MQTT server..." << std::flush;
+			for(auto &topic: topics){
+				client.unsubscribe(topic)->wait();
+			}
+			client.stop_consuming();
+			client.disconnect()->wait();
+			std::cerr << "OK" << std::endl;
+		}
+		else {
+			std::cerr << "\nClient was disconnected" << std::endl;
+		}
 	}
 
 	int connect_client();
