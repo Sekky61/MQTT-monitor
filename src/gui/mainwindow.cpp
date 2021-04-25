@@ -151,11 +151,6 @@ void MainWindow::on_add_topic_clicked()
     emit add_topic_clicked(topic_path);
 }
 
-void MainWindow::on_copy_topic_2_clicked()
-{
-    ui->topic_search->setText("naše pozice ve stromové struktuře");
-}
-
 void MainWindow::on_delete_topic_2_clicked()
 {
     //vymaže subtopics na této pozici
@@ -196,4 +191,35 @@ void MainWindow::connection_succesful_slot()
         delete connection_window;
         connection_window = nullptr;
     }
+}
+
+void MainWindow::on_copy_topic_path_clicked()
+{
+    auto index = ui->treeView->currentIndex();
+    if(index == QModelIndex()){
+        std::cerr << "Nothing selected\n";
+        return;
+    }
+    auto *node_ptr = static_cast<TopicNode *>(index.internalPointer());
+    if(node_ptr == nullptr){
+        std::cerr << "Selected index has nullptr\n";
+        return;
+    }
+    QString full_topic_path = QString::fromStdString(node_ptr->fullTopic);
+    ui->topic_search->setText(full_topic_path);
+}
+
+void MainWindow::on_delete_subtopics_clicked()
+{
+    auto index = ui->treeView->currentIndex();
+    if(index == QModelIndex()){
+        std::cerr << "Nothing selected\n";
+        return;
+    }
+    auto *node_ptr = static_cast<TopicNode *>(index.internalPointer());
+    if(node_ptr == nullptr){
+        std::cerr << "Selected index has nullptr\n";
+        return;
+    }
+
 }

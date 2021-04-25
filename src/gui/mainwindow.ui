@@ -180,7 +180,7 @@ QPushButton:hover{
         </property>
         <layout class="QHBoxLayout" name="horizontalLayout_2">
          <item>
-          <widget class="QPushButton" name="copy_topic_2">
+          <widget class="QPushButton" name="copy_topic_path">
            <property name="autoFillBackground">
             <bool>false</bool>
            </property>
@@ -216,7 +216,7 @@ border-radius: 20px;
           </widget>
          </item>
          <item>
-          <widget class="QPushButton" name="delete_topic_2">
+          <widget class="QPushButton" name="delete_subtopics">
            <property name="autoFillBackground">
             <bool>false</bool>
            </property>

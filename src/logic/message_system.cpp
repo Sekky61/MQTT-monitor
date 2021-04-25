@@ -37,9 +37,9 @@ std::ostream& operator<< (std::ostream &out, TopicNode *node) {
 void print_tree(TopicNode *root){ // todo overload <<
     std::cerr << "printing: " << root->Topic << std::endl;
 	std::cerr << root << '\n';
-    for (auto child : root->Children){
+    for (auto &child : root->Children){
 		std::cerr << "\tprinting child: " << child->Topic << std::endl;
-        print_tree(child);
+        print_tree(child.get());
 	}
 }
 
@@ -57,7 +57,7 @@ void MessageSystem::add_topic(std::string topic_name){
 		if(messages_root != nullptr){
 			messages_root->grow_tree(topic_name);
 		} else {
-			messages_root = new TopicNode();
+			messages_root = std::make_unique<TopicNode>();
 			messages_root->grow_tree(topic_name);
 		}
         
@@ -78,7 +78,7 @@ bool MessageSystem::is_subscribed_topic(std::string topic){
 
 // muze i vytvorit node nody
 TopicNode *MessageSystem::get_node_by_topic(std::string topic){
-    auto *node = messages_root;
+    auto *node = messages_root.get();
 
 	auto cut = cut_topic_path(topic);
 

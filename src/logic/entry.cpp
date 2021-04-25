@@ -22,9 +22,9 @@ int main(int argc, char* argv[])
 	std::cerr << sys.get_node_by_topic("t2/sub1")->Topic << std::endl;
 	std::cerr << sys.get_node_by_topic("t2/sub1")->fullTopic << std::endl;
 
-	while(true){
+	/*while(true){
 		std::this_thread::sleep_for(std::chrono::milliseconds(1000));
-	}
+	}*/
 
 	/*while(true){
 		std::this_thread::sleep_for(std::chrono::milliseconds(1000));

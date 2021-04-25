@@ -76,8 +76,6 @@ private slots:
 
     void on_add_topic_clicked();
 
-    void on_copy_topic_2_clicked();
-
     void on_delete_topic_2_clicked();
 
     void on_publish_button_clicked();
@@ -88,7 +86,9 @@ private slots:
 
     void on_img_msg_clicked();
 
-    void on_dumpButton_clicked();
+    void on_copy_topic_path_clicked();
+
+    void on_delete_subtopics_clicked();
 
 public slots:
 

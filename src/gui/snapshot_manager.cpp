@@ -67,4 +67,5 @@ int snapshot_manager::dump_topic(QDir dir, TopicNode *node){
         }
     }
 
+    return 0;
 }

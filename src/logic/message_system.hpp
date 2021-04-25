@@ -37,10 +37,10 @@ public:
 	unsigned long limit;
 	std::deque<T> Msgs;
 
-    std::vector<TreeNode<T> *> Children;
+    std::vector<std::unique_ptr<TreeNode<T> > > Children;
 	TreeNode<T> *Parent;
 
-        TreeNode(): Parent(nullptr)  {}
+    TreeNode(): Parent(nullptr) {}
 
     TreeNode(TreeNode<T> *parent_ptr, std::string topic_name, std::string full_topic) :
 		Topic(topic_name),
@@ -60,7 +60,7 @@ public:
 	void set_limit_recursive(int new_limit){
 		limit = new_limit;
 
-		for(auto child : Children){
+		for(auto &child : Children){
 			child->set_limit_recursive(limit);
 		}
 	}
@@ -89,10 +89,10 @@ public:
 	}
 
 	TreeNode<T> *get_child(std::string name){
-		auto x = std::find_if(Children.begin(), Children.end(), [&] (const TreeNode<T> *s) { return s->Topic == name; });
+		auto x = std::find_if(Children.begin(), Children.end(), [&] (const std::unique_ptr<TreeNode<T> > &s) { return s->Topic == name; });
 		if (x != Children.end()){
 			// child exists
-			return *x;
+			return (*x).get();
 		}
 		return nullptr;
 	}
@@ -100,12 +100,12 @@ public:
 	TreeNode<T> *get_child_by_index(int index){
 		if (index >= 0 && index < Children.size()){
 			// child exists
-			return Children[index];
+			return Children[index].get();
 		}
 		return nullptr;
 	}
 
-	int get_number_of_children(){
+	size_t get_number_of_children(){
 		
 		return Children.size();
 	}
@@ -114,7 +114,7 @@ public:
 		if(!Parent){
 			return -1;
 		}
-		auto it = find(Parent->Children.begin(), Parent->Children.end(), this);
+		auto it = find(Parent->Children.begin(), Parent->Children.end(), [&] (const std::unique_ptr<TreeNode<T> > &s) { return s.get() == this; });
 		if (it != Parent->Children.end())
     	{
 			// found
@@ -130,8 +130,9 @@ public:
 		if (child_node == nullptr){
 			// child does not exists
 			std::string new_full = (fullTopic == "" ? "" : fullTopic + "/" ) + name;
-			TreeNode<T> *new_node = new TreeNode<T>(this, name, new_full);
-			return Children.emplace_back(new_node);
+			std::unique_ptr<TreeNode<T> > new_node = std::make_unique<TreeNode<T> >(this, name, new_full);
+			Children.emplace_back(std::move(new_node));
+			return Children.back().get();
 		}
 		return child_node;
 	}
@@ -162,7 +163,7 @@ public:
 
 	bool connected;
 	bool SubscribeAll;
-    TopicNode *messages_root;
+    std::unique_ptr<TopicNode> messages_root;
 	std::vector<std::string> topics; // maybe list/map na odstranovani
 
 	const int QOS {1};
@@ -177,7 +178,8 @@ public:
 		client_id{ client_name },
 		client(server_address, client_id)
     {
-		messages_root = new TopicNode();
+		std::cout << "Constructed ms\n";
+		messages_root = std::make_unique<TopicNode>();
 		client.set_message_callback([this](const mqtt::const_message_ptr message){
 			auto topic = message->get_topic();
 			auto msg = message->get_payload();
@@ -185,8 +187,12 @@ public:
 				<< "Callback: " << topic
 				<< " : " << msg << std::endl;
 			this->add_message(message);
-			print_tree(this->messages_root);
+			print_tree(this->messages_root.get());
 		});
+	}
+
+	~MessageSystem(){
+		std::cerr << "Destructed ms\n";
 	}
 
 	int connect_client();
