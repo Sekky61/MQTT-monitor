@@ -8,8 +8,8 @@ all: listen_all
 
 # Object files dependencies
 
-message_system.o: message_system.cpp message_system.hpp
-entry.o: entry.cpp message_system.hpp
+message_system.o: message_system.cpp message_system.hpp tree_node.hpp
+entry.o: entry.cpp message_system.hpp tree_node.hpp
 
 %.o: %.cpp
 	$(CC) $(CXXFLAGS) -c $< -o $@

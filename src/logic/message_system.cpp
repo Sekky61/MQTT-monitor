@@ -136,7 +136,7 @@ void MessageSystem::send_message(std::string topic, const void *data, size_t dat
 	client.publish(topic, data, data_len);
 }
 
-
+// todo move
 std::vector<std::string> cut_topic_path(std::string topic_name){
 	std::istringstream input;
     input.str(topic_name);
