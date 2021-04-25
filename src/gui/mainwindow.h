@@ -76,8 +76,6 @@ private slots:
 
     void on_add_topic_clicked();
 
-    void on_delete_topic_2_clicked();
-
     void on_publish_button_clicked();
 
     void on_Explorer_button_clicked();
@@ -90,6 +88,10 @@ private slots:
 
     void on_delete_subtopics_clicked();
 
+    void on_treeView_customContextMenuRequested(const QPoint &pos);
+
+    void context_copy_topic();
+
 public slots:
 
     void connection_succesful_slot();
@@ -99,6 +101,9 @@ private:
     QString current_file = ""; //jméno souboru ve kterém pracujeme
     QStandardItemModel model;
     TopicModel *mod;
+
+    QMenu *tree_context_menu;
+    QModelIndex context_menu_target;
 
     new_connection *connection_window;
 };

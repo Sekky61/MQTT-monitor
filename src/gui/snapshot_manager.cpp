@@ -16,13 +16,13 @@ int snapshot_manager::create_snapshot(QDir root_dir, client &cli)
         return 1;
     }
 
-    auto *root = cli.sys->messages_root;
+    auto &root = cli.sys->messages_root;
     if(root == nullptr){
         return 1;
     }
 
-    for(auto *child : root->Children){
-        int ret = dump_topic(root_dir, child);
+    for(auto &child : root->Children){
+        int ret = dump_topic(root_dir, child.get());
         if(ret != 0){
             return ret;
         }
@@ -56,12 +56,12 @@ int snapshot_manager::dump_topic(QDir dir, TopicNode *node){
     }
 
     // Vytvorit slozky pro potomky
-    for(auto *child: node->Children){
+    for(auto &child: node->Children){
         QString topic(child->Topic.data());
         dir.mkdir(topic);
         QDir child_dir(dir);
         child_dir.cd(topic);
-        int ret = dump_topic(child_dir, child);
+        int ret = dump_topic(child_dir, child.get());
         if(ret != 0){
             return ret;
         }

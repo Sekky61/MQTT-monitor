@@ -14,7 +14,6 @@
 #include <vector>
 #include <string>
 
-#include <sstream>
 #include <algorithm>
 
 #include "message_system.hpp"
@@ -32,15 +31,6 @@ std::ostream& operator<< (std::ostream &out, TopicNode *node) {
 		out << "\n";
 	}
     return out;
-}
-
-void print_tree(TopicNode *root){ // todo overload <<
-    std::cerr << "printing: " << root->Topic << std::endl;
-	std::cerr << root << '\n';
-    for (auto &child : root->Children){
-		std::cerr << "\tprinting child: " << child->Topic << std::endl;
-        print_tree(child.get());
-	}
 }
 
 void MessageSystem::set_subscribe_all(bool subscribeAll){
@@ -78,18 +68,7 @@ bool MessageSystem::is_subscribed_topic(std::string topic){
 
 // muze i vytvorit node nody
 TopicNode *MessageSystem::get_node_by_topic(std::string topic){
-    auto *node = messages_root.get();
-
-	auto cut = cut_topic_path(topic);
-
-	for(std::string name : cut){
-		node = node->get_create_child(name);
-		if(node == nullptr){
-			return nullptr;
-		}
-	}
-
-	return node;
+	return messages_root->grow_tree(topic);
 }
 
 bool MessageSystem::add_message(mqtt::const_message_ptr message){
@@ -137,29 +116,12 @@ void MessageSystem::send_message(std::string topic, const void *data, size_t dat
 }
 
 // todo move
-std::vector<std::string> cut_topic_path(std::string topic_name){
-	std::istringstream input;
-    input.str(topic_name);
 
-	std::vector<std::string> cut;
-    for (std::string line; std::getline(input, line, '/'); ) {
-    	cut.emplace_back(line);
+void print_tree(TopicNode *root){ // todo overload <<
+    std::cerr << "printing: " << root->Topic << std::endl;
+	std::cerr << root << '\n';
+    for (auto &child : root->Children){
+		std::cerr << "\tprinting child: " << child->Topic << std::endl;
+        print_tree(child.get());
 	}
-	return cut;
 }
-
-/*
-// If we're here, the client was almost certainly disconnected.
-		// But we check, just to make sure.
-
-		if (cli.is_connected()) {
-			cout << "\nShutting down and disconnecting from the MQTT server..." << flush;
-			cli.unsubscribe(TOPIC)->wait();
-			cli.stop_consuming();
-			cli.disconnect()->wait();
-			cout << "OK" << endl;
-		}
-		else {
-			cout << "\nClient was disconnected" << endl;
-		}
-*/

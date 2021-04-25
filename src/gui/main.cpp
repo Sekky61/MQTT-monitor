@@ -16,8 +16,7 @@ int main(int argc, char *argv[])
     QApplication a(argc, argv);
 
     client cli;
-    //cli.connect_to_server("mainName", "tcp://localhost:1888");
-    //cli.sys->add_topic("cc/dd");
+
     TopicModel topmod(cli);
 
     MainWindow w;
@@ -30,8 +29,6 @@ int main(int argc, char *argv[])
     // add_topic_clicked
     QObject::connect(&w, &MainWindow::add_topic_clicked, &cli, &client::add_topic_slot);
     QObject::connect(&w, &MainWindow::publish_clicked, &cli, &client::publish_slot);
-
-
 
     w.show();
     return a.exec();

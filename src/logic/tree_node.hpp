@@ -9,12 +9,23 @@
 
 #include <vector>
 #include <string>
-
-std::vector<std::string> cut_topic_path(std::string topic_name);
+#include <sstream>
 
 template<typename T>
 class TreeNode
 {
+
+	std::vector<std::string> cut_topic_path(std::string topic_name){
+		std::istringstream input;
+    	input.str(topic_name);
+
+		std::vector<std::string> cut;
+    	for (std::string line; std::getline(input, line, '/'); ) {
+    		cut.emplace_back(line);
+		}
+		return cut;
+	}
+
 public:
 
 	std::string Topic;
@@ -44,7 +55,7 @@ public:
 	}
 
 	void set_limit_recursive(int new_limit){
-		limit = new_limit;
+		set_limit(new_limit);
 
 		for(auto &child : Children){
 			child->set_limit_recursive(limit);
@@ -75,7 +86,10 @@ public:
 	}
 
 	TreeNode<T> *get_child(std::string name){
-		auto x = std::find_if(Children.begin(), Children.end(), [&] (const std::unique_ptr<TreeNode<T> > &s) { return s->Topic == name; });
+		auto x = std::find_if(
+			Children.begin(), 
+			Children.end(),
+			[&] (auto &s) { return s->Topic == name; });
 		if (x != Children.end()){
 			// child exists
 			return (*x).get();
@@ -91,8 +105,7 @@ public:
 		return nullptr;
 	}
 
-	size_t get_number_of_children(){
-		
+        size_t number_of_children(){
 		return Children.size();
 	}
 
@@ -100,7 +113,10 @@ public:
 		if(!Parent){
 			return -1;
 		}
-		auto it = find(Parent->Children.begin(), Parent->Children.end(), [&] (const std::unique_ptr<TreeNode<T> > &s) { return s.get() == this; });
+                auto it = find_if(
+			Parent->Children.begin(), 
+			Parent->Children.end(), 
+			[&] (auto &s) { return s.get() == this; });
 		if (it != Parent->Children.end())
     	{
 			// found
@@ -123,7 +139,7 @@ public:
 		return child_node;
 	}
 
-	void grow_tree(std::string topic_name){
+	TreeNode<T> *grow_tree(std::string topic_name){
 
 		std::vector<std::string> cut = cut_topic_path(topic_name);
 
@@ -132,6 +148,8 @@ public:
 		for(std::string name : cut){
 			node = node->get_create_child(name);
 		}
+
+		return node;
 	}
 };
 

@@ -9,6 +9,7 @@
 #include <QDataStream>
 #include <QBuffer>
 #include <QImageReader>
+#include <QClipboard>
 
 MainWindow::MainWindow(QWidget *parent):
     QMainWindow(parent) ,
@@ -17,10 +18,15 @@ MainWindow::MainWindow(QWidget *parent):
     ui->setupUi(this);
     ui->value_text->setReadOnly(true);
 
+    tree_context_menu = new QMenu();
+
+    QAction *copy_full_path_action = new QAction("Copy full path", this);
+    QObject::connect(copy_full_path_action, &QAction::triggered, this, &MainWindow::context_copy_topic);
+    tree_context_menu->addAction(copy_full_path_action);
+
     QObject::connect(ui->treeView, &QAbstractItemView::clicked, this, &MainWindow::display_message);
 
-    //ui->treeView->selectionModel()->selectedIndexes();
-    ui->treeView->currentIndex();
+    ui->treeView->setContextMenuPolicy(Qt::CustomContextMenu);
 }
 
 
@@ -151,12 +157,6 @@ void MainWindow::on_add_topic_clicked()
     emit add_topic_clicked(topic_path);
 }
 
-void MainWindow::on_delete_topic_2_clicked()
-{
-    //vymaže subtopics na této pozici
-    QString topic_path = ui->topic_search->text();
-}
-
 // Publish message
 void MainWindow::on_publish_button_clicked()
 {
@@ -221,5 +221,24 @@ void MainWindow::on_delete_subtopics_clicked()
         std::cerr << "Selected index has nullptr\n";
         return;
     }
+}
 
+void MainWindow::on_treeView_customContextMenuRequested(const QPoint &pos)
+{
+    std::cerr << "context menu request\n";
+    context_menu_target = ui->treeView->indexAt(pos);
+    if (context_menu_target.isValid()) {
+        tree_context_menu->exec(ui->treeView->viewport()->mapToGlobal(pos));
+    }
+}
+
+void MainWindow::context_copy_topic()
+{
+    if (context_menu_target.isValid()) {
+        QClipboard *clipboard = QGuiApplication::clipboard();
+        auto node = static_cast<TopicNode *>(context_menu_target.internalPointer());
+        if(node){
+            clipboard->setText(QString::fromStdString(node->fullTopic));
+        }
+    }
 }

@@ -12,45 +12,26 @@ int TopicModel::rowCount(const QModelIndex &parent) const
         return 0;
     }
 
-    TopicNode *parentItem;
-    if (!parent.isValid()){
-        if(cli.sys == nullptr){
-            //std::cout << "\treturning no sys " << 0 << "\n";
-            return 0;
-        }
-        parentItem = cli.sys->messages_root;
-        if(parentItem == nullptr){
-            //std::cout << "\treturning no root " << 0 << "\n";
-            return 0;
-        }
+    if (parent.isValid()){
+        return static_cast<TopicNode*>(parent.internalPointer())->number_of_children();
     } else {
-        parentItem = static_cast<TopicNode*>(parent.internalPointer());
+        if(cli.sys == nullptr || cli.sys->messages_root.get() == nullptr){
+            return 0;
+        }
+        return cli.sys->messages_root->number_of_children();
     }
-
-    //std::cout << "\treturning " << parentItem->get_number_of_children() << "\n";
-    return parentItem->get_number_of_children();
 }
 
 int TopicModel::columnCount(const QModelIndex &parent) const
 {
-    //std::cout << "columnCount called. parent: " << parent.row() << " : " << parent.column() << " and " << parent.isValid() << "\n";
-
-    auto *node = static_cast<TopicNode*>(parent.internalPointer());
-
-    if(!parent.isValid()){
-        if(cli.sys == nullptr){
-            //std::cout << "\treturning no sys " << 0 << "\n";
+    if (parent.isValid()){
+        return static_cast<TopicNode*>(parent.internalPointer())->number_of_children() > 0 ? 1 : 0;
+    } else {
+        if(cli.sys == nullptr || cli.sys->messages_root.get() == nullptr){
             return 0;
         }
-        node = cli.sys->messages_root;
-        if(node == nullptr){
-            //std::cout << "\treturning no root " << 0 << "\n";
-            return 0;
-        }
+        return cli.sys->messages_root->number_of_children() > 0 ? 1 : 0;
     }
-
-    int has_children = node->Children.size() > 0 ? 1 : 0;
-    return has_children;
 }
 
 QVariant TopicModel::data(const QModelIndex &index, int role) const
@@ -81,16 +62,9 @@ QVariant TopicModel::data(const QModelIndex &index, int role) const
         return QVariant();
     }
 
-    std::cout << "Valid data called. index: " << index.row() << " : " << index.column() << "\n";
-
     TopicNode *item = static_cast<TopicNode*>(index.internalPointer());
 
-    /*int n_of_msgs = item->Msgs.size();
-
-    if(n_of_msgs < index.column() || index.column() < 0 ){
-        std::cout << "\treturning bad column index (" << index.column() << ") size (" << n_of_msgs << ")" << std::endl;
-        return QVariant();
-    }*/
+    //std::cout << "Valid data called. index: " << index.row() << " : " << index.column() << "\n";
 
     std::string str;
 
@@ -104,7 +78,7 @@ QVariant TopicModel::data(const QModelIndex &index, int role) const
         str = item->Topic;
     }
 
-    std::cout << "\treturning " << str << std::endl;
+    //std::cout << "\treturning " << str << std::endl;
     return QVariant( QString::fromStdString(str) );
 }
 
@@ -121,20 +95,20 @@ QVariant TopicModel::headerData(int section, Qt::Orientation orientation, int ro
 
 QModelIndex TopicModel::index(int row, int column, const QModelIndex &parent) const
 {
-    std::cout << "index called. parent: " << parent.row() << " : " << parent.column() <<  " row: " << row << " column: " << column<< "\n";
+    //std::cout << "index called. parent: " << parent.row() << " : " << parent.column() <<  " row: " << row << " column: " << column<< "\n";
 
     if (!hasIndex(row, column, parent))
             return QModelIndex();
 
     TopicNode *parentItem;
 
-    if (!parent.isValid()){
-        parentItem = cli.sys->messages_root;
-        if(parentItem == nullptr){
+    if (parent.isValid()){
+        parentItem = static_cast<TopicNode*>(parent.internalPointer());
+    } else {
+        if(cli.sys == nullptr || cli.sys->messages_root.get() == nullptr){
             return QModelIndex();
         }
-    } else {
-        parentItem = static_cast<TopicNode*>(parent.internalPointer());
+        parentItem = cli.sys->messages_root.get();
     }
 
     TopicNode *childItem = parentItem->get_child_by_index(row);
@@ -150,26 +124,26 @@ QModelIndex TopicModel::index(int row, int column, const QModelIndex &parent) co
 //Returns the parent of the model item with the given index.
 QModelIndex TopicModel::parent(const QModelIndex &index) const
 {
-    std::cout << "parent called. index: " << index.row() << " : " << index.column() << "\n";
+    //std::cout << "parent called. index: " << index.row() << " : " << index.column() << "\n";
 
     if (!index.isValid()){
-        std::cout << "null child invalid\n";
+        //std::cout << "null child invalid\n";
         return QModelIndex();
     }
 
     TopicNode *childItem = static_cast<TopicNode*>(index.internalPointer());
     if(childItem == nullptr){
-        std::cout << "null child null\n";
+        //std::cout << "null child null\n";
         return QModelIndex();
     }
 
     TopicNode *parentItem = childItem->Parent;
 
-    if (parentItem == cli.sys->messages_root){
+    if (parentItem == cli.sys->messages_root.get()){
         return QModelIndex();
     }
 
-    std::cout << "child " << parentItem->get_own_index() << " : " << 0 << "\n";
+    //std::cout << "child " << parentItem->get_own_index() << " : " << 0 << "\n";
     return createIndex(parentItem->get_own_index(), 0, parentItem); // index na rodice
 }
 

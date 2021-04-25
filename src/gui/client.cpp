@@ -21,7 +21,7 @@ int client::connect_to_server(QString client_name, QString server_address){
                 emit mqtt_data_changed();
                 std::cerr << "Emited mqtt_data_changed\n";
                 this->sys->add_message(message);
-                print_tree(this->sys->messages_root);
+                print_tree(this->sys->messages_root.get());
             });
 
     int status = sys->connect_client();
@@ -38,7 +38,9 @@ void client::user_clicked_connect(QString client_name, QString server_address)
 
     if(connected){
         sys->add_topic("t1");
+        sys->add_topic("t3");
         sys->add_topic("t2/sub1");
+        sys->add_topic("t2/sub2");
         emit connection_succesful();
         emit mqtt_data_changed();
     } else {
