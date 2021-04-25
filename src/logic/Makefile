@@ -4,7 +4,7 @@ LDFLAGS = -lpaho-mqtt3a -lpaho-mqttpp3
 
 CPP_FILES = entry.cpp message_system.cpp
 
-all: listen_all test mqttsim
+all: listen_all test
 
 # Object files dependencies
 
@@ -14,9 +14,6 @@ entry.o: entry.cpp
 
 %.o: %.cpp
 	$(CC) $(CXXFLAGS) -c $< -o $@
-
-mqttsim: sensor_simulator.o message_system.o
-	$(CC) $(CXXFLAGS) $^ -o $@ $(LDFLAGS)
 
 listen_all: entry.o message_system.o
 	$(CC) $(CXXFLAGS) $^ -o $@ $(LDFLAGS)
@@ -29,4 +26,4 @@ test: test.cpp
 .PHONY: clean
 
 clean:
-	rm -f listen_all test mqttsim *.o
+	rm -f listen_all test *.o

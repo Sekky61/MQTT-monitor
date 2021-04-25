@@ -1,15 +1,17 @@
-#include "message_system.hpp"
+/**
+ * Simulator provozu mqtt
+ * Autor: Michal Majer xmajer21
+ */
+
 
 #include <iostream>
-
 #include <string>
 #include <unordered_map>
-
 #include <stdexcept>
-
 #include <fstream>
 #include <streambuf>
 
+#include "../logic/message_system.hpp"
 #include "sim_device.hpp"
 
 class ConfigReader
