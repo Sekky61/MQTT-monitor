@@ -8,36 +8,87 @@
 
 #include <cstdlib>
 
+/** \class sim_device
+ *  \brief Abstraktni trida simulovaneho pristroje
+ * 
+ *  Trida slouzi jako rozhrani pro volani generate_msg()
+ *  ze smycky simulatoru.
+ * 
+ */
 class sim_device
 {
-public:
-
-    // vlastnosti vsech devices
     std::string name;
     std::string topic;
     int rate;
 
 public:
 
+    /**
+     * Ciste virtualni metoda.
+     * 
+     * Generuje zpravu pro odeslani do site.
+     */
     virtual std::string generate_msg() = 0;
 
+    /**
+     * Konstruktor
+     */
     sim_device()
     {
         std::cout << "Constructing sim_device \n";
     }
 
+    /**
+     * Setter pro atribut name
+     * 
+     * \param new_name nove jmeno pristroje
+     */
     void set_name(std::string new_name){
         name = new_name;
     }
 
+    /**
+     * Getter pro atribut name
+     */
+    std::string name(){
+        return name;
+    }
+
+    /**
+     * Setter pro atribut topic
+     * 
+     * \param new_topic novy topic pod kterym bude pristroj publikovat
+     */
     void set_topic(std::string new_topic){
         topic = new_topic;
     }
 
+    /**
+     * Getter pro atribut topic
+     */
+    std::string topic(){
+        return topic;
+    }
+
+    /**
+     * Setter pro atribut rate
+     * 
+     * \param new_rate nova perioda odesilani zpravy
+     */
     void set_rate(int new_rate){
         rate = new_rate;
     }
 
+    /**
+     * Getter pro atribut rate
+     */
+    int rate(){
+        return rate;
+    }
+
+    /**
+     * Destruktor
+     */
     virtual ~sim_device()
     { std::cout << "Destructing sim_device \n"; }  
 };

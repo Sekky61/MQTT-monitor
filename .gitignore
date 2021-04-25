@@ -13,5 +13,6 @@ listen_all
 mqttsim
 
 build*
+doc
 *.user
 .vscode
