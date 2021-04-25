@@ -87,6 +87,9 @@ public:
 
         current_value += increment;
 
+        current_value = std::max(current_value, min_val);
+        current_value = std::min(current_value, max_val);
+
         return std::to_string(current_value);
     }
 
@@ -98,16 +101,37 @@ class value_set_device : public sim_device {
 
     float change_chance;
 
+    bool initialized;
+    std::string current_value;
+
     std::vector<std::string> values;
 
 public:
-    value_set_device()
+    value_set_device() : 
+        initialized(false)
     {
         std::cout << "Constructing value_set_device \n";
     }
 
     virtual std::string generate_msg() override {
-        return "value set msg";
+
+        if(!initialized){
+            current_value = pick_random_value();
+            initialized = true;
+        }
+
+        float r = static_cast <float> (rand()) / static_cast <float> (RAND_MAX);
+        if(r<change_chance){
+            // change current value
+            current_value = pick_random_value();
+        }
+
+        return current_value;
+    }
+
+    std::string pick_random_value(){
+        int index = rand() % values.size();
+        return values[index];
     }
 
     void set_values(std::vector<std::string> new_values){

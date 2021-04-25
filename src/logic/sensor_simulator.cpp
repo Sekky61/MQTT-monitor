@@ -48,9 +48,6 @@ public:
         Parser state = Parser::Header;
 
         sim_device *dev = nullptr;
-        std::string name;
-        std::string topic;
-        int rate;
 
         while (std::getline(buffer, line))
         {
