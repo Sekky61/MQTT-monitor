@@ -6,6 +6,8 @@
 #include <iostream>
 #include <unordered_map>
 
+#include <cstdlib>
+
 class sim_device
 {
 public:
@@ -46,10 +48,16 @@ class float_sim_device : public sim_device {
     float max_val;
     float max_delta;
 
+    bool seeded;
     float current_value;
 
 public:
-    float_sim_device()
+    float_sim_device():
+        min_val(0),
+        max_val(100),
+        max_delta(0.5),
+        seeded(false),
+        current_value(0)
     {
         std::cout << "Constructing float_sim_device \n";
     }
@@ -67,7 +75,19 @@ public:
     }
 
     virtual std::string generate_msg() override {
-        return "float msg";
+        
+        if(!seeded){
+            // source: https://stackoverflow.com/questions/686353/random-float-number-generation
+            current_value = min_val + static_cast <float> (rand()) /( static_cast <float> (RAND_MAX/(max_val-min_val)));
+            seeded = true;
+        }
+
+        // increment in range <-max_delta;max_delta>
+        float increment = -max_delta + static_cast <float> (rand()) /( static_cast <float> (RAND_MAX/(2*max_delta)));
+
+        current_value += increment;
+
+        return std::to_string(current_value);
     }
 
     virtual ~float_sim_device()

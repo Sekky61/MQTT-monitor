@@ -282,7 +282,17 @@ int SensorNetwork::start_transmitting()
 
 int main(int argc, char *argv[])
 {
-    MessageSystem sys("Tester", "tcp://localhost:1888");
+    // seeding rand
+    srand (static_cast <unsigned> (time(0)));
+
+    if(argc != 2){
+        std::cerr << "Usage: ./sim URL\n";
+        return 1;
+    }
+
+    std::string server_address = argv[1];
+
+    MessageSystem sys("Tester", server_address);
 
     SensorNetwork network(sys);
 

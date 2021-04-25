@@ -10,7 +10,7 @@ app
 test
 mock_publish
 listen_all
-sim
+mqttsim
 
 build*
 *.user
