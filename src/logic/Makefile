@@ -9,7 +9,7 @@ all: listen_all test sim
 # Object files dependencies
 
 message_system.o: message_system.cpp message_system.hpp
-sensor_simulator.o: sensor_simulator.cpp
+sensor_simulator.o: sensor_simulator.cpp sim_device.hpp
 entry.o: entry.cpp
 
 %.o: %.cpp

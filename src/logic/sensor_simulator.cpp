@@ -85,18 +85,18 @@ public:
                 {
                     throw std::runtime_error("Parse error: unknown device kind");
                 }
-                state = Parser::Param;
+                state = Parser::DeviceName;
                 break;
 
             case Parser::DeviceName:
-                name = line;
+                dev->set_name(line);
                 state = Parser::Topic;
                 break;
 
             case Parser::Topic:
                 if (line.substr(0, 6) == "topic ")
                 {
-                    topic = line.substr(6);
+                    dev->set_topic(line.substr(6));
                     state = Parser::Rate;
                 }
                 else
@@ -108,8 +108,8 @@ public:
             case Parser::Rate:
                 if (line.substr(0, 5) == "rate ")
                 {
-                    rate = std::stoi(line.substr(5));
-                    state = Parser::Kind;
+                    dev->set_rate(std::stoi(line.substr(5)));
+                    state = Parser::Param;
                 }
                 else
                 {
@@ -120,57 +120,78 @@ public:
             case Parser::Param:
                 if (line == "")
                 {
-                    state = Parser::DeviceName;
+                    devices.push_back(dev);
+                    dev = nullptr;
+                    state = Parser::DeviceType;
                     break;
+                }
+
+                std::vector<std::string> tokens;
+                std::string token;
+                std::istringstream tokenStream(line);
+                while (std::getline(tokenStream, token, ' '))
+                {
+                    tokens.push_back(token);
+                }
+
+                // values muze mit libovolny pocet tokenu
+                if (tokens[0] == "values")
+                {
+                    std::vector<std::string>::const_iterator second_item = tokens.begin() + 1;
+                    std::vector<std::string>::const_iterator end = tokens.end();
+                    std::vector<std::string> string_values(second_item, end);
+
+                    // throws if actual object is not derived class
+                    value_set_device *set_dev = dynamic_cast<value_set_device *>(dev);
+
+                    set_dev->set_values(string_values);
+
+                    state = Parser::Param;
+                    continue;
+                }
+
+                // ostatni presne 2
+                if (tokens.size() != 2)
+                {
+                    throw std::runtime_error("Parse error: key<space>value expected");
+                }
+
+                std::string prop_name = tokens[0];
+                std::string prop_value = tokens[1];
+
+                //todo switch idk
+                if (prop_name == "max-val")
+                {
+                    float_sim_device *flt_dev = dynamic_cast<float_sim_device *>(dev);
+                    flt_dev->set_max_val(std::stof(prop_value));
+                }
+                else if (prop_name == "min-val")
+                {
+                    float_sim_device *flt_dev = dynamic_cast<float_sim_device *>(dev);
+                    flt_dev->set_min_val(std::stof(prop_value));
+                }
+                else if (prop_name == "max-delta")
+                {
+                    float_sim_device *flt_dev = dynamic_cast<float_sim_device *>(dev);
+                    flt_dev->set_max_delta(std::stof(prop_value));
+                }
+                else if (prop_name == "change-chance")
+                {
+                    value_set_device *set_dev = dynamic_cast<value_set_device *>(dev);
+                    set_dev->set_change_chance(std::stof(prop_value));
                 }
                 else
                 {
-                    std::vector<std::string> tokens;
-                    std::string token;
-                    std::istringstream tokenStream(line);
-                    while (std::getline(tokenStream, token, ' '))
-                    {
-                        tokens.push_back(token);
-                    }
-
-                    // values muze mit libovolny pocet tokenu
-                    if (tokens[0] == "values")
-                    {
-                        std::vector<std::string>::const_iterator second_item = tokens.begin() + 1;
-                        std::vector<std::string>::const_iterator end = tokens.end();
-                        std::vector<std::string> string_values(second_item, end);
-                        devices.back().values = string_values;
-
-                        state = Parser::Param;
-                        continue;
-                    }
-
-                    // ostatni presne 2
-                    if (tokens.size() != 2)
-                    {
-                        throw std::runtime_error("Parse error: key<space>value expected");
-                    }
-
-                    std::string prop_name = tokens[0];
-                    std::string prop_value = tokens[1];
-
-                    if (prop_name == "rate")
-                    {
-                        devices.back().rate = std::stoi(prop_value);
-                    }
-                    else if (prop_name == "topic")
-                    {
-                        devices.back().topic = prop_value;
-                    }
-                    else
-                    {
-                        devices.back().properties[prop_name] = std::stof(prop_value);
-                    }
-
-                    state = Parser::Param;
+                    throw std::runtime_error("Parse error: unknown parameter");
                 }
+
+                state = Parser::Param;
                 break;
             }
+        }
+
+        if(dev != nullptr){
+            devices.push_back(dev);
         }
 
         return devices;
@@ -195,16 +216,15 @@ class SensorNetwork
 public:
     int transmitting;
     std::string config_file_path;
-    std::vector<sim_device> devices;
+    std::vector<sim_device *> devices;
 
-    SensorNetwork(MessageSystem &sys);
+    SensorNetwork(MessageSystem &sys):
+        system(sys),
+        transmitting(5) {};
 
     int get_devices(std::string);
     int start_transmitting();
 };
-
-SensorNetwork::SensorNetwork(MessageSystem &sys) : system(sys),
-                                                   transmitting(5) {}
 
 int SensorNetwork::get_devices(std::string file_path)
 {
@@ -229,15 +249,12 @@ int SensorNetwork::start_transmitting()
 
     std::vector<int> delays;
 
-    for (auto &dev : devices)
+    std::cerr << "Have " << devices.size() << " devices\n";
+
+    for (auto *dev : devices)
     {
         // Do stuff
-        std::cout << "Starting transmission: " << dev.name << " with rate " << dev.rate << std::endl;
-
-        for (auto &prop : dev.properties)
-        {
-            std::cout << "\t" << prop.first << " : " << prop.second << "\n";
-        }
+        std::cout << "Starting transmission: " << dev->name << " with rate " << dev->rate << std::endl;
     }
 
     int clock = 0; // mby clock = 1
@@ -245,15 +262,15 @@ int SensorNetwork::start_transmitting()
     while (true)
     {
         std::this_thread::sleep_for(1000ms);
-        std::cerr << "Clock " << clock << "\n";
+        std::cerr << "Clk" << clock << "\n";
 
-        for (auto &dev : devices)
+        for (auto *dev : devices)
         {
-            if (clock % dev.rate == 0)
+            if (clock % dev->rate == 0)
             {
-                std::string msg = dev.generate_msg();
-                system.send_message(dev.topic, msg.data(), msg.size());
-                std::cerr << "Clock " << clock << ": Sent " << dev.topic << " - " << msg << "\n";
+                std::string msg = dev->generate_msg();
+                system.send_message(dev->topic, msg.data(), msg.size());
+                std::cerr << "Sent " << dev->topic << " - " << msg << "\n";
             }
         }
 
@@ -273,16 +290,6 @@ int main(int argc, char *argv[])
     if (ret)
     {
         return ret;
-    }
-
-    for (auto &dev : network.devices)
-    {
-        // Do stuff
-        std::cout << "\nDevice: " << dev.name << std::endl;
-        for (auto &prop : dev.properties)
-        {
-            std::cout << "\t" << prop.first << " : " << prop.second << "\n";
-        }
     }
 
     network.start_transmitting();

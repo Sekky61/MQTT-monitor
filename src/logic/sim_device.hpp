@@ -54,8 +54,19 @@ public:
         std::cout << "Constructing float_sim_device \n";
     }
 
+    void set_min_val(float new_min_val){
+        min_val = new_min_val;
+    }
+
+    void set_max_val(float new_max_val){
+        max_val = new_max_val;
+    }
+
+    void set_max_delta(float new_max_delta){
+        max_delta = new_max_delta;
+    }
+
     virtual std::string generate_msg() override {
-        std::cout << "float device " << name <<  " generating msg\n";
         return "float msg";
     }
 
@@ -65,50 +76,30 @@ public:
 
 class value_set_device : public sim_device {
 
+    float change_chance;
+
     std::vector<std::string> values;
 
 public:
     value_set_device()
     {
-        std::cout << "Constructing float_sim_device \n";
+        std::cout << "Constructing value_set_device \n";
     }
 
     virtual std::string generate_msg() override {
-        std::cout << "set device " << name <<  " generating msg\n";
-        return "float msg";
+        return "value set msg";
+    }
+
+    void set_values(std::vector<std::string> new_values){
+        values = new_values;
+    }
+
+    void set_change_chance(float new_change_chance){
+        change_chance = new_change_chance;
     }
 
     virtual ~value_set_device()
     { std::cout << "Destructing float_sim_device \n"; }  
 };
-
-/*
-
-// todo delete
-    float current_value;
-
-    bool has_range;
-    bool has_set_of_values;
-
-    std::vector<std::string> values;
-    std::unordered_map<std::string, float> properties;
-
-void finalize(){
-
-        auto min_val = properties.find("min-val");
-        auto max_val = properties.find("max-val");
-        auto max_delta = properties.find("max-delta");
-        auto change_chance = properties.find("change-chance");
-
-        if(min_val != properties.end() && max_val != properties.end()){
-            has_range = true;
-            current_value = 1.0f;
-        }
-
-        if(change_chance != properties.end() && values.size() != 0){
-            has_set_of_values = true;
-        }
-    }
-*/
 
 #endif
