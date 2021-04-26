@@ -30,6 +30,8 @@ public:
      */
     virtual std::string generate_msg() = 0;
 
+    virtual void set_value(std::string) = 0;
+
     /**
      * Konstruktor
      */
@@ -50,7 +52,7 @@ public:
     /**
      * Getter pro atribut name
      */
-    std::string name(){
+    std::string get_name(){
         return name;
     }
 
@@ -66,7 +68,7 @@ public:
     /**
      * Getter pro atribut topic
      */
-    std::string topic(){
+    std::string get_topic(){
         return topic;
     }
 
@@ -82,7 +84,7 @@ public:
     /**
      * Getter pro atribut rate
      */
-    int rate(){
+    int get_rate(){
         return rate;
     }
 
@@ -144,6 +146,10 @@ public:
         return std::to_string(current_value);
     }
 
+    virtual void set_value(std::string msg) override {
+        current_value = std::stof(msg);
+    }
+
     virtual ~float_sim_device()
     { std::cout << "Destructing float_sim_device \n"; }  
 };
@@ -178,6 +184,10 @@ public:
         }
 
         return current_value;
+    }
+
+    virtual void set_value(std::string msg) override {
+        current_value = msg;
     }
 
     std::string pick_random_value(){

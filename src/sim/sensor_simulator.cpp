@@ -3,7 +3,6 @@
  * Autor: Michal Majer xmajer21
  */
 
-
 #include <iostream>
 #include <string>
 #include <unordered_map>
@@ -189,7 +188,8 @@ public:
             }
         }
 
-        if(dev != nullptr){
+        if (dev != nullptr)
+        {
             devices.push_back(dev);
         }
 
@@ -217,12 +217,23 @@ public:
     std::string config_file_path;
     std::vector<sim_device *> devices;
 
-    SensorNetwork(MessageSystem &sys):
-        system(sys),
-        transmitting(5) {};
+    SensorNetwork(MessageSystem &sys) : system(sys),
+                                        transmitting(5)
+    {
+        if (!system.connected)
+        {
+            int conn = system.connect_client();
+            if (conn != 0)
+            {
+                throw conn; //todo
+            }
+        }
+    };
 
     int get_devices(std::string);
     int start_transmitting();
+    void sub_to_all_devices();
+    sim_device *get_device_by_topic(std::string topic);
 };
 
 int SensorNetwork::get_devices(std::string file_path)
@@ -246,14 +257,12 @@ int SensorNetwork::start_transmitting()
         }
     }
 
-    std::vector<int> delays;
-
     std::cerr << "Have " << devices.size() << " devices\n";
 
     for (auto *dev : devices)
     {
         // Do stuff
-        std::cout << "Starting transmission: " << dev->name << " with rate " << dev->rate << std::endl;
+        std::cout << "Starting transmission: " << dev->get_name() << " with rate " << dev->get_rate() << std::endl;
     }
 
     int clock = 0; // mby clock = 1
@@ -265,11 +274,11 @@ int SensorNetwork::start_transmitting()
 
         for (auto *dev : devices)
         {
-            if (clock % dev->rate == 0)
+            if (clock % dev->get_rate() == 0)
             {
                 std::string msg = dev->generate_msg();
-                system.send_message(dev->topic, msg.data(), msg.size());
-                std::cerr << "Sent " << dev->topic << " - " << msg << "\n";
+                system.send_message(dev->get_topic(), msg.data(), msg.size());
+                std::cerr << "Sent " << dev->get_topic() << " - " << msg << "\n";
             }
         }
 
@@ -279,13 +288,35 @@ int SensorNetwork::start_transmitting()
     return 0;
 }
 
+void SensorNetwork::sub_to_all_devices()
+{
+    for (auto *dev : devices)
+    {
+        system.client.subscribe(dev->get_topic(), 1);
+    }
+}
+
+sim_device *SensorNetwork::get_device_by_topic(std::string topic)
+{
+    auto it = std::find_if(devices.begin(), devices.end(), [&](auto *s) { return s->get_topic() == topic; });
+    if (it == devices.end())
+    {
+        return nullptr;
+    }
+    else
+    {
+        return *it;
+    }
+}
+
 int main(int argc, char *argv[])
 {
     // seeding rand
-    srand (static_cast <unsigned> (time(0)));
+    srand(static_cast<unsigned>(time(0)));
 
-    if(argc != 2){
-        std::cerr << "Usage: ./sim URL\n";
+    if (argc != 2)
+    {
+        std::cerr << "Usage: ./sim file\n";
         return 1;
     }
 
@@ -300,6 +331,21 @@ int main(int argc, char *argv[])
     {
         return ret;
     }
+
+    network.sub_to_all_devices();
+
+    sys.client.set_message_callback([&network](const mqtt::const_message_ptr message) {
+        auto topic = message->get_topic();
+        auto msg = message->get_payload();
+        std::cerr
+            << "Callback: " << topic
+            << " : " << msg << std::endl;
+        sim_device *dev = network.get_device_by_topic(topic);
+        if (dev)
+        {
+            dev->set_value(msg);
+        }
+    });
 
     network.start_transmitting();
 
