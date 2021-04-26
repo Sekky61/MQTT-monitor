@@ -99,6 +99,17 @@ private slots:
 public slots:
 
     void connection_succesful_slot();
+    void on_dial_valueChanged(int value);
+
+    void on_dial_actionTriggered(int action);
+
+    void on_temp_button_clicked();
+
+    void on_screenshot_button_clicked();
+
+    void on_light_set_button_clicked();
+
+    void on_snapshot_button_clicked();
 
 private:
     Ui::MainWindow *ui;

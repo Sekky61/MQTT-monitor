@@ -17,6 +17,28 @@ MainWindow::MainWindow(QWidget *parent):
 {
     ui->setupUi(this);
     ui->value_text->setReadOnly(true);
+    ui->value_text_2->setReadOnly(true);
+
+    ui->progressBar->setTextVisible(false);
+    ui->dial->setWrapping(false);
+
+    //na záčátku bude nastaveno na hodnotu přijatou ze zprávy
+    int message_val = 13; //to si přepiš
+    ui->lcdNumber->display(message_val);
+    ui->progressBar->setValue(message_val);
+    ui->lcdNumber->setSmallDecimalPoint(true);
+
+
+    //dashboard text - vždy
+    ui->radio_text->setChecked(true);
+    ui->radio_text->setAutoExclusive(true);
+
+    //lihts - readonly
+    ui->device_lights_opt->setReadOnly(true);
+    ui->room_lights_opt->setReadOnly(true);
+
+
+
 
     tree_context_menu = new QMenu();
 
@@ -119,10 +141,7 @@ void MainWindow::on_actionSelect_All_triggered()
 
 void MainWindow::on_actionAbout_Aplication_triggered()
 {
-    //QApplication::aboutQt;
-    AboutApplication aboutapplication;
-    aboutapplication.setModal(true);
-    aboutapplication.exec();
+    QMessageBox::aboutQt(this);
 }
 
 void MainWindow::on_actionDefault_size_triggered()
@@ -257,4 +276,51 @@ void MainWindow::delete_subtopics()
             emit tree_data_changed();
         }
     }
+void MainWindow::on_dial_valueChanged(int value)
+{
+    //nastavuje se na hodnotu ciferníku
+    ui->lcdNumber->display(value);
+    ui->progressBar->setValue(value);
+
+}
+
+void MainWindow::on_temp_button_clicked()
+{
+    int new_val = ui->lcdNumber->value(); //získáme novou hodnotu zprávy
+    //TODO přepis zprávy
+}
+
+void MainWindow::on_dial_actionTriggered(int action)
+{
+
+}
+
+
+void MainWindow::on_screenshot_button_clicked()
+{
+    WId window = QWidget::winId(); //rozměry window
+    QScreen *screen = QGuiApplication::primaryScreen();
+    QPixmap *map = new QPixmap(screen->grabWindow(window));
+
+
+    Dialog *screenshot = new Dialog(this);
+    screenshot->setModal(true);
+    screenshot->exec();
+}
+
+void MainWindow::on_light_set_button_clicked()
+{
+    QString room = ui->room_lights_opt->text();
+    QString device = ui->device_lights_opt->text();
+    if (ui->lights_on->isCheckable()){
+        //zapnutí světel na zadané lokaci
+    }
+    if (ui->lights_off->isCheckable()){
+        //vypnutí světel na zadané lokaci
+    }
+}
+
+void MainWindow::on_snapshot_button_clicked()
+{
+    //zobrazí obrázek
 }

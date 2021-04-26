@@ -128,6 +128,30 @@ QPushButton:hover{
       <bool>true</bool>
      </property>
     </widget>
+    <widget class="QPushButton" name="screenshot_button">
+     <property name="geometry">
+      <rect>
+       <x>0</x>
+       <y>640</y>
+       <width>81</width>
+       <height>81</height>
+      </rect>
+     </property>
+     <property name="font">
+      <font>
+       <pointsize>8</pointsize>
+       <weight>75</weight>
+       <bold>true</bold>
+      </font>
+     </property>
+     <property name="styleSheet">
+      <string notr="true">background-color: rgb(89, 4, 1);
+color: rgb(255, 255, 255);</string>
+     </property>
+     <property name="text">
+      <string>SCREENSHOT</string>
+     </property>
+    </widget>
    </widget>
    <widget class="QStackedWidget" name="Pages">
     <property name="geometry">
@@ -135,11 +159,11 @@ QPushButton:hover{
       <x>80</x>
       <y>0</y>
       <width>1071</width>
-      <height>791</height>
+      <height>841</height>
      </rect>
     </property>
     <property name="currentIndex">
-     <number>0</number>
+     <number>1</number>
     </property>
     <widget class="QWidget" name="page">
      <widget class="QScrollArea" name="scrollArea">
@@ -346,7 +370,7 @@ border-radius: 20px;
         <property name="geometry">
          <rect>
           <x>70</x>
-          <y>300</y>
+          <y>290</y>
           <width>71</width>
           <height>21</height>
          </rect>
@@ -367,7 +391,7 @@ border-radius: 20px;
         <property name="geometry">
          <rect>
           <x>70</x>
-          <y>330</y>
+          <y>320</y>
           <width>531</width>
           <height>101</height>
          </rect>
@@ -407,7 +431,7 @@ border-radius: 20px;
           <property name="geometry">
            <rect>
             <x>0</x>
-            <y>0</y>
+            <y>-10</y>
             <width>531</width>
             <height>101</height>
            </rect>
@@ -431,7 +455,7 @@ border-radius: 20px;
         <property name="geometry">
          <rect>
           <x>70</x>
-          <y>440</y>
+          <y>430</y>
           <width>71</width>
           <height>21</height>
          </rect>
@@ -452,7 +476,7 @@ border-radius: 20px;
         <property name="geometry">
          <rect>
           <x>70</x>
-          <y>470</y>
+          <y>460</y>
           <width>531</width>
           <height>101</height>
          </rect>
@@ -472,9 +496,9 @@ border-radius: 20px;
          <widget class="QGraphicsView" name="graphicsView_3">
           <property name="geometry">
            <rect>
-            <x>-5</x>
-            <y>-9</y>
-            <width>541</width>
+            <x>-10</x>
+            <y>-10</y>
+            <width>551</width>
             <height>111</height>
            </rect>
           </property>
@@ -508,18 +532,306 @@ background-color: rgb(77, 121, 140);</string>
          <string>PUBLISH</string>
         </property>
        </widget>
-       <widget class="QPushButton" name="dumpButton">
+       <widget class="QComboBox" name="topic_label_dash">
         <property name="geometry">
          <rect>
-          <x>10</x>
-          <y>220</y>
-          <width>89</width>
-          <height>25</height>
+          <x>450</x>
+          <y>610</y>
+          <width>151</width>
+          <height>22</height>
          </rect>
         </property>
-        <property name="text">
-         <string>DUMP</string>
+        <property name="editable">
+         <bool>true</bool>
         </property>
+       </widget>
+       <widget class="QComboBox" name="room_lights_opt_3">
+        <property name="geometry">
+         <rect>
+          <x>450</x>
+          <y>580</y>
+          <width>151</width>
+          <height>22</height>
+         </rect>
+        </property>
+        <property name="editable">
+         <bool>true</bool>
+        </property>
+       </widget>
+       <widget class="QLabel" name="subtopic_label">
+        <property name="geometry">
+         <rect>
+          <x>350</x>
+          <y>610</y>
+          <width>91</width>
+          <height>20</height>
+         </rect>
+        </property>
+        <property name="font">
+         <font>
+          <pointsize>12</pointsize>
+         </font>
+        </property>
+        <property name="text">
+         <string>Subtopic:</string>
+        </property>
+       </widget>
+       <widget class="QLabel" name="room_label_3">
+        <property name="geometry">
+         <rect>
+          <x>350</x>
+          <y>580</y>
+          <width>61</width>
+          <height>20</height>
+         </rect>
+        </property>
+        <property name="font">
+         <font>
+          <pointsize>12</pointsize>
+         </font>
+        </property>
+        <property name="text">
+         <string>Topic:</string>
+        </property>
+       </widget>
+       <widget class="QPushButton" name="dashboard_add">
+        <property name="geometry">
+         <rect>
+          <x>490</x>
+          <y>690</y>
+          <width>111</width>
+          <height>21</height>
+         </rect>
+        </property>
+        <property name="styleSheet">
+         <string notr="true">color: rgb(255, 255, 255);
+background-color: rgb(77, 121, 140);</string>
+        </property>
+        <property name="text">
+         <string>Add to dash board</string>
+        </property>
+       </widget>
+       <widget class="QGroupBox" name="groupBox">
+        <property name="geometry">
+         <rect>
+          <x>350</x>
+          <y>640</y>
+          <width>51</width>
+          <height>21</height>
+         </rect>
+        </property>
+        <property name="styleSheet">
+         <string notr="true">QGroupBox{
+border: 2px solid rgb(37,39,48);
+border-left:none;
+border-right:none;
+border-top:none;
+border-bottom:none;
+}</string>
+        </property>
+        <property name="title">
+         <string/>
+        </property>
+        <widget class="QRadioButton" name="radio_text">
+         <property name="geometry">
+          <rect>
+           <x>0</x>
+           <y>0</y>
+           <width>51</width>
+           <height>20</height>
+          </rect>
+         </property>
+         <property name="text">
+          <string>Text</string>
+         </property>
+         <property name="checked">
+          <bool>true</bool>
+         </property>
+        </widget>
+       </widget>
+       <widget class="QGroupBox" name="groupBox_2">
+        <property name="geometry">
+         <rect>
+          <x>420</x>
+          <y>640</y>
+          <width>81</width>
+          <height>21</height>
+         </rect>
+        </property>
+        <property name="styleSheet">
+         <string notr="true">QGroupBox{
+border: 2px solid rgb(37,39,48);
+border-left:none;
+border-right:none;
+border-top:none;
+border-bottom:none;
+}</string>
+        </property>
+        <property name="title">
+         <string/>
+        </property>
+        <widget class="QRadioButton" name="radio_water">
+         <property name="geometry">
+          <rect>
+           <x>0</x>
+           <y>0</y>
+           <width>81</width>
+           <height>20</height>
+          </rect>
+         </property>
+         <property name="text">
+          <string>Watteriness</string>
+         </property>
+        </widget>
+       </widget>
+       <widget class="QGroupBox" name="groupBox_3">
+        <property name="geometry">
+         <rect>
+          <x>510</x>
+          <y>640</y>
+          <width>91</width>
+          <height>21</height>
+         </rect>
+        </property>
+        <property name="styleSheet">
+         <string notr="true">QGroupBox{
+border: 2px solid rgb(37,39,48);
+border-left:none;
+border-right:none;
+border-top:none;
+border-bottom:none;
+}</string>
+        </property>
+        <property name="title">
+         <string/>
+        </property>
+        <widget class="QRadioButton" name="radio_temp">
+         <property name="geometry">
+          <rect>
+           <x>0</x>
+           <y>0</y>
+           <width>91</width>
+           <height>20</height>
+          </rect>
+         </property>
+         <property name="text">
+          <string>Temperature</string>
+         </property>
+        </widget>
+       </widget>
+       <widget class="QGroupBox" name="groupBox_4">
+        <property name="geometry">
+         <rect>
+          <x>350</x>
+          <y>660</y>
+          <width>71</width>
+          <height>21</height>
+         </rect>
+        </property>
+        <property name="styleSheet">
+         <string notr="true">QGroupBox{
+border: 2px solid rgb(37,39,48);
+border-left:none;
+border-right:none;
+border-top:none;
+border-bottom:none;
+}</string>
+        </property>
+        <property name="title">
+         <string/>
+        </property>
+        <widget class="QRadioButton" name="radio_cameras">
+         <property name="geometry">
+          <rect>
+           <x>0</x>
+           <y>0</y>
+           <width>71</width>
+           <height>17</height>
+          </rect>
+         </property>
+         <property name="text">
+          <string>Cameras</string>
+         </property>
+        </widget>
+       </widget>
+       <widget class="QGroupBox" name="groupBox_5">
+        <property name="geometry">
+         <rect>
+          <x>420</x>
+          <y>660</y>
+          <width>111</width>
+          <height>21</height>
+         </rect>
+        </property>
+        <property name="styleSheet">
+         <string notr="true">QGroupBox{
+border: 2px solid rgb(37,39,48);
+border-left:none;
+border-right:none;
+border-top:none;
+border-bottom:none;
+}</string>
+        </property>
+        <property name="title">
+         <string/>
+        </property>
+        <widget class="QRadioButton" name="radio_thermo">
+         <property name="geometry">
+          <rect>
+           <x>0</x>
+           <y>0</y>
+           <width>101</width>
+           <height>20</height>
+          </rect>
+         </property>
+         <property name="text">
+          <string>Thermostat</string>
+         </property>
+        </widget>
+       </widget>
+       <widget class="QGroupBox" name="groupBox_6">
+        <property name="geometry">
+         <rect>
+          <x>510</x>
+          <y>660</y>
+          <width>81</width>
+          <height>21</height>
+         </rect>
+        </property>
+        <property name="styleSheet">
+         <string notr="true">QGroupBox{
+border: 2px solid rgb(37,39,48);
+border-left:none;
+border-right:none;
+border-top:none;
+border-bottom:none;
+}</string>
+        </property>
+        <property name="title">
+         <string/>
+        </property>
+        <widget class="QRadioButton" name="radioButton">
+         <property name="geometry">
+          <rect>
+           <x>0</x>
+           <y>0</y>
+           <width>82</width>
+           <height>17</height>
+          </rect>
+         </property>
+         <property name="styleSheet">
+          <string notr="true">QGroupBox{
+border: 2px solid rgb(37,39,48);
+border-left:none;
+border-right:none;
+border-top:none;
+border-bottom:none;
+}</string>
+         </property>
+         <property name="text">
+          <string>Lights</string>
+         </property>
+        </widget>
        </widget>
       </widget>
      </widget>
@@ -529,7 +841,7 @@ background-color: rgb(77, 121, 140);</string>
         <x>0</x>
         <y>80</y>
         <width>431</width>
-        <height>721</height>
+        <height>741</height>
        </rect>
       </property>
       <attribute name="headerVisible">
@@ -732,6 +1044,518 @@ background-color: rgb(77, 121, 140);</string>
        </property>
       </widget>
      </widget>
+     <widget class="QLabel" name="label_4">
+      <property name="geometry">
+       <rect>
+        <x>20</x>
+        <y>100</y>
+        <width>201</width>
+        <height>31</height>
+       </rect>
+      </property>
+      <property name="font">
+       <font>
+        <pointsize>11</pointsize>
+        <weight>50</weight>
+        <bold>false</bold>
+       </font>
+      </property>
+      <property name="text">
+       <string>Zpráva přijata z TOPICU:</string>
+      </property>
+     </widget>
+     <widget class="QLabel" name="topic_name">
+      <property name="geometry">
+       <rect>
+        <x>210</x>
+        <y>105</y>
+        <width>221</width>
+        <height>21</height>
+       </rect>
+      </property>
+      <property name="font">
+       <font>
+        <pointsize>12</pointsize>
+        <weight>75</weight>
+        <bold>true</bold>
+       </font>
+      </property>
+      <property name="text">
+       <string>Nastaví se na cestu</string>
+      </property>
+     </widget>
+     <widget class="QWidget" name="widget_lights" native="true">
+      <property name="geometry">
+       <rect>
+        <x>20</x>
+        <y>350</y>
+        <width>321</width>
+        <height>191</height>
+       </rect>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">.QWidget{
+border: 2px solid rgb(37,39,48);
+border-radius: 20px;
+}</string>
+      </property>
+      <widget class="QLineEdit" name="device_lights_opt">
+       <property name="geometry">
+        <rect>
+         <x>130</x>
+         <y>70</y>
+         <width>151</width>
+         <height>20</height>
+        </rect>
+       </property>
+       <property name="styleSheet">
+        <string notr="true">QLineEdit{
+border: 2px solid rgb(37,39,48);
+border-left:none;
+border-right:none;
+border-top:none;
+border-radius: 20px;
+}</string>
+       </property>
+       <property name="placeholderText">
+        <string/>
+       </property>
+       <property name="clearButtonEnabled">
+        <bool>true</bool>
+       </property>
+      </widget>
+      <widget class="QLabel" name="lights_label">
+       <property name="geometry">
+        <rect>
+         <x>10</x>
+         <y>10</y>
+         <width>141</width>
+         <height>21</height>
+        </rect>
+       </property>
+       <property name="font">
+        <font>
+         <pointsize>12</pointsize>
+        </font>
+       </property>
+       <property name="styleSheet">
+        <string notr="true">color:rgb(77, 121, 140);</string>
+       </property>
+       <property name="text">
+        <string>Lights</string>
+       </property>
+      </widget>
+      <widget class="QLineEdit" name="room_lights_opt">
+       <property name="geometry">
+        <rect>
+         <x>130</x>
+         <y>40</y>
+         <width>151</width>
+         <height>20</height>
+        </rect>
+       </property>
+       <property name="styleSheet">
+        <string notr="true">QLineEdit{
+border: 2px solid rgb(37,39,48);
+border-left:none;
+border-right:none;
+border-top:none;
+border-radius: 20px;
+}</string>
+       </property>
+       <property name="placeholderText">
+        <string/>
+       </property>
+       <property name="clearButtonEnabled">
+        <bool>true</bool>
+       </property>
+      </widget>
+      <widget class="QLabel" name="device_label">
+       <property name="geometry">
+        <rect>
+         <x>10</x>
+         <y>70</y>
+         <width>71</width>
+         <height>16</height>
+        </rect>
+       </property>
+       <property name="font">
+        <font>
+         <pointsize>12</pointsize>
+        </font>
+       </property>
+       <property name="text">
+        <string>Device</string>
+       </property>
+      </widget>
+      <widget class="QLabel" name="room_label">
+       <property name="geometry">
+        <rect>
+         <x>10</x>
+         <y>40</y>
+         <width>71</width>
+         <height>16</height>
+        </rect>
+       </property>
+       <property name="font">
+        <font>
+         <pointsize>12</pointsize>
+        </font>
+       </property>
+       <property name="text">
+        <string>Room</string>
+       </property>
+      </widget>
+      <widget class="QPushButton" name="light_set_button">
+       <property name="geometry">
+        <rect>
+         <x>130</x>
+         <y>140</y>
+         <width>151</width>
+         <height>31</height>
+        </rect>
+       </property>
+       <property name="styleSheet">
+        <string notr="true">color: rgb(255, 255, 255);
+background-color: rgb(77, 121, 140);</string>
+       </property>
+       <property name="text">
+        <string>Set light</string>
+       </property>
+      </widget>
+      <widget class="QRadioButton" name="lights_on">
+       <property name="geometry">
+        <rect>
+         <x>190</x>
+         <y>100</y>
+         <width>47</width>
+         <height>17</height>
+        </rect>
+       </property>
+       <property name="text">
+        <string>On</string>
+       </property>
+      </widget>
+      <widget class="QRadioButton" name="lights_off">
+       <property name="geometry">
+        <rect>
+         <x>240</x>
+         <y>100</y>
+         <width>41</width>
+         <height>17</height>
+        </rect>
+       </property>
+       <property name="text">
+        <string>Off</string>
+       </property>
+      </widget>
+     </widget>
+     <widget class="QWidget" name="widget_thermo" native="true">
+      <property name="geometry">
+       <rect>
+        <x>20</x>
+        <y>140</y>
+        <width>321</width>
+        <height>201</height>
+       </rect>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">.QWidget{
+border: 2px solid rgb(37,39,48);
+border-radius: 20px;
+}</string>
+      </property>
+      <widget class="QPushButton" name="temp_button">
+       <property name="geometry">
+        <rect>
+         <x>130</x>
+         <y>160</y>
+         <width>151</width>
+         <height>31</height>
+        </rect>
+       </property>
+       <property name="styleSheet">
+        <string notr="true">color: rgb(255, 255, 255);
+background-color: rgb(77, 121, 140);</string>
+       </property>
+       <property name="text">
+        <string>Change temperature</string>
+       </property>
+      </widget>
+      <widget class="QProgressBar" name="progressBar">
+       <property name="geometry">
+        <rect>
+         <x>130</x>
+         <y>130</y>
+         <width>151</width>
+         <height>23</height>
+        </rect>
+       </property>
+       <property name="minimum">
+        <number>-50</number>
+       </property>
+       <property name="maximum">
+        <number>50</number>
+       </property>
+       <property name="value">
+        <number>24</number>
+       </property>
+       <property name="textVisible">
+        <bool>false</bool>
+       </property>
+      </widget>
+      <widget class="QLCDNumber" name="lcdNumber">
+       <property name="geometry">
+        <rect>
+         <x>130</x>
+         <y>50</y>
+         <width>151</width>
+         <height>71</height>
+        </rect>
+       </property>
+       <property name="styleSheet">
+        <string notr="true">QLCDNumber{
+border: 1px solid rgb(37,39,48);
+border-radius: 20px;
+}</string>
+       </property>
+       <property name="frameShape">
+        <enum>QFrame::StyledPanel</enum>
+       </property>
+       <property name="digitCount">
+        <number>3</number>
+       </property>
+       <property name="segmentStyle">
+        <enum>QLCDNumber::Flat</enum>
+       </property>
+      </widget>
+      <widget class="QLabel" name="heat_label">
+       <property name="geometry">
+        <rect>
+         <x>10</x>
+         <y>10</y>
+         <width>141</width>
+         <height>21</height>
+        </rect>
+       </property>
+       <property name="font">
+        <font>
+         <pointsize>12</pointsize>
+        </font>
+       </property>
+       <property name="styleSheet">
+        <string notr="true">color:rgb(77, 121, 140);</string>
+       </property>
+       <property name="text">
+        <string>Thermostat</string>
+       </property>
+      </widget>
+      <widget class="QDial" name="dial">
+       <property name="geometry">
+        <rect>
+         <x>10</x>
+         <y>40</y>
+         <width>91</width>
+         <height>91</height>
+        </rect>
+       </property>
+       <property name="minimum">
+        <number>-50</number>
+       </property>
+       <property name="maximum">
+        <number>50</number>
+       </property>
+       <property name="invertedAppearance">
+        <bool>false</bool>
+       </property>
+      </widget>
+     </widget>
+     <widget class="QWidget" name="message_widget" native="true">
+      <property name="geometry">
+       <rect>
+        <x>350</x>
+        <y>140</y>
+        <width>351</width>
+        <height>201</height>
+       </rect>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">.QWidget{
+border: 2px solid rgb(37,39,48);
+border-radius: 20px;
+}</string>
+      </property>
+      <widget class="QLabel" name="pure_text">
+       <property name="geometry">
+        <rect>
+         <x>10</x>
+         <y>10</y>
+         <width>191</width>
+         <height>21</height>
+        </rect>
+       </property>
+       <property name="font">
+        <font>
+         <pointsize>12</pointsize>
+        </font>
+       </property>
+       <property name="styleSheet">
+        <string notr="true">color:rgb(77, 121, 140);</string>
+       </property>
+       <property name="text">
+        <string>Pure message text</string>
+       </property>
+      </widget>
+      <widget class="QScrollArea" name="scrollArea_5">
+       <property name="geometry">
+        <rect>
+         <x>10</x>
+         <y>50</y>
+         <width>331</width>
+         <height>141</height>
+        </rect>
+       </property>
+       <property name="widgetResizable">
+        <bool>true</bool>
+       </property>
+       <widget class="QWidget" name="scrollAreaWidgetContents_5">
+        <property name="geometry">
+         <rect>
+          <x>0</x>
+          <y>0</y>
+          <width>329</width>
+          <height>139</height>
+         </rect>
+        </property>
+        <widget class="QPlainTextEdit" name="value_text_2">
+         <property name="geometry">
+          <rect>
+           <x>0</x>
+           <y>0</y>
+           <width>331</width>
+           <height>141</height>
+          </rect>
+         </property>
+         <property name="styleSheet">
+          <string notr="true">QPlainTextEdit{
+border: 2px solid rgb(37,39,48);
+border-left:none;
+border-right:none;
+border-top:none;
+border-bottom:none;
+}</string>
+         </property>
+        </widget>
+       </widget>
+      </widget>
+     </widget>
+     <widget class="QWidget" name="cameras_widget" native="true">
+      <property name="geometry">
+       <rect>
+        <x>710</x>
+        <y>140</y>
+        <width>341</width>
+        <height>201</height>
+       </rect>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">.QWidget{
+border: 2px solid rgb(37,39,48);
+border-radius: 20px;
+}</string>
+      </property>
+      <widget class="QLabel" name="cameras_label">
+       <property name="geometry">
+        <rect>
+         <x>20</x>
+         <y>10</y>
+         <width>191</width>
+         <height>21</height>
+        </rect>
+       </property>
+       <property name="font">
+        <font>
+         <pointsize>12</pointsize>
+        </font>
+       </property>
+       <property name="styleSheet">
+        <string notr="true">color:rgb(77, 121, 140);</string>
+       </property>
+       <property name="text">
+        <string>Cameras</string>
+       </property>
+      </widget>
+      <widget class="QLineEdit" name="room_lights_opt_2">
+       <property name="geometry">
+        <rect>
+         <x>140</x>
+         <y>50</y>
+         <width>151</width>
+         <height>20</height>
+        </rect>
+       </property>
+       <property name="styleSheet">
+        <string notr="true">QLineEdit{
+border: 2px solid rgb(37,39,48);
+border-left:none;
+border-right:none;
+border-top:none;
+border-radius: 20px;
+}</string>
+       </property>
+       <property name="placeholderText">
+        <string/>
+       </property>
+       <property name="clearButtonEnabled">
+        <bool>true</bool>
+       </property>
+      </widget>
+      <widget class="QLabel" name="room_label_2">
+       <property name="geometry">
+        <rect>
+         <x>20</x>
+         <y>50</y>
+         <width>71</width>
+         <height>16</height>
+        </rect>
+       </property>
+       <property name="font">
+        <font>
+         <pointsize>12</pointsize>
+        </font>
+       </property>
+       <property name="text">
+        <string>Room</string>
+       </property>
+      </widget>
+      <widget class="QPushButton" name="snapshot_button">
+       <property name="enabled">
+        <bool>true</bool>
+       </property>
+       <property name="geometry">
+        <rect>
+         <x>80</x>
+         <y>130</y>
+         <width>191</width>
+         <height>41</height>
+        </rect>
+       </property>
+       <property name="styleSheet">
+        <string notr="true">color: rgb(255, 255, 255);
+background-color: rgb(77, 121, 140);</string>
+       </property>
+       <property name="text">
+        <string>Show last snapshot from this room</string>
+       </property>
+      </widget>
+     </widget>
+     <zorder>widget_lights</zorder>
+     <zorder>frame_2</zorder>
+     <zorder>label_4</zorder>
+     <zorder>topic_name</zorder>
+     <zorder>widget_thermo</zorder>
+     <zorder>message_widget</zorder>
+     <zorder>cameras_widget</zorder>
     </widget>
    </widget>
    <widget class="QFrame" name="frame_3">
@@ -784,6 +1608,42 @@ background-color: rgb(0, 0, 0);</string>
      </property>
     </widget>
    </widget>
+   <widget class="QWidget" name="layoutWidget">
+    <property name="geometry">
+     <rect>
+      <x>0</x>
+      <y>0</y>
+      <width>2</width>
+      <height>2</height>
+     </rect>
+    </property>
+    <layout class="QHBoxLayout" name="horizontalLayout"/>
+   </widget>
+   <widget class="QWidget" name="layoutWidget">
+    <property name="geometry">
+     <rect>
+      <x>0</x>
+      <y>0</y>
+      <width>2</width>
+      <height>2</height>
+     </rect>
+    </property>
+    <layout class="QVBoxLayout" name="verticalLayout_3"/>
+   </widget>
+   <widget class="QWidget" name="layoutWidget">
+    <property name="geometry">
+     <rect>
+      <x>0</x>
+      <y>0</y>
+      <width>2</width>
+      <height>2</height>
+     </rect>
+    </property>
+    <layout class="QVBoxLayout" name="verticalLayout_4"/>
+   </widget>
+   <zorder>layoutWidget</zorder>
+   <zorder>layoutWidget</zorder>
+   <zorder>layoutWidget</zorder>
    <zorder>Pages</zorder>
    <zorder>frame_3</zorder>
    <zorder>frame_menu</zorder>

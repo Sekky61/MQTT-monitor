@@ -12,6 +12,7 @@ SOURCES += \
     aboutapplication.cpp \
     client.cpp \
     error_messages.cpp \
+    dialog.cpp \
     main.cpp \
     mainwindow.cpp \
     new_connection.cpp \
@@ -22,6 +23,7 @@ HEADERS += \
     aboutapplication.h \
     client.h \
     error_messages.h \
+    dialog.h \
     mainwindow.h \
     new_connection.h \
     snapshot_manager.h \
@@ -32,7 +34,7 @@ HEADERS += ../logic/message_system.hpp
 SOURCES += ../logic/message_system.cpp
 
 FORMS += \
-    aboutapplication.ui \
+    dialog.ui \
     mainwindow.ui \
     new_connection.ui
 
