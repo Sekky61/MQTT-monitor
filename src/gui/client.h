@@ -25,6 +25,8 @@ signals:
 public slots:
     void user_clicked_connect(QString client_name, QString server_address);
 
+    void user_clicked_disconnect();
+
     void add_topic_slot(QString topic_string);
 
     void delete_topic_slot(QString topic_string);

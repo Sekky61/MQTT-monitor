@@ -34,7 +34,7 @@ int client::connect_to_server(QString client_name, QString server_address){
 
 void client::user_clicked_connect(QString client_name, QString server_address)
 {
-    std::cout << "Signal in its destination. name:" << client_name.toStdString() << "\n";
+    std::cout << "User clicked connect. " << client_name.toStdString() << "\n";
     connect_to_server(client_name, server_address);
 
     if(connected){
@@ -46,6 +46,20 @@ void client::user_clicked_connect(QString client_name, QString server_address)
         emit mqtt_data_changed();
     } else {
         error_message("nepodarilo se pripojit");
+    }
+}
+
+void client::user_clicked_disconnect()
+{
+    if(connected){
+        sys->client.disconnect()->wait();
+        connected = false;
+        delete sys;
+        sys = nullptr;
+        std::cerr << "Disconnected.\n";
+        emit mqtt_data_changed();
+    } else {
+        std::cerr << "Neni pripojeno - nelze se odpojit\n";
     }
 }
 

@@ -15,10 +15,30 @@
 #include <QClipboard>
 
 MainWindow::MainWindow(QWidget *parent):
-    QMainWindow(parent) ,
-    ui(new Ui::MainWindow)
+    QMainWindow(parent),
+    cli(),
+    mod(cli),
+    ui(new Ui::MainWindow),
+    tree_context_menu(new QMenu()),
+    context_menu_target(),
+    displayed_topic(),
+    connection_window(nullptr)
 {
     ui->setupUi(this);
+
+    // aktualizace zobrazeni pri prichodu mqtt zpravy
+    QObject::connect(&cli, &client::mqtt_data_changed, &mod, &TopicModel::incoming_data_change);
+    QObject::connect(&cli, &client::mqtt_data_changed, this, &MainWindow::mqtt_data_changed_slot);
+
+    QObject::connect(&cli, &client::connection_succesful, this, &MainWindow::connection_succesful_slot);
+    QObject::connect(ui->button_disconnect, &QAbstractButton::clicked, &cli, &client::user_clicked_disconnect);
+
+    // add_topic_clicked
+    QObject::connect(this, &MainWindow::add_topic_clicked, &cli, &client::add_topic_slot);
+    QObject::connect(this, &MainWindow::delete_topic_clicked, &cli, &client::delete_topic_slot);
+    QObject::connect(this, &MainWindow::publish_clicked, &cli, &client::publish_slot);
+
+    ui->treeView->setModel(&mod);
     ui->value_text->setReadOnly(true);
     ui->value_text_2->setReadOnly(true);
 
@@ -47,10 +67,6 @@ MainWindow::MainWindow(QWidget *parent):
     ui->temperature_stacked->setCurrentIndex(1);
     ui->water_stacked->setCurrentIndex(1);
 
-
-
-    tree_context_menu = new QMenu();
-
     QAction *copy_full_path_action = new QAction("Copy full path", this);
     QObject::connect(copy_full_path_action, &QAction::triggered, this, &MainWindow::context_copy_topic);
     tree_context_menu->addAction(copy_full_path_action);
@@ -75,25 +91,24 @@ MainWindow::~MainWindow()
     //this->setCentralWidget(ui->textEdit);
 }
 
-void MainWindow::set_tree_model(TopicModel *new_model)
-{
-    mod = new_model;
-    ui->treeView->setModel(new_model);
-    QObject::connect(this, &MainWindow::tree_data_changed, new_model, &TopicModel::incoming_data_change);
-}
-
-void MainWindow::set_client_ptr(client *cl)
-{
-    cli_ptr = cl;
-}
-
 void MainWindow::display_message(const QModelIndex &index)
 {
-    auto msg_ptr = static_cast<TopicNode*>(index.internalPointer())->get_latest_msg();
-    if(msg_ptr == nullptr){
+    displayed_topic = index;
+
+    auto node_ptr = static_cast<TopicNode*>(index.internalPointer());
+    if(node_ptr == nullptr){
         std::cerr << "zadne zpravy\n";
+        ui->value_text->setPlainText(QString());
         return;
     }
+
+    auto msg_ptr = node_ptr->get_latest_msg();
+    if(msg_ptr == nullptr){
+        std::cerr << "zadne zpravy\n";
+        ui->value_text->setPlainText(QString());
+        return;
+    }
+
     std::string payload = (*msg_ptr)->get_payload();
     QString qmsg = QString::fromStdString(payload);
     ui->value_text->setPlainText(qmsg);
@@ -107,18 +122,12 @@ void MainWindow::display_message(const QModelIndex &index)
     QByteArray imageFormat = QImageReader::imageFormat(&buf);
 
     if(imageFormat.size() == 0){
-        std::cerr << "SIZE 0\n";
+        std::cerr << "SIZE 0 - NOT A PICTURE\n";
     } else {
-        std::cerr << "OK\n";
+        std::cerr << "OK - PICTURE\n";
     }
 
     //on_img_msg_clicked
-}
-
-void MainWindow::connect_to_client_from_dialog(QString client_name, QString server_address)
-{
-    std::cout << "Slot connect_to_client_from_dialog activated\n";
-    emit connect_client_mainwindow(client_name, server_address);
 }
 
 
@@ -172,9 +181,18 @@ void MainWindow::on_buttonConnect_clicked()
 {
     connection_window = new new_connection(this);
 
-    QObject::connect(connection_window, &new_connection::connect_to_server, this, &MainWindow::connect_to_client_from_dialog);
+    QObject::connect(connection_window, &new_connection::connect_to_server, &cli, &client::user_clicked_connect);
     connection_window->setModal(true);
     connection_window->exec();
+}
+
+void MainWindow::connection_succesful_slot()
+{
+    if(connection_window){
+        connection_window->close(); // todo disconnect signal
+        delete connection_window;
+        connection_window = nullptr;
+    }
 }
 
 void MainWindow::on_searchButton_clicked()
@@ -183,7 +201,7 @@ void MainWindow::on_searchButton_clicked()
     ui->searchValue->setText("");
     //filtrování stromové struktury
     proxy_tree = new QSortFilterProxyModel(this);
-    proxy_tree->setSourceModel(mod);
+    proxy_tree->setSourceModel(&mod);
     proxy_tree->setFilterCaseSensitivity(Qt::CaseInsensitive);
     proxy_tree->setRecursiveFilteringEnabled(true);
     proxy_tree->setFilterKeyColumn(0); //If the value is -1, the keys will be read from all columns
@@ -224,15 +242,6 @@ void MainWindow::on_img_msg_clicked()
     //tohle patří do funkce kde budeš zpracovávat zprávu
     ui->img_msg->setEnabled(false);
     ui->img_msg->setVisible(false);
-}
-
-void MainWindow::connection_succesful_slot()
-{
-    if(connection_window){
-        connection_window->close(); // todo disconnect signal
-        delete connection_window;
-        connection_window = nullptr;
-    }
 }
 
 void MainWindow::on_copy_topic_path_clicked()
@@ -307,6 +316,11 @@ void MainWindow::unsubscribe_context()
             emit tree_data_changed();
         }
     }
+}
+
+void MainWindow::mqtt_data_changed_slot()
+{
+    display_message(displayed_topic);
 }
 
 void MainWindow::on_dial_valueChanged(int value)
@@ -413,5 +427,5 @@ void MainWindow::on_dashboard_add_clicked()
 void MainWindow::save_tree_structure_slot(QDir root)
 {
     snapshot_manager mngr;
-    mngr.create_snapshot(root, cli_ptr);
+    mngr.create_snapshot(root, &cli);
 }

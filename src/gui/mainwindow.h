@@ -37,10 +37,6 @@ public:
     ~MainWindow(); //destruktor
     QSortFilterProxyModel * proxy_tree;
 
-    void set_tree_model(TopicModel *mod);
-
-    void set_client_ptr(client *cl);
-
 signals:
 
     void connect_client_mainwindow(QString client_name, QString server_address);
@@ -54,10 +50,6 @@ signals:
     void tree_data_changed();
 
 private slots:
-
-    void display_message(const QModelIndex &index);
-
-    void connect_to_client_from_dialog(QString client_name, QString server_address);
 
     void on_actionQuit_triggered();
 
@@ -105,7 +97,12 @@ private slots:
 
 public slots:
 
+    void mqtt_data_changed_slot();
+
+    void display_message(const QModelIndex &index);
+
     void connection_succesful_slot();
+
     void on_dial_valueChanged(int value);
 
     void on_dial_actionTriggered(int action);
@@ -125,14 +122,15 @@ public slots:
     void save_tree_structure_slot(QDir);
 
 private:
+    client cli;
+    TopicModel mod;
+
     Ui::MainWindow *ui;
-    QString current_file = ""; //jméno souboru ve kterém pracujeme
-    QStandardItemModel model;
-    TopicModel *mod;
-    client *cli_ptr;
 
     QMenu *tree_context_menu;
     QModelIndex context_menu_target;
+
+    QModelIndex displayed_topic;
 
     new_connection *connection_window;
 };
