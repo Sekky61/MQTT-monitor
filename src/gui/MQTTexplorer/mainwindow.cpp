@@ -2,7 +2,7 @@
 #include "ui_mainwindow.h"
 #include "aboutapplication.h"
 #include "new_connection.h"
-
+#include "dialog.h"
 
 MainWindow::MainWindow(QWidget *parent):
     QMainWindow(parent) ,
@@ -19,6 +19,19 @@ MainWindow::MainWindow(QWidget *parent):
     int message_val = 13; //to si přepiš
     ui->lcdNumber->display(message_val);
     ui->progressBar->setValue(message_val);
+    ui->lcdNumber->setSmallDecimalPoint(true);
+
+
+    //dashboard text - vždy
+    ui->radio_text->setChecked(true);
+    ui->radio_text->setAutoExclusive(true);
+
+    //lihts - readonly
+    ui->device_lights_opt->setReadOnly(true);
+    ui->room_lights_opt->setReadOnly(true);
+
+
+
 
     QList<QStandardItem*> list;
     auto item = new QStandardItem("localhost");
@@ -224,6 +237,8 @@ void MainWindow::on_publish_button_clicked()
 {
     QString message_path = ui->path_message->text(); //pošle zprávu na zadanou adresu
     QString text = ui->textEdit->toPlainText(); //zpráva
+
+
 }
 
 void MainWindow::on_Explorer_button_clicked()
@@ -261,4 +276,34 @@ void MainWindow::on_temp_button_clicked()
 void MainWindow::on_dial_actionTriggered(int action)
 {
 
+}
+
+
+void MainWindow::on_screenshot_button_clicked()
+{
+    WId window = QWidget::winId(); //rozměry window
+    QScreen *screen = QGuiApplication::primaryScreen();
+    QPixmap *map = new QPixmap(screen->grabWindow(window));
+
+
+    Dialog *screenshot = new Dialog(this);
+    screenshot->setModal(true);
+    screenshot->exec();
+}
+
+void MainWindow::on_light_set_button_clicked()
+{
+    QString room = ui->room_lights_opt->text();
+    QString device = ui->device_lights_opt->text();
+    if (ui->lights_on->isCheckable()){
+        //zapnutí světel na zadané lokaci
+    }
+    if (ui->lights_off->isCheckable()){
+        //vypnutí světel na zadané lokaci
+    }
+}
+
+void MainWindow::on_snapshot_button_clicked()
+{
+    //zobrazí obrázek
 }
