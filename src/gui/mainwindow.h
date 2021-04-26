@@ -82,6 +82,10 @@ private slots:
 
     void on_snapshot_button_clicked();
 
+    void on_snap_button_clicked();
+
+    void on_dashboard_add_clicked();
+
 private:
     Ui::MainWindow *ui;
     QString current_file = ""; //jméno souboru ve kterém pracujeme

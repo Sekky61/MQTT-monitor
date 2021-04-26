@@ -12,17 +12,20 @@ SOURCES += \
     dialog.cpp \
     main.cpp \
     mainwindow.cpp \
-    new_connection.cpp
+    new_connection.cpp \
+    snapshot.cpp
 
 HEADERS += \
     dialog.h \
     mainwindow.h \
-    new_connection.h
+    new_connection.h \
+    snapshot.h
 
 FORMS += \
     dialog.ui \
     mainwindow.ui \
-    new_connection.ui
+    new_connection.ui \
+    snapshot.ui
 
 # Default rules for deployment.
 qnx: target.path = /tmp/$${TARGET}/bin

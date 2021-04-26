@@ -3,6 +3,7 @@
 #include "aboutapplication.h"
 #include "new_connection.h"
 #include "dialog.h"
+#include "snapshot.h"
 
 MainWindow::MainWindow(QWidget *parent):
     QMainWindow(parent) ,
@@ -30,6 +31,12 @@ MainWindow::MainWindow(QWidget *parent):
     ui->device_lights_opt->setReadOnly(true);
     ui->room_lights_opt->setReadOnly(true);
 
+    //základní nastavení widgetů na dashboardu - widgety jsou defaultně vypnuté
+    ui->thermo_stacked->setCurrentIndex(1);
+    ui->light_stacked->setCurrentIndex(1);
+    ui->cameras_stacked->setCurrentIndex(1);
+    ui->temperature_stacked->setCurrentIndex(1);
+    ui->water_stacked->setCurrentIndex(1);
 
 
 
@@ -295,10 +302,10 @@ void MainWindow::on_light_set_button_clicked()
 {
     QString room = ui->room_lights_opt->text();
     QString device = ui->device_lights_opt->text();
-    if (ui->lights_on->isCheckable()){
+    if (ui->lights_on->isChecked()){
         //zapnutí světel na zadané lokaci
     }
-    if (ui->lights_off->isCheckable()){
+    if (!(ui->lights_off->isChecked())){
         //vypnutí světel na zadané lokaci
     }
 }
@@ -306,4 +313,51 @@ void MainWindow::on_light_set_button_clicked()
 void MainWindow::on_snapshot_button_clicked()
 {
     //zobrazí obrázek
+}
+
+void MainWindow::on_snap_button_clicked()
+{
+    Snapshot *snap = new Snapshot(this);
+    snap->setModal(true);
+    snap->exec();
+}
+
+void MainWindow::on_dashboard_add_clicked()
+{
+    //thermostat
+    if(ui->radio_thermo->isChecked()){
+        //aktivuje se widget
+        ui->thermo_stacked->setCurrentIndex(0);
+    }else if(!(ui->radio_thermo->isChecked())){
+        //widget se vypne
+        ui->thermo_stacked->setCurrentIndex(1);
+    }
+
+    //lights
+    if(ui->radio_light->isChecked()){
+        ui->light_stacked->setCurrentIndex(0);
+    }else if(!(ui->radio_light->isChecked())){
+        ui->light_stacked->setCurrentIndex(1);
+    }
+
+    //cameras
+    if(ui->radio_cameras->isChecked()){
+        ui->cameras_stacked->setCurrentIndex(0);
+    }else if(!(ui->radio_cameras->isChecked())){
+        ui->cameras_stacked->setCurrentIndex(1);
+    }
+
+    //temperature
+    if(ui->radio_temp->isChecked()){
+        ui->temperature_stacked->setCurrentIndex(0);
+    }else if(!(ui->radio_temp->isChecked())){
+        ui->temperature_stacked->setCurrentIndex(1);
+    }
+
+    //watteriness
+    if(ui->radio_water->isChecked()){
+        ui->water_stacked->setCurrentIndex(0);
+    }else if(!(ui->radio_water->isChecked())){
+        ui->water_stacked->setCurrentIndex(1);
+    }
 }

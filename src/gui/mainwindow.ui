@@ -152,6 +152,30 @@ color: rgb(255, 255, 255);</string>
       <string>SCREENSHOT</string>
      </property>
     </widget>
+    <widget class="QPushButton" name="snap_button">
+     <property name="geometry">
+      <rect>
+       <x>0</x>
+       <y>540</y>
+       <width>81</width>
+       <height>81</height>
+      </rect>
+     </property>
+     <property name="font">
+      <font>
+       <pointsize>8</pointsize>
+       <weight>75</weight>
+       <bold>true</bold>
+      </font>
+     </property>
+     <property name="styleSheet">
+      <string notr="true">background-color: rgb(89, 4, 1);
+color: rgb(255, 255, 255);</string>
+     </property>
+     <property name="text">
+      <string>SNAPSHOT</string>
+     </property>
+    </widget>
    </widget>
    <widget class="QStackedWidget" name="Pages">
     <property name="geometry">
@@ -746,7 +770,7 @@ border-bottom:none;
            <x>0</x>
            <y>0</y>
            <width>71</width>
-           <height>17</height>
+           <height>21</height>
           </rect>
          </property>
          <property name="text">
@@ -810,13 +834,13 @@ border-bottom:none;
         <property name="title">
          <string/>
         </property>
-        <widget class="QRadioButton" name="radioButton">
+        <widget class="QRadioButton" name="radio_light">
          <property name="geometry">
           <rect>
            <x>0</x>
            <y>0</y>
            <width>82</width>
-           <height>17</height>
+           <height>21</height>
           </rect>
          </property>
          <property name="styleSheet">
@@ -1084,296 +1108,10 @@ background-color: rgb(77, 121, 140);</string>
        <string>Nastaví se na cestu</string>
       </property>
      </widget>
-     <widget class="QWidget" name="widget_lights" native="true">
-      <property name="geometry">
-       <rect>
-        <x>20</x>
-        <y>350</y>
-        <width>321</width>
-        <height>191</height>
-       </rect>
-      </property>
-      <property name="styleSheet">
-       <string notr="true">.QWidget{
-border: 2px solid rgb(37,39,48);
-border-radius: 20px;
-}</string>
-      </property>
-      <widget class="QLineEdit" name="device_lights_opt">
-       <property name="geometry">
-        <rect>
-         <x>130</x>
-         <y>70</y>
-         <width>151</width>
-         <height>20</height>
-        </rect>
-       </property>
-       <property name="styleSheet">
-        <string notr="true">QLineEdit{
-border: 2px solid rgb(37,39,48);
-border-left:none;
-border-right:none;
-border-top:none;
-border-radius: 20px;
-}</string>
-       </property>
-       <property name="placeholderText">
-        <string/>
-       </property>
-       <property name="clearButtonEnabled">
-        <bool>true</bool>
-       </property>
-      </widget>
-      <widget class="QLabel" name="lights_label">
-       <property name="geometry">
-        <rect>
-         <x>10</x>
-         <y>10</y>
-         <width>141</width>
-         <height>21</height>
-        </rect>
-       </property>
-       <property name="font">
-        <font>
-         <pointsize>12</pointsize>
-        </font>
-       </property>
-       <property name="styleSheet">
-        <string notr="true">color:rgb(77, 121, 140);</string>
-       </property>
-       <property name="text">
-        <string>Lights</string>
-       </property>
-      </widget>
-      <widget class="QLineEdit" name="room_lights_opt">
-       <property name="geometry">
-        <rect>
-         <x>130</x>
-         <y>40</y>
-         <width>151</width>
-         <height>20</height>
-        </rect>
-       </property>
-       <property name="styleSheet">
-        <string notr="true">QLineEdit{
-border: 2px solid rgb(37,39,48);
-border-left:none;
-border-right:none;
-border-top:none;
-border-radius: 20px;
-}</string>
-       </property>
-       <property name="placeholderText">
-        <string/>
-       </property>
-       <property name="clearButtonEnabled">
-        <bool>true</bool>
-       </property>
-      </widget>
-      <widget class="QLabel" name="device_label">
-       <property name="geometry">
-        <rect>
-         <x>10</x>
-         <y>70</y>
-         <width>71</width>
-         <height>16</height>
-        </rect>
-       </property>
-       <property name="font">
-        <font>
-         <pointsize>12</pointsize>
-        </font>
-       </property>
-       <property name="text">
-        <string>Device</string>
-       </property>
-      </widget>
-      <widget class="QLabel" name="room_label">
-       <property name="geometry">
-        <rect>
-         <x>10</x>
-         <y>40</y>
-         <width>71</width>
-         <height>16</height>
-        </rect>
-       </property>
-       <property name="font">
-        <font>
-         <pointsize>12</pointsize>
-        </font>
-       </property>
-       <property name="text">
-        <string>Room</string>
-       </property>
-      </widget>
-      <widget class="QPushButton" name="light_set_button">
-       <property name="geometry">
-        <rect>
-         <x>130</x>
-         <y>140</y>
-         <width>151</width>
-         <height>31</height>
-        </rect>
-       </property>
-       <property name="styleSheet">
-        <string notr="true">color: rgb(255, 255, 255);
-background-color: rgb(77, 121, 140);</string>
-       </property>
-       <property name="text">
-        <string>Set light</string>
-       </property>
-      </widget>
-      <widget class="QRadioButton" name="lights_on">
-       <property name="geometry">
-        <rect>
-         <x>190</x>
-         <y>100</y>
-         <width>47</width>
-         <height>17</height>
-        </rect>
-       </property>
-       <property name="text">
-        <string>On</string>
-       </property>
-      </widget>
-      <widget class="QRadioButton" name="lights_off">
-       <property name="geometry">
-        <rect>
-         <x>240</x>
-         <y>100</y>
-         <width>41</width>
-         <height>17</height>
-        </rect>
-       </property>
-       <property name="text">
-        <string>Off</string>
-       </property>
-      </widget>
-     </widget>
-     <widget class="QWidget" name="widget_thermo" native="true">
-      <property name="geometry">
-       <rect>
-        <x>20</x>
-        <y>140</y>
-        <width>321</width>
-        <height>201</height>
-       </rect>
-      </property>
-      <property name="styleSheet">
-       <string notr="true">.QWidget{
-border: 2px solid rgb(37,39,48);
-border-radius: 20px;
-}</string>
-      </property>
-      <widget class="QPushButton" name="temp_button">
-       <property name="geometry">
-        <rect>
-         <x>130</x>
-         <y>160</y>
-         <width>151</width>
-         <height>31</height>
-        </rect>
-       </property>
-       <property name="styleSheet">
-        <string notr="true">color: rgb(255, 255, 255);
-background-color: rgb(77, 121, 140);</string>
-       </property>
-       <property name="text">
-        <string>Change temperature</string>
-       </property>
-      </widget>
-      <widget class="QProgressBar" name="progressBar">
-       <property name="geometry">
-        <rect>
-         <x>130</x>
-         <y>130</y>
-         <width>151</width>
-         <height>23</height>
-        </rect>
-       </property>
-       <property name="minimum">
-        <number>-50</number>
-       </property>
-       <property name="maximum">
-        <number>50</number>
-       </property>
-       <property name="value">
-        <number>24</number>
-       </property>
-       <property name="textVisible">
-        <bool>false</bool>
-       </property>
-      </widget>
-      <widget class="QLCDNumber" name="lcdNumber">
-       <property name="geometry">
-        <rect>
-         <x>130</x>
-         <y>50</y>
-         <width>151</width>
-         <height>71</height>
-        </rect>
-       </property>
-       <property name="styleSheet">
-        <string notr="true">QLCDNumber{
-border: 1px solid rgb(37,39,48);
-border-radius: 20px;
-}</string>
-       </property>
-       <property name="frameShape">
-        <enum>QFrame::StyledPanel</enum>
-       </property>
-       <property name="digitCount">
-        <number>3</number>
-       </property>
-       <property name="segmentStyle">
-        <enum>QLCDNumber::Flat</enum>
-       </property>
-      </widget>
-      <widget class="QLabel" name="heat_label">
-       <property name="geometry">
-        <rect>
-         <x>10</x>
-         <y>10</y>
-         <width>141</width>
-         <height>21</height>
-        </rect>
-       </property>
-       <property name="font">
-        <font>
-         <pointsize>12</pointsize>
-        </font>
-       </property>
-       <property name="styleSheet">
-        <string notr="true">color:rgb(77, 121, 140);</string>
-       </property>
-       <property name="text">
-        <string>Thermostat</string>
-       </property>
-      </widget>
-      <widget class="QDial" name="dial">
-       <property name="geometry">
-        <rect>
-         <x>10</x>
-         <y>40</y>
-         <width>91</width>
-         <height>91</height>
-        </rect>
-       </property>
-       <property name="minimum">
-        <number>-50</number>
-       </property>
-       <property name="maximum">
-        <number>50</number>
-       </property>
-       <property name="invertedAppearance">
-        <bool>false</bool>
-       </property>
-      </widget>
-     </widget>
      <widget class="QWidget" name="message_widget" native="true">
       <property name="geometry">
        <rect>
-        <x>350</x>
+        <x>20</x>
         <y>140</y>
         <width>351</width>
         <height>201</height>
@@ -1449,7 +1187,399 @@ border-bottom:none;
        </widget>
       </widget>
      </widget>
-     <widget class="QWidget" name="cameras_widget" native="true">
+     <widget class="QStackedWidget" name="thermo_stacked">
+      <property name="geometry">
+       <rect>
+        <x>380</x>
+        <y>140</y>
+        <width>321</width>
+        <height>201</height>
+       </rect>
+      </property>
+      <property name="currentIndex">
+       <number>0</number>
+      </property>
+      <widget class="QWidget" name="page_3">
+       <widget class="QWidget" name="widget_thermo" native="true">
+        <property name="geometry">
+         <rect>
+          <x>0</x>
+          <y>0</y>
+          <width>321</width>
+          <height>201</height>
+         </rect>
+        </property>
+        <property name="styleSheet">
+         <string notr="true">.QWidget{
+border: 2px solid rgb(37,39,48);
+border-radius: 20px;
+}</string>
+        </property>
+        <widget class="QPushButton" name="temp_button">
+         <property name="geometry">
+          <rect>
+           <x>130</x>
+           <y>160</y>
+           <width>151</width>
+           <height>31</height>
+          </rect>
+         </property>
+         <property name="styleSheet">
+          <string notr="true">color: rgb(255, 255, 255);
+background-color: rgb(77, 121, 140);</string>
+         </property>
+         <property name="text">
+          <string>Change temperature</string>
+         </property>
+        </widget>
+        <widget class="QProgressBar" name="progressBar">
+         <property name="geometry">
+          <rect>
+           <x>130</x>
+           <y>130</y>
+           <width>151</width>
+           <height>23</height>
+          </rect>
+         </property>
+         <property name="minimum">
+          <number>-50</number>
+         </property>
+         <property name="maximum">
+          <number>50</number>
+         </property>
+         <property name="value">
+          <number>24</number>
+         </property>
+         <property name="textVisible">
+          <bool>false</bool>
+         </property>
+        </widget>
+        <widget class="QLCDNumber" name="lcdNumber">
+         <property name="geometry">
+          <rect>
+           <x>130</x>
+           <y>50</y>
+           <width>151</width>
+           <height>71</height>
+          </rect>
+         </property>
+         <property name="styleSheet">
+          <string notr="true">QLCDNumber{
+border: 1px solid rgb(37,39,48);
+border-radius: 20px;
+}</string>
+         </property>
+         <property name="frameShape">
+          <enum>QFrame::StyledPanel</enum>
+         </property>
+         <property name="digitCount">
+          <number>3</number>
+         </property>
+         <property name="segmentStyle">
+          <enum>QLCDNumber::Flat</enum>
+         </property>
+        </widget>
+        <widget class="QLabel" name="heat_label">
+         <property name="geometry">
+          <rect>
+           <x>10</x>
+           <y>10</y>
+           <width>141</width>
+           <height>21</height>
+          </rect>
+         </property>
+         <property name="font">
+          <font>
+           <pointsize>12</pointsize>
+          </font>
+         </property>
+         <property name="styleSheet">
+          <string notr="true">color:rgb(77, 121, 140);</string>
+         </property>
+         <property name="text">
+          <string>Thermostat</string>
+         </property>
+        </widget>
+        <widget class="QDial" name="dial">
+         <property name="geometry">
+          <rect>
+           <x>10</x>
+           <y>40</y>
+           <width>91</width>
+           <height>91</height>
+          </rect>
+         </property>
+         <property name="minimum">
+          <number>-50</number>
+         </property>
+         <property name="maximum">
+          <number>50</number>
+         </property>
+         <property name="invertedAppearance">
+          <bool>false</bool>
+         </property>
+        </widget>
+       </widget>
+      </widget>
+      <widget class="QWidget" name="page_4">
+       <widget class="QWidget" name="widget_thermo_off" native="true">
+        <property name="geometry">
+         <rect>
+          <x>0</x>
+          <y>0</y>
+          <width>321</width>
+          <height>201</height>
+         </rect>
+        </property>
+        <property name="styleSheet">
+         <string notr="true">.QWidget{
+border: 2px solid rgb(37,39,48);
+border-radius: 20px;
+}</string>
+        </property>
+        <widget class="QLabel" name="label_5">
+         <property name="geometry">
+          <rect>
+           <x>30</x>
+           <y>70</y>
+           <width>271</width>
+           <height>41</height>
+          </rect>
+         </property>
+         <property name="font">
+          <font>
+           <pointsize>12</pointsize>
+           <weight>75</weight>
+           <bold>true</bold>
+          </font>
+         </property>
+         <property name="text">
+          <string>Thermostat widget is DISABLED</string>
+         </property>
+        </widget>
+       </widget>
+      </widget>
+     </widget>
+     <widget class="QStackedWidget" name="light_stacked">
+      <property name="geometry">
+       <rect>
+        <x>10</x>
+        <y>350</y>
+        <width>361</width>
+        <height>201</height>
+       </rect>
+      </property>
+      <property name="currentIndex">
+       <number>1</number>
+      </property>
+      <widget class="QWidget" name="page_5">
+       <widget class="QWidget" name="widget_lights" native="true">
+        <property name="geometry">
+         <rect>
+          <x>10</x>
+          <y>0</y>
+          <width>351</width>
+          <height>201</height>
+         </rect>
+        </property>
+        <property name="styleSheet">
+         <string notr="true">.QWidget{
+border: 2px solid rgb(37,39,48);
+border-radius: 20px;
+}</string>
+        </property>
+        <widget class="QLineEdit" name="device_lights_opt">
+         <property name="geometry">
+          <rect>
+           <x>170</x>
+           <y>70</y>
+           <width>151</width>
+           <height>20</height>
+          </rect>
+         </property>
+         <property name="styleSheet">
+          <string notr="true">QLineEdit{
+border: 2px solid rgb(37,39,48);
+border-left:none;
+border-right:none;
+border-top:none;
+border-radius: 20px;
+}</string>
+         </property>
+         <property name="placeholderText">
+          <string/>
+         </property>
+         <property name="clearButtonEnabled">
+          <bool>true</bool>
+         </property>
+        </widget>
+        <widget class="QLabel" name="lights_label">
+         <property name="geometry">
+          <rect>
+           <x>10</x>
+           <y>10</y>
+           <width>141</width>
+           <height>21</height>
+          </rect>
+         </property>
+         <property name="font">
+          <font>
+           <pointsize>12</pointsize>
+          </font>
+         </property>
+         <property name="styleSheet">
+          <string notr="true">color:rgb(77, 121, 140);</string>
+         </property>
+         <property name="text">
+          <string>Lights</string>
+         </property>
+        </widget>
+        <widget class="QLineEdit" name="room_lights_opt">
+         <property name="geometry">
+          <rect>
+           <x>170</x>
+           <y>40</y>
+           <width>151</width>
+           <height>20</height>
+          </rect>
+         </property>
+         <property name="styleSheet">
+          <string notr="true">QLineEdit{
+border: 2px solid rgb(37,39,48);
+border-left:none;
+border-right:none;
+border-top:none;
+border-radius: 20px;
+}</string>
+         </property>
+         <property name="placeholderText">
+          <string/>
+         </property>
+         <property name="clearButtonEnabled">
+          <bool>true</bool>
+         </property>
+        </widget>
+        <widget class="QLabel" name="device_label">
+         <property name="geometry">
+          <rect>
+           <x>10</x>
+           <y>70</y>
+           <width>71</width>
+           <height>16</height>
+          </rect>
+         </property>
+         <property name="font">
+          <font>
+           <pointsize>12</pointsize>
+          </font>
+         </property>
+         <property name="text">
+          <string>Device</string>
+         </property>
+        </widget>
+        <widget class="QLabel" name="room_label">
+         <property name="geometry">
+          <rect>
+           <x>10</x>
+           <y>40</y>
+           <width>71</width>
+           <height>16</height>
+          </rect>
+         </property>
+         <property name="font">
+          <font>
+           <pointsize>12</pointsize>
+          </font>
+         </property>
+         <property name="text">
+          <string>Room</string>
+         </property>
+        </widget>
+        <widget class="QPushButton" name="light_set_button">
+         <property name="geometry">
+          <rect>
+           <x>170</x>
+           <y>130</y>
+           <width>151</width>
+           <height>31</height>
+          </rect>
+         </property>
+         <property name="styleSheet">
+          <string notr="true">color: rgb(255, 255, 255);
+background-color: rgb(77, 121, 140);</string>
+         </property>
+         <property name="text">
+          <string>Set light</string>
+         </property>
+        </widget>
+        <widget class="QRadioButton" name="lights_on">
+         <property name="geometry">
+          <rect>
+           <x>230</x>
+           <y>100</y>
+           <width>47</width>
+           <height>17</height>
+          </rect>
+         </property>
+         <property name="text">
+          <string>On</string>
+         </property>
+        </widget>
+        <widget class="QRadioButton" name="lights_off">
+         <property name="geometry">
+          <rect>
+           <x>280</x>
+           <y>100</y>
+           <width>41</width>
+           <height>17</height>
+          </rect>
+         </property>
+         <property name="text">
+          <string>Off</string>
+         </property>
+        </widget>
+       </widget>
+      </widget>
+      <widget class="QWidget" name="page_6">
+       <widget class="QWidget" name="widget_lights_disabled" native="true">
+        <property name="geometry">
+         <rect>
+          <x>10</x>
+          <y>0</y>
+          <width>351</width>
+          <height>201</height>
+         </rect>
+        </property>
+        <property name="styleSheet">
+         <string notr="true">.QWidget{
+border: 2px solid rgb(37,39,48);
+border-radius: 20px;
+}</string>
+        </property>
+        <widget class="QLabel" name="label_6">
+         <property name="geometry">
+          <rect>
+           <x>80</x>
+           <y>70</y>
+           <width>261</width>
+           <height>41</height>
+          </rect>
+         </property>
+         <property name="font">
+          <font>
+           <pointsize>12</pointsize>
+           <weight>75</weight>
+           <bold>true</bold>
+          </font>
+         </property>
+         <property name="text">
+          <string>Lights widget is DISABLED</string>
+         </property>
+        </widget>
+       </widget>
+      </widget>
+     </widget>
+     <widget class="QStackedWidget" name="cameras_stacked">
       <property name="geometry">
        <rect>
         <x>710</x>
@@ -1458,104 +1588,418 @@ border-bottom:none;
         <height>201</height>
        </rect>
       </property>
-      <property name="styleSheet">
-       <string notr="true">.QWidget{
+      <property name="currentIndex">
+       <number>0</number>
+      </property>
+      <widget class="QWidget" name="page_7">
+       <widget class="QWidget" name="cameras_widget" native="true">
+        <property name="geometry">
+         <rect>
+          <x>0</x>
+          <y>0</y>
+          <width>341</width>
+          <height>201</height>
+         </rect>
+        </property>
+        <property name="styleSheet">
+         <string notr="true">.QWidget{
 border: 2px solid rgb(37,39,48);
 border-radius: 20px;
 }</string>
-      </property>
-      <widget class="QLabel" name="cameras_label">
-       <property name="geometry">
-        <rect>
-         <x>20</x>
-         <y>10</y>
-         <width>191</width>
-         <height>21</height>
-        </rect>
-       </property>
-       <property name="font">
-        <font>
-         <pointsize>12</pointsize>
-        </font>
-       </property>
-       <property name="styleSheet">
-        <string notr="true">color:rgb(77, 121, 140);</string>
-       </property>
-       <property name="text">
-        <string>Cameras</string>
-       </property>
-      </widget>
-      <widget class="QLineEdit" name="room_lights_opt_2">
-       <property name="geometry">
-        <rect>
-         <x>140</x>
-         <y>50</y>
-         <width>151</width>
-         <height>20</height>
-        </rect>
-       </property>
-       <property name="styleSheet">
-        <string notr="true">QLineEdit{
+        </property>
+        <widget class="QLabel" name="cameras_label">
+         <property name="geometry">
+          <rect>
+           <x>20</x>
+           <y>10</y>
+           <width>191</width>
+           <height>21</height>
+          </rect>
+         </property>
+         <property name="font">
+          <font>
+           <pointsize>12</pointsize>
+          </font>
+         </property>
+         <property name="styleSheet">
+          <string notr="true">color:rgb(77, 121, 140);</string>
+         </property>
+         <property name="text">
+          <string>Cameras</string>
+         </property>
+        </widget>
+        <widget class="QLineEdit" name="room_lights_opt_2">
+         <property name="geometry">
+          <rect>
+           <x>140</x>
+           <y>50</y>
+           <width>151</width>
+           <height>20</height>
+          </rect>
+         </property>
+         <property name="styleSheet">
+          <string notr="true">QLineEdit{
 border: 2px solid rgb(37,39,48);
 border-left:none;
 border-right:none;
 border-top:none;
 border-radius: 20px;
 }</string>
-       </property>
-       <property name="placeholderText">
-        <string/>
-       </property>
-       <property name="clearButtonEnabled">
-        <bool>true</bool>
-       </property>
-      </widget>
-      <widget class="QLabel" name="room_label_2">
-       <property name="geometry">
-        <rect>
-         <x>20</x>
-         <y>50</y>
-         <width>71</width>
-         <height>16</height>
-        </rect>
-       </property>
-       <property name="font">
-        <font>
-         <pointsize>12</pointsize>
-        </font>
-       </property>
-       <property name="text">
-        <string>Room</string>
-       </property>
-      </widget>
-      <widget class="QPushButton" name="snapshot_button">
-       <property name="enabled">
-        <bool>true</bool>
-       </property>
-       <property name="geometry">
-        <rect>
-         <x>80</x>
-         <y>130</y>
-         <width>191</width>
-         <height>41</height>
-        </rect>
-       </property>
-       <property name="styleSheet">
-        <string notr="true">color: rgb(255, 255, 255);
+         </property>
+         <property name="placeholderText">
+          <string/>
+         </property>
+         <property name="clearButtonEnabled">
+          <bool>true</bool>
+         </property>
+        </widget>
+        <widget class="QLabel" name="room_label_2">
+         <property name="geometry">
+          <rect>
+           <x>20</x>
+           <y>50</y>
+           <width>71</width>
+           <height>16</height>
+          </rect>
+         </property>
+         <property name="font">
+          <font>
+           <pointsize>12</pointsize>
+          </font>
+         </property>
+         <property name="text">
+          <string>Room</string>
+         </property>
+        </widget>
+        <widget class="QPushButton" name="snapshot_button">
+         <property name="enabled">
+          <bool>true</bool>
+         </property>
+         <property name="geometry">
+          <rect>
+           <x>80</x>
+           <y>130</y>
+           <width>191</width>
+           <height>41</height>
+          </rect>
+         </property>
+         <property name="styleSheet">
+          <string notr="true">color: rgb(255, 255, 255);
 background-color: rgb(77, 121, 140);</string>
-       </property>
-       <property name="text">
-        <string>Show last snapshot from this room</string>
-       </property>
+         </property>
+         <property name="text">
+          <string>Show last snapshot from this room</string>
+         </property>
+        </widget>
+       </widget>
+      </widget>
+      <widget class="QWidget" name="page_8">
+       <widget class="QWidget" name="widget_cameras_off" native="true">
+        <property name="geometry">
+         <rect>
+          <x>0</x>
+          <y>0</y>
+          <width>341</width>
+          <height>201</height>
+         </rect>
+        </property>
+        <property name="styleSheet">
+         <string notr="true">.QWidget{
+border: 2px solid rgb(37,39,48);
+border-radius: 20px;
+}</string>
+        </property>
+        <widget class="QLabel" name="label_7">
+         <property name="geometry">
+          <rect>
+           <x>60</x>
+           <y>70</y>
+           <width>271</width>
+           <height>41</height>
+          </rect>
+         </property>
+         <property name="font">
+          <font>
+           <pointsize>12</pointsize>
+           <weight>75</weight>
+           <bold>true</bold>
+          </font>
+         </property>
+         <property name="text">
+          <string>Cameras widget is DISABLED</string>
+         </property>
+        </widget>
+       </widget>
       </widget>
      </widget>
-     <zorder>widget_lights</zorder>
-     <zorder>frame_2</zorder>
-     <zorder>label_4</zorder>
-     <zorder>topic_name</zorder>
-     <zorder>widget_thermo</zorder>
-     <zorder>message_widget</zorder>
-     <zorder>cameras_widget</zorder>
+     <widget class="QStackedWidget" name="temperature_stacked">
+      <property name="geometry">
+       <rect>
+        <x>380</x>
+        <y>350</y>
+        <width>321</width>
+        <height>201</height>
+       </rect>
+      </property>
+      <property name="currentIndex">
+       <number>1</number>
+      </property>
+      <widget class="QWidget" name="page_9">
+       <widget class="QWidget" name="widget_thermo_2" native="true">
+        <property name="geometry">
+         <rect>
+          <x>0</x>
+          <y>0</y>
+          <width>321</width>
+          <height>201</height>
+         </rect>
+        </property>
+        <property name="styleSheet">
+         <string notr="true">.QWidget{
+border: 2px solid rgb(37,39,48);
+border-radius: 20px;
+}</string>
+        </property>
+        <widget class="QLCDNumber" name="lcdNumber_2">
+         <property name="geometry">
+          <rect>
+           <x>60</x>
+           <y>60</y>
+           <width>191</width>
+           <height>91</height>
+          </rect>
+         </property>
+         <property name="styleSheet">
+          <string notr="true">QLCDNumber{
+border: 1px solid rgb(37,39,48);
+border-radius: 20px;
+}</string>
+         </property>
+         <property name="frameShape">
+          <enum>QFrame::StyledPanel</enum>
+         </property>
+         <property name="digitCount">
+          <number>3</number>
+         </property>
+         <property name="segmentStyle">
+          <enum>QLCDNumber::Flat</enum>
+         </property>
+        </widget>
+        <widget class="QLabel" name="temperature_label">
+         <property name="geometry">
+          <rect>
+           <x>10</x>
+           <y>10</y>
+           <width>141</width>
+           <height>21</height>
+          </rect>
+         </property>
+         <property name="font">
+          <font>
+           <pointsize>12</pointsize>
+          </font>
+         </property>
+         <property name="styleSheet">
+          <string notr="true">color:rgb(77, 121, 140);</string>
+         </property>
+         <property name="text">
+          <string>Temperature</string>
+         </property>
+        </widget>
+       </widget>
+      </widget>
+      <widget class="QWidget" name="page_10">
+       <widget class="QWidget" name="widget_temp_off" native="true">
+        <property name="geometry">
+         <rect>
+          <x>0</x>
+          <y>0</y>
+          <width>321</width>
+          <height>201</height>
+         </rect>
+        </property>
+        <property name="styleSheet">
+         <string notr="true">.QWidget{
+border: 2px solid rgb(37,39,48);
+border-radius: 20px;
+}</string>
+        </property>
+        <widget class="QLabel" name="label_8">
+         <property name="geometry">
+          <rect>
+           <x>30</x>
+           <y>70</y>
+           <width>281</width>
+           <height>41</height>
+          </rect>
+         </property>
+         <property name="font">
+          <font>
+           <pointsize>12</pointsize>
+           <weight>75</weight>
+           <bold>true</bold>
+          </font>
+         </property>
+         <property name="text">
+          <string>Temperature widget is DISABLED</string>
+         </property>
+        </widget>
+       </widget>
+      </widget>
+     </widget>
+     <widget class="QStackedWidget" name="water_stacked">
+      <property name="geometry">
+       <rect>
+        <x>710</x>
+        <y>350</y>
+        <width>341</width>
+        <height>201</height>
+       </rect>
+      </property>
+      <property name="currentIndex">
+       <number>1</number>
+      </property>
+      <widget class="QWidget" name="page_11">
+       <widget class="QWidget" name="cameras_widget_2" native="true">
+        <property name="geometry">
+         <rect>
+          <x>0</x>
+          <y>0</y>
+          <width>341</width>
+          <height>201</height>
+         </rect>
+        </property>
+        <property name="styleSheet">
+         <string notr="true">.QWidget{
+border: 2px solid rgb(37,39,48);
+border-radius: 20px;
+}</string>
+        </property>
+        <widget class="QLabel" name="watter_label">
+         <property name="geometry">
+          <rect>
+           <x>20</x>
+           <y>10</y>
+           <width>191</width>
+           <height>21</height>
+          </rect>
+         </property>
+         <property name="font">
+          <font>
+           <pointsize>12</pointsize>
+          </font>
+         </property>
+         <property name="styleSheet">
+          <string notr="true">color:rgb(77, 121, 140);</string>
+         </property>
+         <property name="text">
+          <string>Watteriness</string>
+         </property>
+        </widget>
+        <widget class="QLineEdit" name="room_lights_opt_4">
+         <property name="geometry">
+          <rect>
+           <x>140</x>
+           <y>50</y>
+           <width>151</width>
+           <height>20</height>
+          </rect>
+         </property>
+         <property name="styleSheet">
+          <string notr="true">QLineEdit{
+border: 2px solid rgb(37,39,48);
+border-left:none;
+border-right:none;
+border-top:none;
+border-radius: 20px;
+}</string>
+         </property>
+         <property name="placeholderText">
+          <string/>
+         </property>
+         <property name="clearButtonEnabled">
+          <bool>true</bool>
+         </property>
+        </widget>
+        <widget class="QLabel" name="room_label_4">
+         <property name="geometry">
+          <rect>
+           <x>20</x>
+           <y>50</y>
+           <width>71</width>
+           <height>16</height>
+          </rect>
+         </property>
+         <property name="font">
+          <font>
+           <pointsize>12</pointsize>
+          </font>
+         </property>
+         <property name="text">
+          <string>Room</string>
+         </property>
+        </widget>
+        <widget class="QProgressBar" name="watteriness_per">
+         <property name="geometry">
+          <rect>
+           <x>80</x>
+           <y>110</y>
+           <width>211</width>
+           <height>41</height>
+          </rect>
+         </property>
+         <property name="font">
+          <font>
+           <pointsize>14</pointsize>
+           <weight>75</weight>
+           <bold>true</bold>
+          </font>
+         </property>
+         <property name="value">
+          <number>24</number>
+         </property>
+        </widget>
+       </widget>
+      </widget>
+      <widget class="QWidget" name="page_12">
+       <widget class="QWidget" name="widget_water_off" native="true">
+        <property name="geometry">
+         <rect>
+          <x>0</x>
+          <y>0</y>
+          <width>341</width>
+          <height>201</height>
+         </rect>
+        </property>
+        <property name="styleSheet">
+         <string notr="true">.QWidget{
+border: 2px solid rgb(37,39,48);
+border-radius: 20px;
+}</string>
+        </property>
+        <widget class="QLabel" name="label_9">
+         <property name="geometry">
+          <rect>
+           <x>50</x>
+           <y>70</y>
+           <width>271</width>
+           <height>41</height>
+          </rect>
+         </property>
+         <property name="font">
+          <font>
+           <pointsize>12</pointsize>
+           <weight>75</weight>
+           <bold>true</bold>
+          </font>
+         </property>
+         <property name="text">
+          <string>Watteriness widget is DISABLED</string>
+         </property>
+        </widget>
+       </widget>
+      </widget>
+     </widget>
     </widget>
    </widget>
    <widget class="QFrame" name="frame_3">
