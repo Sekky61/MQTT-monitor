@@ -18,6 +18,7 @@ SOURCES += \
     new_connection.cpp \
     snapshot_manager.cpp \
     topicmodel.cpp
+    snapshot.cpp
 
 HEADERS += \
     aboutapplication.h \
@@ -28,6 +29,7 @@ HEADERS += \
     new_connection.h \
     snapshot_manager.h \
     topicmodel.h
+    snapshot.h
 
 
 HEADERS += ../logic/message_system.hpp
@@ -36,7 +38,8 @@ SOURCES += ../logic/message_system.cpp
 FORMS += \
     dialog.ui \
     mainwindow.ui \
-    new_connection.ui
+    new_connection.ui \
+    snapshot.ui
 
 # Default rules for deployment.
 qnx: target.path = /tmp/$${TARGET}/bin
