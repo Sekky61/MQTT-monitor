@@ -8,6 +8,7 @@ snapshot_manager::snapshot_manager()
 
 int snapshot_manager::create_snapshot(QDir root_dir, client &cli)
 {
+    std::cerr << "Creating snapshot\n";
     if(!root_dir.mkdir("snapshot")){
         return 1;
     }
@@ -15,6 +16,7 @@ int snapshot_manager::create_snapshot(QDir root_dir, client &cli)
     if(!root_dir.cd("snapshot")){
         return 1;
     }
+    std::cerr << "In snapshot dir\n" << root_dir.path().toStdString() << "\n";
 
     auto &root = cli.sys->messages_root;
     if(root == nullptr){

@@ -151,6 +151,11 @@ public:
 
 		return node;
 	}
+
+	void delete_children(){
+		Children.clear();
+		Children.shrink_to_fit();
+	}
 };
 
 #endif

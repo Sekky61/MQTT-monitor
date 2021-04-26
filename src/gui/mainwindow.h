@@ -46,6 +46,8 @@ signals:
 
     void publish_clicked(QString topic_string, QString content_string);
 
+    void tree_data_changed();
+
 private slots:
 
     void display_message(const QModelIndex &index);
@@ -91,6 +93,8 @@ private slots:
     void on_treeView_customContextMenuRequested(const QPoint &pos);
 
     void context_copy_topic();
+
+    void delete_subtopics();
 
 public slots:
 

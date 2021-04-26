@@ -24,6 +24,10 @@ MainWindow::MainWindow(QWidget *parent):
     QObject::connect(copy_full_path_action, &QAction::triggered, this, &MainWindow::context_copy_topic);
     tree_context_menu->addAction(copy_full_path_action);
 
+    QAction *delete_subtopics_action = new QAction("Delete all subtopics", this);
+    QObject::connect(delete_subtopics_action, &QAction::triggered, this, &MainWindow::delete_subtopics);
+    tree_context_menu->addAction(delete_subtopics_action);
+
     QObject::connect(ui->treeView, &QAbstractItemView::clicked, this, &MainWindow::display_message);
 
     ui->treeView->setContextMenuPolicy(Qt::CustomContextMenu);
@@ -40,6 +44,7 @@ void MainWindow::set_tree_model(TopicModel *new_model)
 {
     mod = new_model;
     ui->treeView->setModel(new_model);
+    QObject::connect(this, &MainWindow::tree_data_changed, new_model, &TopicModel::incoming_data_change);
 }
 
 void MainWindow::display_message(const QModelIndex &index)
@@ -239,6 +244,17 @@ void MainWindow::context_copy_topic()
         auto node = static_cast<TopicNode *>(context_menu_target.internalPointer());
         if(node){
             clipboard->setText(QString::fromStdString(node->fullTopic));
+        }
+    }
+}
+
+void MainWindow::delete_subtopics()
+{
+    if (context_menu_target.isValid()) {
+        auto node = static_cast<TopicNode *>(context_menu_target.internalPointer());
+        if(node){
+            node->delete_children();
+            emit tree_data_changed();
         }
     }
 }
