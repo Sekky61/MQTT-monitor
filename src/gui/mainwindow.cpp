@@ -3,6 +3,7 @@
 #include "aboutapplication.h"
 #include "new_connection.h"
 #include "topicmodel.h"
+#include "dialog.h"
 
 #include <iostream>
 #include <QByteArray>
@@ -49,6 +50,10 @@ MainWindow::MainWindow(QWidget *parent):
     QAction *delete_subtopics_action = new QAction("Delete all subtopics", this);
     QObject::connect(delete_subtopics_action, &QAction::triggered, this, &MainWindow::delete_subtopics);
     tree_context_menu->addAction(delete_subtopics_action);
+
+    QAction *unsubscribe_action = new QAction("Unsubscribe", this);
+    QObject::connect(unsubscribe_action, &QAction::triggered, this, &MainWindow::unsubscribe_context);
+    tree_context_menu->addAction(unsubscribe_action);
 
     QObject::connect(ui->treeView, &QAbstractItemView::clicked, this, &MainWindow::display_message);
 
@@ -276,6 +281,21 @@ void MainWindow::delete_subtopics()
             emit tree_data_changed();
         }
     }
+}
+
+void MainWindow::unsubscribe_context()
+{
+    if (context_menu_target.isValid()) {
+        auto node = static_cast<TopicNode *>(context_menu_target.internalPointer());
+        if(node){
+
+            QString topic = QString::fromStdString(node->fullTopic);
+            emit delete_topic_clicked(topic);
+            emit tree_data_changed();
+        }
+    }
+}
+
 void MainWindow::on_dial_valueChanged(int value)
 {
     //nastavuje se na hodnotu ciferníku
@@ -300,10 +320,10 @@ void MainWindow::on_screenshot_button_clicked()
 {
     WId window = QWidget::winId(); //rozměry window
     QScreen *screen = QGuiApplication::primaryScreen();
-    QPixmap *map = new QPixmap(screen->grabWindow(window));
+    auto map = std::make_unique<QPixmap>(screen->grabWindow(window));
 
 
-    Dialog *screenshot = new Dialog(this);
+    std::unique_ptr<Dialog> screenshot = std::make_unique<Dialog>();
     screenshot->setModal(true);
     screenshot->exec();
 }

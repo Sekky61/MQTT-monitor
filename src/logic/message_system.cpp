@@ -54,8 +54,19 @@ void MessageSystem::add_topic(std::string topic_name){
 	}
 
 void MessageSystem::remove_topic(std::string topic_name){
-		std::remove(topics.begin(),topics.end(), topic_name);
+        std::remove(topics.begin(),topics.end(), topic_name);
 		client.unsubscribe(topic_name)->wait();
+
+        auto node = get_node_by_topic(topic_name);
+        auto parent = node->Parent;
+        auto &children = parent->Children;
+
+        auto object_it = find_if(children.begin(), children.end(),
+                        [&](std::unique_ptr<TopicNode> & obj){ return obj.get() == node;}
+                       );
+        if(object_it != children.end()){
+            children.erase(std::remove(children.begin(), children.end(), *object_it));
+        }
 	}
 
 bool MessageSystem::is_subscribed_topic(std::string topic){

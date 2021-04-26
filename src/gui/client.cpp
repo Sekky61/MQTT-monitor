@@ -21,6 +21,7 @@ int client::connect_to_server(QString client_name, QString server_address){
                 emit mqtt_data_changed();
                 std::cerr << "Emited mqtt_data_changed\n";
                 this->sys->add_message(message);
+
                 print_tree(this->sys->messages_root.get());
             });
 
@@ -58,11 +59,23 @@ void client::add_topic_slot(QString topic_string)
     }
 }
 
+void client::delete_topic_slot(QString topic_string)
+{
+    if(connected){
+        sys->remove_topic(topic_string.toStdString());
+        emit mqtt_data_changed();
+    } else {
+        std::cerr << "Nelze odebrat topic " << topic_string.toStdString() << " - client neni pripojeny\n";
+    }
+}
+
 void client::publish_slot(QString topic_string, QString content)
 {
     if(connected){
         QByteArray data = QByteArray(content.toStdString().data());
-        sys->send_message(topic_string.toStdString(), data.data(), data.length());
+        std::string topic = topic_string.toStdString();
+        sys->send_message(topic, data.data(), data.length());
+
         emit mqtt_data_changed();
     } else {
         std::cerr << "Nelze publishnout topic " << topic_string.toStdString() << " - client neni pripojeny\n";

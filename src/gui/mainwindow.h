@@ -44,6 +44,8 @@ signals:
 
     void add_topic_clicked(QString topic_string);
 
+    void delete_topic_clicked(QString topic_string);
+
     void publish_clicked(QString topic_string, QString content_string);
 
     void tree_data_changed();
@@ -95,6 +97,8 @@ private slots:
     void context_copy_topic();
 
     void delete_subtopics();
+
+    void unsubscribe_context();
 
 public slots:
 

@@ -27,6 +27,8 @@ public slots:
 
     void add_topic_slot(QString topic_string);
 
+    void delete_topic_slot(QString topic_string);
+
     void publish_slot(QString topic_string, QString content); //todo void *
 
 };

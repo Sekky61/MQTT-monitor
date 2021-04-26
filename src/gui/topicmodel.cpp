@@ -2,6 +2,7 @@
 
 #include <iostream>
 #include <QFont>
+#include <QBrush>
 
 int TopicModel::rowCount(const QModelIndex &parent) const
 {
@@ -50,6 +51,9 @@ QVariant TopicModel::data(const QModelIndex &index, int role) const
                 if(cli.sys->is_subscribed_topic(full_topic)){
                     f.setWeight(QFont::Weight::Bold);
                     return QVariant(f);
+                } else {
+                    f.setWeight(QFont::Weight::Light);
+                    return QVariant(f);
                 }
             }
         }
@@ -57,7 +61,25 @@ QVariant TopicModel::data(const QModelIndex &index, int role) const
         f.setWeight(QFont::Weight::Light);
         return QVariant(f);
     }
+/*
+    if(role == Qt::BackgroundRole){
 
+        TopicNode *item = static_cast<TopicNode*>(index.internalPointer());
+        if(item->Msgs.size() == 0){
+            return QVariant();
+        }
+        std::cerr << "bcgrnd: " << item->Topic << " " << item->last_msg_sent << "\n";
+        if(item->last_msg_sent){
+            QColor green = QColor(171,255,122);
+            QBrush br = QBrush(green);
+            return QVariant(br);
+        } else {
+            QColor blue = QColor(148,239,255);
+            QBrush br = QBrush(blue);
+            return QVariant(br);
+        }
+    }
+*/
     if (role != Qt::DisplayRole){
         return QVariant();
     }

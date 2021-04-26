@@ -47,6 +47,7 @@ public:
 
 	MessageSystem(std::string client_name, std::string server_address):
 		connected(false),
+        SubscribeAll(false),
 		client_id{ client_name },
 		client(server_address, client_id)
     {
