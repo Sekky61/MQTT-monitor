@@ -21,6 +21,7 @@
 
 #include "topicmodel.h"
 #include "new_connection.h"
+#include "client.h"
 
 QT_BEGIN_NAMESPACE
 namespace Ui { class MainWindow; }
@@ -37,6 +38,8 @@ public:
     QSortFilterProxyModel * proxy_tree;
 
     void set_tree_model(TopicModel *mod);
+
+    void set_client_ptr(client *cl);
 
 signals:
 
@@ -119,11 +122,14 @@ public slots:
 
     void on_dashboard_add_clicked();
 
+    void save_tree_structure_slot(QDir);
+
 private:
     Ui::MainWindow *ui;
     QString current_file = ""; //jméno souboru ve kterém pracujeme
     QStandardItemModel model;
     TopicModel *mod;
+    client *cli_ptr;
 
     QMenu *tree_context_menu;
     QModelIndex context_menu_target;

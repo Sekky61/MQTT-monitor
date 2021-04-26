@@ -5,6 +5,7 @@
 #include "topicmodel.h"
 #include "dialog.h"
 #include "snapshot.h"
+#include "snapshot_manager.h"
 
 #include <iostream>
 #include <QByteArray>
@@ -79,6 +80,11 @@ void MainWindow::set_tree_model(TopicModel *new_model)
     mod = new_model;
     ui->treeView->setModel(new_model);
     QObject::connect(this, &MainWindow::tree_data_changed, new_model, &TopicModel::incoming_data_change);
+}
+
+void MainWindow::set_client_ptr(client *cl)
+{
+    cli_ptr = cl;
 }
 
 void MainWindow::display_message(const QModelIndex &index)
@@ -354,9 +360,14 @@ void MainWindow::on_snapshot_button_clicked()
 
 void MainWindow::on_snap_button_clicked()
 {
-    Snapshot *snap = new Snapshot(this);
+    auto snap = std::make_unique<Snapshot>(this);
+
+    QObject::connect(snap.get(), &Snapshot::save_tree_structure, this, &MainWindow::save_tree_structure_slot);
+
     snap->setModal(true);
     snap->exec();
+
+    //zde se bude ukládat stromová struktura
 }
 
 void MainWindow::on_dashboard_add_clicked()
@@ -397,4 +408,10 @@ void MainWindow::on_dashboard_add_clicked()
     }else if(!(ui->radio_water->isChecked())){
         ui->water_stacked->setCurrentIndex(1);
     }
+}
+
+void MainWindow::save_tree_structure_slot(QDir root)
+{
+    snapshot_manager mngr;
+    mngr.create_snapshot(root, cli_ptr);
 }

@@ -17,7 +17,7 @@ SOURCES += \
     mainwindow.cpp \
     new_connection.cpp \
     snapshot_manager.cpp \
-    topicmodel.cpp
+    topicmodel.cpp\
     snapshot.cpp
 
 HEADERS += \
@@ -28,7 +28,7 @@ HEADERS += \
     mainwindow.h \
     new_connection.h \
     snapshot_manager.h \
-    topicmodel.h
+    topicmodel.h\
     snapshot.h
 
 

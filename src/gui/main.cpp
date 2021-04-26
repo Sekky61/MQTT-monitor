@@ -21,6 +21,7 @@ int main(int argc, char *argv[])
 
     MainWindow w;
     w.set_tree_model(&topmod);
+    w.set_client_ptr(&cli);
 
     QObject::connect(&cli, &client::mqtt_data_changed, &topmod, &TopicModel::incoming_data_change);
     QObject::connect(&w, &MainWindow::connect_client_mainwindow, &cli, &client::user_clicked_connect);

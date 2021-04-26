@@ -9,7 +9,7 @@ class snapshot_manager
 public:
     snapshot_manager();
 
-    int create_snapshot(QDir root_dir, client &cli);
+    int create_snapshot(QDir root_dir, client *cli);
 
     int dump_topic(QDir dir, TopicNode *node);
 };

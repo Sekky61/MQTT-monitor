@@ -6,25 +6,43 @@ snapshot_manager::snapshot_manager()
 
 }
 
-int snapshot_manager::create_snapshot(QDir root_dir, client &cli)
+int snapshot_manager::create_snapshot(QDir root_dir, client *cli)
 {
+    if(cli == nullptr){
+        std::cerr << " cli null\n";
+        return 1;
+    }
+
+    if(cli->sys == nullptr){
+        std::cerr << " sys null\n";
+        return 1;
+    }
+
+    auto &root = cli->sys->messages_root;
+    if(root == nullptr){
+        std::cerr << " messages null\n";
+        return 1;
+    }
+
     std::cerr << "Creating snapshot\n";
-    if(!root_dir.mkdir("snapshot")){
+    std::cerr << root_dir.path().toStdString();
+    if(!root_dir.mkpath("snapshot")){
+        std::cerr << " mkdir failed\n";
         return 1;
     }
 
     if(!root_dir.cd("snapshot")){
+        std::cerr << " cd failed\n";
         return 1;
     }
     std::cerr << "In snapshot dir\n" << root_dir.path().toStdString() << "\n";
 
-    auto &root = cli.sys->messages_root;
-    if(root == nullptr){
-        return 1;
-    }
-
     for(auto &child : root->Children){
-        int ret = dump_topic(root_dir, child.get());
+        QDir root_cpy = QDir(root_dir);
+        QString topic = QString::fromStdString(child->Topic);
+        root_cpy.mkpath(topic);
+        root_cpy.cd(topic);
+        int ret = dump_topic(root_cpy, child.get());
         if(ret != 0){
             return ret;
         }
@@ -43,18 +61,18 @@ int snapshot_manager::dump_topic(QDir dir, TopicNode *node){
     QString file_name("payload.txt");
 
     // Vytvorit payload.txt
-    QFile payload_file = QFile(file_name);
-    if(payload_file.open(QIODevice::WriteOnly)){
-        mqtt::const_message_ptr *last_message = node->get_latest_msg();
-        if(last_message != nullptr){
-            if(*last_message != nullptr){
+    QFile payload_file = QFile(dir.path() + "/" + file_name);
+
+    mqtt::const_message_ptr *last_message = node->get_latest_msg();
+    if(last_message != nullptr){
+        if(*last_message != nullptr){
+            if(payload_file.open(QIODevice::WriteOnly)){
                 std::string content = (*last_message)->get_payload();
                 payload_file.write(content.data());
+            } else {
+                return 1;
             }
         }
-        payload_file.close();
-    } else {
-        return 1;
     }
 
     // Vytvorit slozky pro potomky
