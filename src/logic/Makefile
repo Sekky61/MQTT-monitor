@@ -1,6 +1,6 @@
 CC = g++
 CXXFLAGS = -std=c++17 -pedantic -Wall -Wextra -O2
-LDFLAGS = -lpaho-mqtt3a -lpaho-mqttpp3
+LDFLAGS = -lpaho-mqtt3c -lpaho-mqtt3a -lpaho-mqttpp3
 
 CPP_FILES = entry.cpp message_system.cpp
 

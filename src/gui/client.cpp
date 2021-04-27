@@ -42,6 +42,7 @@ void client::user_clicked_connect(QString client_name, QString server_address)
         sys->add_topic("t3");
         sys->add_topic("t2/sub1");
         sys->add_topic("t2/sub2");
+        sys->add_topic("pic");
         emit connection_succesful();
         emit mqtt_data_changed();
     } else {

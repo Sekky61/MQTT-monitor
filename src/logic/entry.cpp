@@ -26,7 +26,7 @@ int main(int argc, char* argv[])
 	std::cerr << sys.get_node_by_topic("t2/sub1")->Topic << std::endl;
 	std::cerr << sys.get_node_by_topic("t2/sub1")->fullTopic << std::endl;
 
-	std::ifstream input( "pic.jpg", std::ios::binary );
+	std::ifstream input( "pic.png", std::ios::binary );
 
     // copies all data into buffer
     std::vector<unsigned char> buffer(std::istreambuf_iterator<char>(input), {});

@@ -1,4 +1,5 @@
 #include <QFile>
+#include <QImage>
 #include "snapshot_manager.h"
 
 snapshot_manager::snapshot_manager()
@@ -58,17 +59,31 @@ int snapshot_manager::dump_topic(QDir dir, TopicNode *node){
         return 0;
     }
 
-    QString file_name("payload.txt");
-
-    // Vytvorit payload.txt
-    QFile payload_file = QFile(dir.path() + "/" + file_name);
-
     mqtt::const_message_ptr *last_message = node->get_latest_msg();
     if(last_message != nullptr){
         if(*last_message != nullptr){
+
+            std::string payload = (*last_message)->get_payload();
+
+            QImage img;
+            img.loadFromData(reinterpret_cast<const uchar*>(payload.data()), payload.size());
+
+            QString file_name;
+
+            if(img.format() == QImage::Format_Invalid){
+                std::cerr << "DATA IS NOT PICTURE\n";
+                file_name = "payload.txt";
+            } else {
+                std::cerr << "OK - NAME WILL BE .JPG\n";
+                file_name = "payload.jpg";
+            }
+
+            QFile payload_file = QFile(dir.path() + "/" + file_name);
+
             if(payload_file.open(QIODevice::WriteOnly)){
-                std::string content = (*last_message)->get_payload();
-                payload_file.write(content.data());
+                std::cerr << "Writing " << payload.size() << " B\n";
+                int written = payload_file.write(payload.data(), payload.size());
+                std::cerr << "Actually " << written << " B\n";
             } else {
                 return 1;
             }

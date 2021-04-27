@@ -49,4 +49,4 @@ else: unix:!android: target.path = /opt/$${TARGET}/bin
 RESOURCES += \
     Resources.qrc
 
-unix|win32: LIBS += -lpaho-mqttpp3 -lpaho-mqtt3as
+unix|win32: LIBS += -lpaho-mqtt3c -lpaho-mqtt3a -lpaho-mqttpp3
