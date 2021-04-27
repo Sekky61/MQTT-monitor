@@ -15,14 +15,14 @@ int client::connect_to_server(QString client_name, QString server_address){
     sys->client.set_message_callback([this](const mqtt::const_message_ptr message){
                 auto topic = message->get_topic();
                 auto msg = message->get_payload();
-                std::cerr
+                /*std::cerr
                     << "QT callback: " << topic
-                    << " : " << msg << std::endl;
+                    << " : " << msg << std::endl;*/
                 emit mqtt_data_changed();
                 std::cerr << "Emited mqtt_data_changed\n";
                 this->sys->add_message(message);
 
-                print_tree(this->sys->messages_root.get());
+                //print_tree(this->sys->messages_root.get());
             });
 
     int status = sys->connect_client();

@@ -16,3 +16,6 @@ build*
 doc
 *.user
 .vscode
+
+*.jpg
+git_fix

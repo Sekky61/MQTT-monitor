@@ -101,6 +101,8 @@ public slots:
 
     void display_message(const QModelIndex &index);
 
+    void display_history(const QModelIndex &index);
+
     void connection_succesful_slot();
 
     void on_dial_valueChanged(int value);

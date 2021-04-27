@@ -99,36 +99,61 @@ void MainWindow::display_message(const QModelIndex &index)
     if(node_ptr == nullptr){
         std::cerr << "zadne zpravy\n";
         ui->value_text->setPlainText(QString());
+        ui->img_msg->setVisible(false);
         return;
     }
+
+
 
     auto msg_ptr = node_ptr->get_latest_msg();
     if(msg_ptr == nullptr){
         std::cerr << "zadne zpravy\n";
         ui->value_text->setPlainText(QString());
+        ui->img_msg->setVisible(false);
         return;
     }
 
     std::string payload = (*msg_ptr)->get_payload();
-    QString qmsg = QString::fromStdString(payload);
-    ui->value_text->setPlainText(qmsg);
 
-    QByteArray arr = QByteArray(payload.data());
+    QImage img;
+    img.loadFromData(reinterpret_cast<const uchar*>(payload.data()), payload.size());
 
-    QDataStream stream = QDataStream(arr);
-
-    QBuffer buf = QBuffer(&arr);
-
-    QByteArray imageFormat = QImageReader::imageFormat(&buf);
-
-    if(imageFormat.size() == 0){
+    if(img.format() == QImage::Format_Invalid){
         std::cerr << "SIZE 0 - NOT A PICTURE\n";
+        QString qmsg = QString::fromStdString(payload);
+        ui->value_text->setPlainText(qmsg);
+        ui->img_msg->setVisible(false);
     } else {
         std::cerr << "OK - PICTURE\n";
+        ui->value_text->setPlainText(QString());
+        ui->img_msg->setVisible(true);
     }
 
     //on_img_msg_clicked
 }
+
+void MainWindow::display_history(const QModelIndex &index)
+{
+    auto node_ptr = static_cast<TopicNode*>(index.internalPointer());
+    if(node_ptr == nullptr){
+        std::cerr << "zadne zpravy\n";
+        //ui->value_text->setPlainText(QString());
+        return;
+    }
+
+    auto &messages = node_ptr->Msgs;
+
+    QString res;
+
+    for(auto msg: messages){
+        res += QString::fromStdString(msg->get_payload()) + "\n";
+    }
+
+    //ui-> HISTORY FIELD
+
+    //todo pics
+}
+
 
 
 void MainWindow::on_actionQuit_triggered()
@@ -240,8 +265,46 @@ void MainWindow::on_Dash_button_clicked()
 void MainWindow::on_img_msg_clicked()
 {
     //tohle patří do funkce kde budeš zpracovávat zprávu
-    ui->img_msg->setEnabled(false);
-    ui->img_msg->setVisible(false);
+    if(displayed_topic.isValid()){
+
+        auto node_ptr = static_cast<TopicNode*>(displayed_topic.internalPointer());
+        if(node_ptr == nullptr){
+            std::cerr << "zadne zpravy\n";
+            //ui->value_text->setPlainText(QString());
+            return;
+        }
+
+        auto msg_ptr = node_ptr->get_latest_msg();
+        if(msg_ptr == nullptr){
+            std::cerr << "zadne zpravy\n";
+            ui->value_text->setPlainText(QString());
+            ui->img_msg->setVisible(false);
+            return;
+        }
+
+        std::string payload = (*msg_ptr)->get_payload();
+
+        QImage img;
+        img.loadFromData(reinterpret_cast<const uchar*>(payload.data()), payload.size());
+
+        if(img.format() == QImage::Format_Invalid){
+            std::cerr << "CANNOT DISPLAY PICTURE\n";
+        } else {
+            std::cerr << "OK - SHOWING PICTURE\n";
+            QDialog dia = QDialog();
+            QLabel pic_lbl = QLabel(&dia);
+
+            QPixmap map;
+            map.convertFromImage(img);
+            pic_lbl.setPixmap(map);
+            std::cerr << pic_lbl.width() << " - " << pic_lbl.height();
+            dia.resize(img.width(), img.height());
+            dia.exec();
+        }
+
+    }
+    //ui->img_msg->setEnabled(false);
+    //ui->img_msg->setVisible(false);
 }
 
 void MainWindow::on_copy_topic_path_clicked()
