@@ -70,21 +70,21 @@ private slots:
 
     void on_img_msg_clicked();
 
-    void on_dial_valueChanged(int value);
+    //void on_dial_valueChanged(int value);
 
-    void on_dial_actionTriggered(int action);
+    //void on_dial_actionTriggered(int action);
 
-    void on_temp_button_clicked();
+    //void on_light_set_button_clicked();
+
+    // void on_temp_button_clicked();
 
     void on_screenshot_button_clicked();
-
-    void on_light_set_button_clicked();
 
     void on_snapshot_button_clicked();
 
     void on_snap_button_clicked();
 
-    void on_dashboard_add_clicked();
+    //void on_dashboard_add_clicked();
 
 private:
     Ui::MainWindow *ui;

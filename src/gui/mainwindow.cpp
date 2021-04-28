@@ -5,22 +5,53 @@
 #include "dialog.h"
 #include "snapshot.h"
 
+#include "dash_tile.h"
+#include "thermostat_tile.h"
+#include "fulltext_tile.h"
+#include "camera_tile.h"
+#include "light_tile.h"
+#include "temperature_tile.h"
+#include "humidity_tile.h"
+
 MainWindow::MainWindow(QWidget *parent):
     QMainWindow(parent) ,
     ui(new Ui::MainWindow)
 {
     ui->setupUi(this);
-    ui->value_text->setReadOnly(true);
-    ui->value_text_2->setReadOnly(true);
 
-    ui->progressBar->setTextVisible(false);
-    ui->dial->setWrapping(false);
+    dash_tile *tile1 = new dash_tile();
+    fulltext_tile *tile2 = new fulltext_tile();
+    camera_tile *tile3 = new camera_tile();
+    thermostat_tile *tile4 = new thermostat_tile();
+    light_tile *tile5 = new light_tile();
+    temperature_tile *tile6 = new temperature_tile();
+    humidity_tile *tile7 = new humidity_tile();
+
+    //ui->tiles_layout->setSpacing(10);
+
+    ui->tiles_layout->setContentsMargins(20,20,20,20);
+
+    ui->tiles_layout->setSizeConstraint(QLayout::SetMaximumSize);
+
+    ui->tiles_layout->addWidget(tile1, 0, 0);
+    ui->tiles_layout->addWidget(tile2, 0, 1);
+    ui->tiles_layout->addWidget(tile3, 1, 0);
+    ui->tiles_layout->addWidget(tile4, 1, 1);
+    ui->tiles_layout->addWidget(tile5, 2, 1);
+    ui->tiles_layout->addWidget(tile6, 2, 2);
+    ui->tiles_layout->addWidget(tile7, 0, 2);
+
+    ui->value_text->setReadOnly(true);
+    //ui->value_text_2->setReadOnly(true);
+
+    //ui->progressBar->setTextVisible(false);
+    //ui->dial->setWrapping(false);
 
     //na záčátku bude nastaveno na hodnotu přijatou ze zprávy
     int message_val = 13; //to si přepiš
-    ui->lcdNumber->display(message_val);
-    ui->progressBar->setValue(message_val);
-    ui->lcdNumber->setSmallDecimalPoint(true);
+    //ui->lcdNumber->display(message_val);
+    //ui->progressBar->setValue(message_val);
+    //ui->lcdNumber->setSmallDecimalPoint(true);
 
 
     //dashboard text - vždy
@@ -28,15 +59,15 @@ MainWindow::MainWindow(QWidget *parent):
     ui->radio_text->setAutoExclusive(true);
 
     //lihts - readonly
-    ui->device_lights_opt->setReadOnly(true);
-    ui->room_lights_opt->setReadOnly(true);
+    //ui->device_lights_opt->setReadOnly(true);
+    //ui->room_lights_opt->setReadOnly(true);
 
     //základní nastavení widgetů na dashboardu - widgety jsou defaultně vypnuté
-    ui->thermo_stacked->setCurrentIndex(1);
-    ui->light_stacked->setCurrentIndex(1);
-    ui->cameras_stacked->setCurrentIndex(1);
-    ui->temperature_stacked->setCurrentIndex(1);
-    ui->water_stacked->setCurrentIndex(1);
+    //ui->thermo_stacked->setCurrentIndex(1);
+    //ui->light_stacked->setCurrentIndex(1);
+    //ui->cameras_stacked->setCurrentIndex(1);
+    //ui->temperature_stacked->setCurrentIndex(1);
+    //ui->water_stacked->setCurrentIndex(1);
 
 
 
@@ -266,7 +297,7 @@ void MainWindow::on_img_msg_clicked()
     ui->img_msg->setVisible(false);
 }
 
-void MainWindow::on_dial_valueChanged(int value)
+/*void MainWindow::on_dial_valueChanged(int value)
 {
     //nastavuje se na hodnotu ciferníku
     ui->lcdNumber->display(value);
@@ -284,7 +315,7 @@ void MainWindow::on_dial_actionTriggered(int action)
 {
 
 }
-
+*/
 
 void MainWindow::on_screenshot_button_clicked()
 {
@@ -297,7 +328,7 @@ void MainWindow::on_screenshot_button_clicked()
     screenshot->setModal(true);
     screenshot->exec();
 }
-
+/*
 void MainWindow::on_light_set_button_clicked()
 {
     QString room = ui->room_lights_opt->text();
@@ -309,7 +340,7 @@ void MainWindow::on_light_set_button_clicked()
         //vypnutí světel na zadané lokaci
     }
 }
-
+*/
 void MainWindow::on_snapshot_button_clicked()
 {
     //zobrazí obrázek
@@ -321,7 +352,7 @@ void MainWindow::on_snap_button_clicked()
     snap->setModal(true);
     snap->exec();
 }
-
+/*
 void MainWindow::on_dashboard_add_clicked()
 {
     //thermostat
@@ -361,3 +392,4 @@ void MainWindow::on_dashboard_add_clicked()
         ui->water_stacked->setCurrentIndex(1);
     }
 }
+*/
