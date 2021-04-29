@@ -20,7 +20,7 @@ public:
 signals:
     void connection_succesful();
 
-    void mqtt_data_changed();
+    void mqtt_data_changed(QString, QString);
 
 public slots:
     void user_clicked_connect(QString client_name, QString server_address);

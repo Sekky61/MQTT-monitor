@@ -20,7 +20,7 @@ class light_tile : public dash_tile
     QPushButton *light_off_button;
 
 public:
-    light_tile();
+    light_tile(QString);
 
 private slots:
 

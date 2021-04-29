@@ -14,7 +14,10 @@ class dash_tile : public QFrame
     std::unique_ptr<QGridLayout> layout;
 
 public:
-    explicit dash_tile(QWidget *parent = nullptr);
+    QString topic;
+
+public:
+    explicit dash_tile(QWidget *parent = nullptr, QString topic_src = "");
 
 
 };

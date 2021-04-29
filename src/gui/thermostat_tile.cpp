@@ -1,6 +1,6 @@
 #include "thermostat_tile.h"
 
-thermostat_tile::thermostat_tile() : dash_tile()
+thermostat_tile::thermostat_tile(QString topic_src) : dash_tile(nullptr, topic_src)
 {
     std::cerr << "constructing thermostat\n";
 

@@ -1,6 +1,6 @@
 #include "humidity_tile.h"
 
-humidity_tile::humidity_tile() : dash_tile()
+humidity_tile::humidity_tile(QString topic_src) : dash_tile(nullptr, topic_src)
 {
     water_label = new QLabel(this);
             water_label->setObjectName(QString::fromUtf8("water_label"));
@@ -30,4 +30,12 @@ humidity_tile::humidity_tile() : dash_tile()
             humidity_per->setObjectName(QString::fromUtf8("humidity_per"));
             humidity_per->setGeometry(QRect(80, 110, 211, 41));
             humidity_per->setValue(24);
+}
+
+void humidity_tile::incoming_data(QString incoming_topic, QString payload)
+{
+    if(incoming_topic == topic){
+        int val = payload.toInt();
+        humidity_per->setValue(val);
+    }
 }

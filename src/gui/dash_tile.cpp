@@ -5,9 +5,10 @@
 #include <QPushButton>
 #include <QLabel>
 
-dash_tile::dash_tile(QWidget *parent) :
+dash_tile::dash_tile(QWidget *parent, QString topic_src) :
     QFrame(parent),
-    layout(new QGridLayout)
+    layout(new QGridLayout),
+    topic(topic_src)
 {
     std::cerr << "Dash tile constructed\n";
     this->setStyleSheet("dash_tile {\nborder: 2px solid rgb(37,39,48);\nborder-radius: 20px;\n}");

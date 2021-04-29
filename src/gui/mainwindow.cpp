@@ -22,7 +22,6 @@
 #include "temperature_tile.h"
 #include "humidity_tile.h"
 
-#include "flow_layout.h"
 
 MainWindow::MainWindow(QWidget *parent):
     QMainWindow(parent),
@@ -49,13 +48,6 @@ MainWindow::MainWindow(QWidget *parent):
     QObject::connect(this, &MainWindow::publish_clicked, &cli, &client::publish_slot);
 
     ui->treeView->setModel(&mod);
-    dash_tile *tile1 = new dash_tile();
-    fulltext_tile *tile2 = new fulltext_tile();
-    camera_tile *tile3 = new camera_tile();
-    thermostat_tile *tile4 = new thermostat_tile();
-    light_tile *tile5 = new light_tile();
-    temperature_tile *tile6 = new temperature_tile();
-    humidity_tile *tile7 = new humidity_tile();
 
     //ui->tiles_layout->setSpacing(10);
 
@@ -63,35 +55,11 @@ MainWindow::MainWindow(QWidget *parent):
     gridLayoutWidget->setObjectName(QString::fromUtf8("gridLayoutWidget"));
     gridLayoutWidget->setGeometry(QRect(0, 80, 1070, 700));
 
-    FlowLayout *tiles_layout = new FlowLayout(gridLayoutWidget);
+    tiles_layout = new FlowLayout(gridLayoutWidget);
     tiles_layout->setObjectName(QString::fromUtf8("tiles_layout"));
     tiles_layout->setContentsMargins(20, 20, 20, 20);
     gridLayoutWidget->setLayout(tiles_layout);
     tiles_layout->activate();
-
-    tiles_layout->addWidget(tile1);
-    tiles_layout->addWidget(tile2);
-    tiles_layout->addWidget(tile3);
-    tiles_layout->addWidget(tile4);
-    tiles_layout->addWidget(tile5);
-    tiles_layout->addWidget(tile6);
-    tiles_layout->addWidget(tile7);
-
-    //tiles_layout->activate();
-    //tiles_layout->activate();
-    //tiles_layout->addItem(item2);
-/*
-    ui->tiles_layout->setContentsMargins(20,20,20,20);
-
-    ui->tiles_layout->setSizeConstraint(QLayout::SetMaximumSize);
-
-    ui->tiles_layout->addWidget(tile1, 0, 0);
-    ui->tiles_layout->addWidget(tile2, 0, 1);
-    ui->tiles_layout->addWidget(tile3, 1, 0);
-    ui->tiles_layout->addWidget(tile4, 1, 1);
-    ui->tiles_layout->addWidget(tile5, 2, 1);
-    ui->tiles_layout->addWidget(tile6, 2, 2);
-    ui->tiles_layout->addWidget(tile7, 0, 2);*/
 
     ui->value_text->setReadOnly(true);
     //ui->value_text_2->setReadOnly(true);
@@ -120,6 +88,38 @@ MainWindow::MainWindow(QWidget *parent):
     //ui->cameras_stacked->setCurrentIndex(1);
     //ui->temperature_stacked->setCurrentIndex(1);
     //ui->water_stacked->setCurrentIndex(1);
+
+    // context menu
+
+    // dashboard submenu
+
+    QMenu *dash_submenu = tree_context_menu->addMenu("Add to dashboard");
+
+    QAction *tile_add_plaintext = new QAction("Plain text", this);
+    QObject::connect(tile_add_plaintext, &QAction::triggered, this, &MainWindow::add_to_dashboard_plain_text);
+    dash_submenu->addAction(tile_add_plaintext);
+
+    QAction *tile_add_thermostat = new QAction("Thermostat", this);
+    QObject::connect(tile_add_thermostat, &QAction::triggered, this, &MainWindow::add_to_dashboard_thermostat);
+    dash_submenu->addAction(tile_add_thermostat);
+
+    QAction *tile_add_thermometer = new QAction("Thermometer", this);
+    QObject::connect(tile_add_thermometer, &QAction::triggered, this, &MainWindow::add_to_dashboard_thermometer);
+    dash_submenu->addAction(tile_add_thermometer);
+
+    QAction *tile_add_camera = new QAction("Camera feed", this);
+    QObject::connect(tile_add_camera, &QAction::triggered, this, &MainWindow::add_to_dashboard_camera);
+    dash_submenu->addAction(tile_add_camera);
+
+    QAction *tile_add_light = new QAction("Light", this);
+    QObject::connect(tile_add_light, &QAction::triggered, this, &MainWindow::add_to_dashboard_light);
+    dash_submenu->addAction(tile_add_light);
+
+    QAction *tile_add_humidity = new QAction("Humidity", this);
+    QObject::connect(tile_add_humidity, &QAction::triggered, this, &MainWindow::add_to_dashboard_humidity);
+    dash_submenu->addAction(tile_add_humidity);
+
+    // Other options
 
     QAction *copy_full_path_action = new QAction("Copy full path", this);
     QObject::connect(copy_full_path_action, &QAction::triggered, this, &MainWindow::context_copy_topic);
@@ -313,6 +313,7 @@ void MainWindow::on_Explorer_button_clicked()
 void MainWindow::on_Dash_button_clicked()
 {
     ui->Pages->setCurrentIndex(1);
+    tiles_layout->trigger_redraw();
 }
 
 //bude zobrazovat obrázek
@@ -361,6 +362,17 @@ void MainWindow::on_img_msg_clicked()
     //ui->img_msg->setVisible(false);
 }
 
+// CONTEXT MENU
+
+void MainWindow::on_treeView_customContextMenuRequested(const QPoint &pos)
+{
+    std::cerr << "context menu request\n";
+    context_menu_target = ui->treeView->indexAt(pos);
+    if (context_menu_target.isValid()) {
+        tree_context_menu->exec(ui->treeView->viewport()->mapToGlobal(pos));
+    }
+}
+
 void MainWindow::on_copy_topic_path_clicked()
 {
     auto index = ui->treeView->currentIndex();
@@ -391,12 +403,77 @@ void MainWindow::on_delete_subtopics_clicked()
     }
 }
 
-void MainWindow::on_treeView_customContextMenuRequested(const QPoint &pos)
+void MainWindow::add_to_dashboard_plain_text()
 {
-    std::cerr << "context menu request\n";
-    context_menu_target = ui->treeView->indexAt(pos);
     if (context_menu_target.isValid()) {
-        tree_context_menu->exec(ui->treeView->viewport()->mapToGlobal(pos));
+        auto node = static_cast<TopicNode *>(context_menu_target.internalPointer());
+        if(node){
+            fulltext_tile *tile = new fulltext_tile(QString::fromStdString(node->fullTopic));
+            QObject::connect(&cli, &client::mqtt_data_changed, tile, &fulltext_tile::incoming_data);
+            tiles_layout->addWidget(tile);
+            tiles_layout->activate();
+        }
+    }
+}
+
+void MainWindow::add_to_dashboard_thermostat()
+{
+    if (context_menu_target.isValid()) {
+        auto node = static_cast<TopicNode *>(context_menu_target.internalPointer());
+        if(node){
+            thermostat_tile *tile = new thermostat_tile(QString::fromStdString(node->fullTopic));
+            tiles_layout->addWidget(tile);
+            tiles_layout->activate();
+        }
+    }
+}
+
+void MainWindow::add_to_dashboard_thermometer()
+{
+    if (context_menu_target.isValid()) {
+        auto node = static_cast<TopicNode *>(context_menu_target.internalPointer());
+        if(node){
+            temperature_tile *tile = new temperature_tile(QString::fromStdString(node->fullTopic));
+            tiles_layout->addWidget(tile);
+            tiles_layout->activate();
+        }
+    }
+}
+
+void MainWindow::add_to_dashboard_camera()
+{
+    if (context_menu_target.isValid()) {
+        auto node = static_cast<TopicNode *>(context_menu_target.internalPointer());
+        if(node){
+            camera_tile *tile = new camera_tile(QString::fromStdString(node->fullTopic));
+            tiles_layout->addWidget(tile);
+            tiles_layout->activate();
+        }
+    }
+}
+
+void MainWindow::add_to_dashboard_light()
+{
+    if (context_menu_target.isValid()) {
+        auto node = static_cast<TopicNode *>(context_menu_target.internalPointer());
+        if(node){
+            light_tile *tile = new light_tile(QString::fromStdString(node->fullTopic));
+            tiles_layout->addWidget(tile);
+            tiles_layout->activate();
+        }
+    }
+}
+
+void MainWindow::add_to_dashboard_humidity()
+{
+    if (context_menu_target.isValid()) {
+        auto node = static_cast<TopicNode *>(context_menu_target.internalPointer());
+        if(node){
+            humidity_tile *tile = new humidity_tile(QString::fromStdString(node->fullTopic));
+            QObject::connect(&cli, &client::mqtt_data_changed, tile, &humidity_tile::incoming_data);
+            tiles_layout->addWidget(tile);
+            tiles_layout->activate();
+        }
     }
 }
 
@@ -435,7 +512,9 @@ void MainWindow::unsubscribe_context()
     }
 }
 
-void MainWindow::mqtt_data_changed_slot()
+// END OF CONTEXT MENU
+
+void MainWindow::mqtt_data_changed_slot(QString topic, QString msg)
 {
     display_message(displayed_topic);
 }
@@ -484,10 +563,11 @@ void MainWindow::on_light_set_button_clicked()
     }
 }
 */
+/*
 void MainWindow::on_snapshot_button_clicked()
 {
     //zobrazí obrázek
-}
+}*/
 
 void MainWindow::on_snap_button_clicked()
 {

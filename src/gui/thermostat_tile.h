@@ -20,7 +20,7 @@ class thermostat_tile : public dash_tile
     int temperature;
 
 public:
-    thermostat_tile();
+    thermostat_tile(QString);
 
 private slots:
     void update_display();

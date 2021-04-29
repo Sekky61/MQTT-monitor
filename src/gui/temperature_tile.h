@@ -12,7 +12,7 @@ class temperature_tile : public dash_tile
     QLCDNumber *lcdNumber_2;
     QLabel *temperature_label;
 public:
-    temperature_tile();
+    temperature_tile(QString);
 };
 
 #endif // TEMPERATURE_TILE_H

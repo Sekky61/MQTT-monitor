@@ -15,7 +15,10 @@ class humidity_tile : public dash_tile
     QLabel *room_label_4;
     QProgressBar *humidity_per;
 public:
-    humidity_tile();
+    humidity_tile(QString);
+
+public slots:
+    void incoming_data(QString incoming_topic, QString payload);
 };
 
 #endif // HUMIDITY_TILE_H

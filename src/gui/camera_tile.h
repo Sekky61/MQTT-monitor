@@ -15,7 +15,7 @@ class camera_tile : public dash_tile
     QPushButton *snapshot_button;
 
 public:
-    camera_tile();
+    camera_tile(QString);
 
 private slots:
 

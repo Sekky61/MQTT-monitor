@@ -26,7 +26,7 @@ public:
     QModelIndex parent(const QModelIndex &index) const override;
 
 public slots:
-    void incoming_data_change();
+    void incoming_data_change(QString, QString);
 
 private:
     client &cli;

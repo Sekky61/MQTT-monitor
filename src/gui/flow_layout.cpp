@@ -49,7 +49,6 @@
 ****************************************************************************/
 
 #include <QtWidgets>
-#include <iostream>
 
 #include "flow_layout.h"
 //! [1]
@@ -121,6 +120,11 @@ QLayoutItem *FlowLayout::takeAt(int index)
 }
 //! [5]
 
+void FlowLayout::trigger_redraw()
+{
+    doLayout(geometry(), false);
+}
+
 //! [6]
 Qt::Orientations FlowLayout::expandingDirections() const
 {
@@ -168,7 +172,6 @@ QSize FlowLayout::minimumSize() const
 //! [9]
 int FlowLayout::doLayout(const QRect &rect, bool testOnly) const
 {
-    std::cerr << "Running doLayout\n";
     int left, top, right, bottom;
     getContentsMargins(&left, &top, &right, &bottom);
     QRect effectiveRect = rect.adjusted(+left, +top, -right, -bottom);
@@ -201,7 +204,6 @@ int FlowLayout::doLayout(const QRect &rect, bool testOnly) const
         if (!testOnly){
             auto dim = QRect(QPoint(x, y), item->sizeHint());
             item->setGeometry(dim);
-            std::cerr << "Set geometry: " << item << " " << dim.width() << "x" << dim.height();
         }
 
         x = nextX;

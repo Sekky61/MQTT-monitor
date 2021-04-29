@@ -1,6 +1,6 @@
 #include "light_tile.h"
 
-light_tile::light_tile() : dash_tile()
+light_tile::light_tile(QString topic_src) : dash_tile(nullptr, topic_src)
 {
             device_lights_opt = new QLineEdit(this);
             device_lights_opt->setObjectName(QString::fromUtf8("device_lights_opt"));

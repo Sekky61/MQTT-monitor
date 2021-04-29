@@ -19,9 +19,12 @@
 #include <QTreeView>
 #include <QFileSystemModel>
 
+#include <unordered_map>
+
 #include "topicmodel.h"
 #include "new_connection.h"
 #include "client.h"
+#include "flow_layout.h"
 
 QT_BEGIN_NAMESPACE
 namespace Ui { class MainWindow; }
@@ -95,9 +98,24 @@ private slots:
 
     void unsubscribe_context();
 
+    // add to dashboard
+
+    void add_to_dashboard_plain_text();
+
+    void add_to_dashboard_thermostat();
+
+    void add_to_dashboard_thermometer();
+
+    void add_to_dashboard_camera();
+
+    void add_to_dashboard_light();
+
+    void add_to_dashboard_humidity();
+
+
 public slots:
 
-    void mqtt_data_changed_slot();
+    void mqtt_data_changed_slot(QString, QString);
 
     void display_message(const QModelIndex &index);
 
@@ -115,7 +133,7 @@ public slots:
 
     void on_screenshot_button_clicked();
 
-    void on_snapshot_button_clicked();
+    //void on_snapshot_button_clicked();
 
     void on_snap_button_clicked();
 
@@ -135,5 +153,7 @@ private:
     QModelIndex displayed_topic;
 
     new_connection *connection_window;
+
+    FlowLayout *tiles_layout;
 };
 #endif // MAINWINDOW_H

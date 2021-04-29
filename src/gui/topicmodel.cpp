@@ -169,7 +169,7 @@ QModelIndex TopicModel::parent(const QModelIndex &index) const
     return createIndex(parentItem->get_own_index(), 0, parentItem); // index na rodice
 }
 
-void TopicModel::incoming_data_change()
+void TopicModel::incoming_data_change(QString topic, QString msg)
 {
     std::cout << "Slot incoming_data_change active" << std::endl;
     emit layoutChanged();

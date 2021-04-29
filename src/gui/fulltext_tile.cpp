@@ -1,6 +1,6 @@
 #include "fulltext_tile.h"
 
-fulltext_tile::fulltext_tile() : dash_tile()
+fulltext_tile::fulltext_tile(QString topic_src) : dash_tile(nullptr, topic_src)
 {
     pure_text = new QLabel(this);
             pure_text->setObjectName(QString::fromUtf8("pure_text"));
@@ -16,6 +16,7 @@ fulltext_tile::fulltext_tile() : dash_tile()
             scrollAreaWidgetContents_5->setObjectName(QString::fromUtf8("scrollAreaWidgetContents_5"));
             scrollAreaWidgetContents_5->setGeometry(QRect(0, 0, 300, 130));
             value_text_2 = new QPlainTextEdit(scrollAreaWidgetContents_5);
+            value_text_2->setReadOnly(true);
             value_text_2->setObjectName(QString::fromUtf8("value_text_2"));
             value_text_2->setGeometry(QRect(0, 0, 300, 130));
             value_text_2->setStyleSheet(QString::fromUtf8("QPlainTextEdit{\n"
@@ -25,4 +26,11 @@ fulltext_tile::fulltext_tile() : dash_tile()
     "border-top:none;\n"
     "border-bottom:none;\n"
     "}"));
+}
+
+void fulltext_tile::incoming_data(QString incoming_topic, QString payload)
+{
+    if(incoming_topic == topic){
+        value_text_2->setPlainText(payload);
+    }
 }
