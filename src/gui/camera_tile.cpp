@@ -38,5 +38,5 @@ camera_tile::camera_tile(QString topic_src) :
 
 void camera_tile::show_camera_frame(bool)
 {
-    //emit
+    emit show_pic(topic);
 }

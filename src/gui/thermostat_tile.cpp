@@ -42,18 +42,32 @@ thermostat_tile::thermostat_tile(QString topic_src) : dash_tile(nullptr, topic_s
             dial->setMaximum(50);
             dial->setInvertedAppearance(false);
 
-            QObject::connect(dial, &QAbstractSlider::valueChanged, this, &thermostat_tile::update_display);
-            QObject::connect(temp_button, &QAbstractButton::clicked, this, &thermostat_tile::send_data);
+            QObject::connect(dial, &QAbstractSlider::valueChanged, this, &thermostat_tile::on_dial_valueChanged);
+            QObject::connect(temp_button, &QAbstractButton::clicked, this, &thermostat_tile::handle_click_set_temp);
+}
+
+void thermostat_tile::on_dial_valueChanged(int value)
+{
+    temperature = value;
+    update_display();
+}
+
+void thermostat_tile::incoming_data(QString topic_src, QString payload)
+{
+    if(topic_src == topic){
+        temperature = payload.toInt();
+        update_display();
+    }
 }
 
 void thermostat_tile::update_display()
 {
-    temperature = dial->value();
+    dial->setValue(temperature);
     lcdNumber->display(temperature);
     progressBar->setValue(temperature);
 }
 
-void thermostat_tile::send_data()
+void thermostat_tile::handle_click_set_temp()
 {
-    // emit temperature
+    emit send_data(topic, QString::number(temperature));
 }

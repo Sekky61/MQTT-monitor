@@ -1,7 +1,7 @@
 /**
  * Simulator provozu mqtt
  * Autor: Michal Majer xmajer21
- */
+ */ 
 
 #include <iostream>
 #include <string>
@@ -79,6 +79,10 @@ public:
                 {
                     dev = new value_set_device();
                 }
+                else if (line == "picture-device")
+                {
+                    dev = new picture_device();
+                }
                 else
                 {
                     throw std::runtime_error("Parse error: unknown device kind");
@@ -118,6 +122,7 @@ public:
             case Parser::Param:
                 if (line == "")
                 {
+                    // konec konfigurace zarizeni
                     devices.push_back(dev);
                     dev = nullptr;
                     state = Parser::DeviceType;
@@ -139,10 +144,8 @@ public:
                     std::vector<std::string>::const_iterator end = tokens.end();
                     std::vector<std::string> string_values(second_item, end);
 
-                    // throws if actual object is not derived class
-                    value_set_device *set_dev = dynamic_cast<value_set_device *>(dev);
-
-                    set_dev->set_values(string_values);
+                    // neni implementovano ve vsech zarizenich
+                    dev->set_values(string_values);
 
                     state = Parser::Param;
                     continue;
@@ -257,8 +260,6 @@ int SensorNetwork::start_transmitting()
         }
     }
 
-    std::cerr << "Have " << devices.size() << " devices\n";
-
     for (auto *dev : devices)
     {
         // Do stuff
@@ -278,7 +279,6 @@ int SensorNetwork::start_transmitting()
             {
                 std::string msg = dev->generate_msg();
                 system.send_message(dev->get_topic(), msg.data(), msg.size());
-                std::cerr << "Sent " << dev->get_topic() << " - " << msg << "\n";
             }
         }
 
@@ -339,7 +339,7 @@ int main(int argc, char *argv[])
         auto msg = message->get_payload();
         std::cerr
             << "Callback: " << topic
-            << " : " << msg << std::endl;
+            << " : " << msg.size() << " B\n";
         sim_device *dev = network.get_device_by_topic(topic);
         if (dev)
         {

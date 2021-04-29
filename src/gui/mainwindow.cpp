@@ -339,27 +339,8 @@ void MainWindow::on_img_msg_clicked()
 
         std::string payload = (*msg_ptr)->get_payload();
 
-        QImage img;
-        img.loadFromData(reinterpret_cast<const uchar*>(payload.data()), payload.size());
-
-        if(img.format() == QImage::Format_Invalid){
-            std::cerr << "CANNOT DISPLAY PICTURE\n";
-        } else {
-            std::cerr << "OK - SHOWING PICTURE\n";
-            QDialog dia = QDialog();
-            QLabel pic_lbl = QLabel(&dia);
-
-            QPixmap map;
-            map.convertFromImage(img);
-            pic_lbl.setPixmap(map);
-            std::cerr << pic_lbl.width() << " - " << pic_lbl.height();
-            dia.resize(img.width(), img.height());
-            dia.exec();
-        }
-
+        popup_picture(payload);
     }
-    //ui->img_msg->setEnabled(false);
-    //ui->img_msg->setVisible(false);
 }
 
 // CONTEXT MENU
@@ -422,6 +403,8 @@ void MainWindow::add_to_dashboard_thermostat()
         auto node = static_cast<TopicNode *>(context_menu_target.internalPointer());
         if(node){
             thermostat_tile *tile = new thermostat_tile(QString::fromStdString(node->fullTopic));
+            QObject::connect(&cli, &client::mqtt_data_changed, tile, &thermostat_tile::incoming_data);
+            QObject::connect(tile, &thermostat_tile::send_data, &cli, &client::publish_slot);
             tiles_layout->addWidget(tile);
             tiles_layout->activate();
         }
@@ -434,6 +417,7 @@ void MainWindow::add_to_dashboard_thermometer()
         auto node = static_cast<TopicNode *>(context_menu_target.internalPointer());
         if(node){
             temperature_tile *tile = new temperature_tile(QString::fromStdString(node->fullTopic));
+            QObject::connect(&cli, &client::mqtt_data_changed, tile, &temperature_tile::incoming_data);
             tiles_layout->addWidget(tile);
             tiles_layout->activate();
         }
@@ -446,10 +430,32 @@ void MainWindow::add_to_dashboard_camera()
         auto node = static_cast<TopicNode *>(context_menu_target.internalPointer());
         if(node){
             camera_tile *tile = new camera_tile(QString::fromStdString(node->fullTopic));
+            QObject::connect(tile, &camera_tile::show_pic, this, &MainWindow::show_pic_from_topic);
             tiles_layout->addWidget(tile);
             tiles_layout->activate();
         }
     }
+}
+
+void MainWindow::show_pic_from_topic(QString topic)
+{
+    //popup s nejnovejsim obrazkem z topicu
+
+    auto node = cli.sys->get_node_by_topic(topic.toStdString());
+
+    if(node == nullptr){
+        return;
+    }
+
+    auto msg = node->get_latest_msg();
+
+    if(msg == nullptr){
+        return;
+    }
+
+    std::string payload = (*msg)->get_payload();
+
+    popup_picture(payload);
 }
 
 void MainWindow::add_to_dashboard_light()
@@ -458,6 +464,8 @@ void MainWindow::add_to_dashboard_light()
         auto node = static_cast<TopicNode *>(context_menu_target.internalPointer());
         if(node){
             light_tile *tile = new light_tile(QString::fromStdString(node->fullTopic));
+            QObject::connect(&cli, &client::mqtt_data_changed, tile, &light_tile::incoming_data);
+            QObject::connect(tile, &light_tile::send_data, &cli, &client::publish_slot);
             tiles_layout->addWidget(tile);
             tiles_layout->activate();
         }
@@ -626,4 +634,25 @@ void MainWindow::save_tree_structure_slot(QDir root)
 {
     snapshot_manager mngr;
     mngr.create_snapshot(root, &cli);
+}
+
+void MainWindow::popup_picture(std::string payload)
+{
+    QImage img;
+    img.loadFromData(reinterpret_cast<const uchar*>(payload.data()), payload.size());
+
+    if(img.format() == QImage::Format_Invalid){
+        std::cerr << "CANNOT DISPLAY PICTURE\n";
+    } else {
+        std::cerr << "OK - SHOWING PICTURE\n";
+        QDialog dia = QDialog();
+        QLabel pic_lbl = QLabel(&dia);
+
+        QPixmap map;
+        map.convertFromImage(img);
+        pic_lbl.setPixmap(map);
+        std::cerr << pic_lbl.width() << " - " << pic_lbl.height();
+        dia.resize(img.width(), img.height());
+        dia.exec();
+    }
 }

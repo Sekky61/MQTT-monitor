@@ -108,6 +108,8 @@ private slots:
 
     void add_to_dashboard_camera();
 
+    void show_pic_from_topic(QString);
+
     void add_to_dashboard_light();
 
     void add_to_dashboard_humidity();
@@ -142,6 +144,9 @@ public slots:
     void save_tree_structure_slot(QDir);
 
 private:
+
+    void popup_picture(std::string);
+
     client cli;
     TopicModel mod;
 

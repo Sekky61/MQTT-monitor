@@ -6,6 +6,10 @@
 #include <iostream>
 #include <unordered_map>
 
+#include <fstream>
+#include <iterator>
+#include <algorithm>
+
 #include <cstdlib>
 
 /** \class sim_device
@@ -31,6 +35,8 @@ public:
     virtual std::string generate_msg() = 0;
 
     virtual void set_value(std::string) = 0;
+
+    virtual void set_values(std::vector<std::string> new_values) = 0;
 
     /**
      * Konstruktor
@@ -150,6 +156,10 @@ public:
         current_value = std::stof(msg);
     }
 
+    virtual void set_values(std::vector<std::string>) override {
+        throw new std::exception;
+    }
+
     virtual ~float_sim_device()
     { std::cout << "Destructing float_sim_device \n"; }  
 };
@@ -195,7 +205,7 @@ public:
         return values[index];
     }
 
-    void set_values(std::vector<std::string> new_values){
+    virtual void set_values(std::vector<std::string> new_values) override {
         values = new_values;
     }
 
@@ -205,6 +215,58 @@ public:
 
     virtual ~value_set_device()
     { std::cout << "Destructing float_sim_device \n"; }  
+};
+
+class picture_device : public sim_device {
+
+    bool initialized;
+
+    std::vector<std::string> values;
+
+public:
+    picture_device() : sim_device(), initialized(false)
+    {
+        std::cout << "Constructing picture_device \n";
+    }
+
+    virtual std::string generate_msg() override {
+
+        if(!initialized){
+            file_paths_to_pictures();
+            initialized = true;
+        }
+
+        return pick_random_value();
+    }
+
+    void file_paths_to_pictures(){
+        std::vector<std::string> new_vals;
+        for(auto path : values){
+            std::ifstream input( path, std::ios::binary );
+
+            std::string str((std::istreambuf_iterator<char>(input)),
+                 std::istreambuf_iterator<char>());
+
+            new_vals.push_back(str);
+        }
+        values = new_vals;
+    }
+
+    std::string pick_random_value(){
+        int index = rand() % values.size();
+        return values[index];
+    }
+
+    virtual void set_values(std::vector<std::string> new_values) override {
+        values = new_values;
+    }
+
+    virtual void set_value(std::string msg) override {
+        (void)msg;
+    }
+
+    virtual ~picture_device()
+    { std::cout << "Destructing picture_device \n"; }  
 };
 
 #endif

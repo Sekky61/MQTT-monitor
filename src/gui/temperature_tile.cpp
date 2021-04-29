@@ -19,3 +19,16 @@ temperature_tile::temperature_tile(QString topic_src) : dash_tile(nullptr, topic
             temperature_label->setStyleSheet(QString::fromUtf8("color:rgb(77, 121, 140);"));
             temperature_label->setText("Temperature");
 }
+
+void temperature_tile::incoming_data(QString topic_src, QString payload)
+{
+    if(topic_src == topic){
+        temperature = payload.toInt();
+        update_display();
+    }
+}
+
+void temperature_tile::update_display()
+{
+    lcdNumber_2->display(temperature);
+}

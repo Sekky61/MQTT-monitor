@@ -12,7 +12,7 @@ fulltext_tile::fulltext_tile(QString topic_src) : dash_tile(nullptr, topic_src)
             scrollArea_5->setObjectName(QString::fromUtf8("scrollArea_5"));
             scrollArea_5->setGeometry(QRect(10, 50, 300, 130));
             scrollArea_5->setWidgetResizable(true);
-            scrollAreaWidgetContents_5 = new QWidget();
+            scrollAreaWidgetContents_5 = new QWidget(scrollArea_5);
             scrollAreaWidgetContents_5->setObjectName(QString::fromUtf8("scrollAreaWidgetContents_5"));
             scrollAreaWidgetContents_5->setGeometry(QRect(0, 0, 300, 130));
             value_text_2 = new QPlainTextEdit(scrollAreaWidgetContents_5);

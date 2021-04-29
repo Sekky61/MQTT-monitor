@@ -14,8 +14,13 @@ class camera_tile : public dash_tile
     QLabel *room_label_2;
     QPushButton *snapshot_button;
 
+signals:
+    void show_pic(QString);
+
 public:
+
     camera_tile(QString);
+
 
 private slots:
 

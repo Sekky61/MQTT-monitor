@@ -60,12 +60,26 @@ light_tile::light_tile(QString topic_src) : dash_tile(nullptr, topic_src)
             QObject::connect(light_off_button, &QPushButton::clicked, this, &light_tile::turn_off);
 }
 
+void light_tile::incoming_data(QString topic_in, QString payload)
+{
+    if(topic_in == topic){
+        value = payload.toLower() == "on";
+        update_view();
+    }
+}
+
+void light_tile::update_view()
+{
+    light_on_button->setStyleSheet(value ? stylesheet_active : stylesheet_normal);
+    light_off_button->setStyleSheet(value ? stylesheet_normal : stylesheet_active);
+}
+
 void light_tile::turn_on()
 {
-    //emit
+    emit send_data(topic, "On");
 }
 
 void light_tile::turn_off()
 {
-    //emit
+    emit send_data(topic, "Off");
 }

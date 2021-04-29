@@ -22,9 +22,18 @@ class thermostat_tile : public dash_tile
 public:
     thermostat_tile(QString);
 
+signals:
+
+    void send_data(QString, QString);
+
+public slots:
+
+    void incoming_data(QString, QString);
+
 private slots:
+    void on_dial_valueChanged(int);
     void update_display();
-    void send_data();
+    void handle_click_set_temp();
 };
 
 #endif // THERMOSTAT_TILE_H

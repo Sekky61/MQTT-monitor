@@ -19,8 +19,26 @@ class light_tile : public dash_tile
     QPushButton *light_on_button;
     QPushButton *light_off_button;
 
+    bool value;
+
+    QString stylesheet_active = "color: rgb(255, 255, 255);\n"
+    "background-color: rgb(66, 245, 99);";
+
+    QString stylesheet_normal = "color: rgb(255, 255, 255);\n"
+    "background-color: rgb(201, 201, 201);";
+
+    void update_view();
+
+signals:
+
+    void send_data(QString, QString);
+
 public:
     light_tile(QString);
+
+public slots:
+
+    void incoming_data(QString, QString);
 
 private slots:
 

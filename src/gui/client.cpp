@@ -39,10 +39,10 @@ void client::user_clicked_connect(QString client_name, QString server_address)
 
     if(connected){
         sys->add_topic("t1");
-        sys->add_topic("t3");
-        sys->add_topic("t2/sub1");
-        sys->add_topic("t2/sub2");
-        sys->add_topic("pic");
+        sys->add_topic("svetla/svetlo1");
+        sys->add_topic("svetla/svetlo2");
+        sys->add_topic("teplomery");
+        sys->add_topic("cameras/camera1");
         emit connection_succesful();
         emit mqtt_data_changed("", "");
     } else {
@@ -53,6 +53,7 @@ void client::user_clicked_connect(QString client_name, QString server_address)
 void client::user_clicked_disconnect()
 {
     if(connected){
+        sys->client.stop_consuming();
         sys->client.disconnect()->wait();
         connected = false;
         delete sys;
