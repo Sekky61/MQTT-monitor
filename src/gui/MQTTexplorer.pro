@@ -12,24 +12,40 @@ SOURCES += \
     aboutapplication.cpp \
     client.cpp \
     error_messages.cpp \
+    camera_tile.cpp \
+    dash_tile.cpp \
     dialog.cpp \
+    flow_layout.cpp \
+    fulltext_tile.cpp \
+    humidity_tile.cpp \
+    light_tile.cpp \
     main.cpp \
     mainwindow.cpp \
     new_connection.cpp \
     snapshot_manager.cpp \
     topicmodel.cpp\
-    snapshot.cpp
+    snapshot.cpp\
+    temperature_tile.cpp \
+    thermostat_tile.cpp
 
 HEADERS += \
     aboutapplication.h \
     client.h \
     error_messages.h \
+    camera_tile.h \
+    dash_tile.h \
     dialog.h \
+    flow_layout.h \
+    fulltext_tile.h \
+    humidity_tile.h \
+    light_tile.h \
     mainwindow.h \
     new_connection.h \
     snapshot_manager.h \
     topicmodel.h\
-    snapshot.h
+    snapshot.h \
+    temperature_tile.h \
+    thermostat_tile.h
 
 
 HEADERS += ../logic/message_system.hpp
