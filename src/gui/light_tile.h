@@ -15,11 +15,17 @@ class light_tile : public dash_tile
     QLineEdit *room_lights_opt;
     QLabel *room_label;
     QLabel *device_label;
-    QPushButton *light_set_button;
-    QRadioButton *lights_on;
-    QRadioButton *lights_off;
+
+    QPushButton *light_on_button;
+    QPushButton *light_off_button;
+
 public:
     light_tile();
+
+private slots:
+
+    void turn_on();
+    void turn_off();
 };
 
 #endif // LIGHT_TILE_H

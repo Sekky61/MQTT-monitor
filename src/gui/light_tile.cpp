@@ -4,7 +4,7 @@ light_tile::light_tile() : dash_tile()
 {
             device_lights_opt = new QLineEdit(this);
             device_lights_opt->setObjectName(QString::fromUtf8("device_lights_opt"));
-            device_lights_opt->setGeometry(QRect(170, 70, 151, 20));
+            device_lights_opt->setGeometry(QRect(170, 70, 130, 20));
             device_lights_opt->setStyleSheet(QString::fromUtf8("QLineEdit{\n"
     "border: 2px solid rgb(37,39,48);\n"
     "border-left:none;\n"
@@ -21,7 +21,7 @@ light_tile::light_tile() : dash_tile()
             lights_label->setText("Light");
             room_lights_opt = new QLineEdit(this);
             room_lights_opt->setObjectName(QString::fromUtf8("room_lights_opt"));
-            room_lights_opt->setGeometry(QRect(170, 40, 151, 20));
+            room_lights_opt->setGeometry(QRect(170, 40, 130, 20));
             room_lights_opt->setStyleSheet(QString::fromUtf8("QLineEdit{\n"
     "border: 2px solid rgb(37,39,48);\n"
     "border-left:none;\n"
@@ -42,18 +42,30 @@ light_tile::light_tile() : dash_tile()
             //device_label->setFont(font2);
             device_label->setText("Device");
 
-            light_set_button = new QPushButton(this);
-            light_set_button->setObjectName(QString::fromUtf8("light_set_button"));
-            light_set_button->setGeometry(QRect(170, 130, 151, 31));
-            light_set_button->setStyleSheet(QString::fromUtf8("color: rgb(255, 255, 255);\n"
+            light_on_button = new QPushButton(this);
+            light_on_button->setObjectName(QString::fromUtf8("light_set_button"));
+            light_on_button->setGeometry(QRect(75, 130, 80, 50));
+            light_on_button->setStyleSheet(QString::fromUtf8("color: rgb(255, 255, 255);\n"
     "background-color: rgb(77, 121, 140);"));
-            light_set_button->setText("Set light");
-            lights_on = new QRadioButton(this);
-            lights_on->setObjectName(QString::fromUtf8("lights_on"));
-            lights_on->setGeometry(QRect(230, 100, 47, 17));
-            lights_on->setText("On");
-            lights_off = new QRadioButton(this);
-            lights_off->setObjectName(QString::fromUtf8("lights_off"));
-            lights_off->setGeometry(QRect(280, 100, 41, 17));
-            lights_off->setText("Off");
+            light_on_button->setText("On");
+
+            light_off_button = new QPushButton(this);
+            light_off_button->setObjectName(QString::fromUtf8("light_set_button"));
+            light_off_button->setGeometry(QRect(165, 130, 80, 50));
+            light_off_button->setStyleSheet(QString::fromUtf8("color: rgb(255, 255, 255);\n"
+    "background-color: rgb(77, 121, 140);"));
+            light_off_button->setText("Off");
+
+            QObject::connect(light_on_button, &QPushButton::clicked, this, &light_tile::turn_on);
+            QObject::connect(light_off_button, &QPushButton::clicked, this, &light_tile::turn_off);
+}
+
+void light_tile::turn_on()
+{
+    //emit
+}
+
+void light_tile::turn_off()
+{
+    //emit
 }

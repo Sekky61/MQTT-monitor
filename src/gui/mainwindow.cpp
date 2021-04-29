@@ -13,6 +13,8 @@
 #include "temperature_tile.h"
 #include "humidity_tile.h"
 
+#include "flow_layout.h"
+
 MainWindow::MainWindow(QWidget *parent):
     QMainWindow(parent) ,
     ui(new Ui::MainWindow)
@@ -29,6 +31,28 @@ MainWindow::MainWindow(QWidget *parent):
 
     //ui->tiles_layout->setSpacing(10);
 
+    QWidget *gridLayoutWidget = new QWidget(ui->page_2);
+    gridLayoutWidget->setObjectName(QString::fromUtf8("gridLayoutWidget"));
+    gridLayoutWidget->setGeometry(QRect(0, 80, 1070, 700));
+
+    FlowLayout *tiles_layout = new FlowLayout(gridLayoutWidget);
+    tiles_layout->setObjectName(QString::fromUtf8("tiles_layout"));
+    tiles_layout->setContentsMargins(20, 20, 20, 20);
+    gridLayoutWidget->setLayout(tiles_layout);
+    tiles_layout->activate();
+
+    tiles_layout->addWidget(tile1);
+    tiles_layout->addWidget(tile2);
+    tiles_layout->addWidget(tile3);
+    tiles_layout->addWidget(tile4);
+    tiles_layout->addWidget(tile5);
+    tiles_layout->addWidget(tile6);
+    tiles_layout->addWidget(tile7);
+
+    //tiles_layout->activate();
+    //tiles_layout->activate();
+    //tiles_layout->addItem(item2);
+/*
     ui->tiles_layout->setContentsMargins(20,20,20,20);
 
     ui->tiles_layout->setSizeConstraint(QLayout::SetMaximumSize);
@@ -39,7 +63,7 @@ MainWindow::MainWindow(QWidget *parent):
     ui->tiles_layout->addWidget(tile4, 1, 1);
     ui->tiles_layout->addWidget(tile5, 2, 1);
     ui->tiles_layout->addWidget(tile6, 2, 2);
-    ui->tiles_layout->addWidget(tile7, 0, 2);
+    ui->tiles_layout->addWidget(tile7, 0, 2);*/
 
     ui->value_text->setReadOnly(true);
     //ui->value_text_2->setReadOnly(true);

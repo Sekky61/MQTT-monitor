@@ -12,6 +12,7 @@ SOURCES += \
     camera_tile.cpp \
     dash_tile.cpp \
     dialog.cpp \
+    flow_layout.cpp \
     fulltext_tile.cpp \
     humidity_tile.cpp \
     light_tile.cpp \
@@ -26,6 +27,7 @@ HEADERS += \
     camera_tile.h \
     dash_tile.h \
     dialog.h \
+    flow_layout.h \
     fulltext_tile.h \
     humidity_tile.h \
     light_tile.h \

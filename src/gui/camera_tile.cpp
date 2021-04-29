@@ -31,4 +31,11 @@ camera_tile::camera_tile() : dash_tile()
             snapshot_button->setStyleSheet(QString::fromUtf8("color: rgb(255, 255, 255);\n"
     "background-color: rgb(77, 121, 140);"));
             snapshot_button->setText("Show last frame");
+
+            QObject::connect(snapshot_button, &QPushButton::clicked, this, &camera_tile::show_camera_frame);
+}
+
+void camera_tile::show_camera_frame(bool)
+{
+    //emit
 }

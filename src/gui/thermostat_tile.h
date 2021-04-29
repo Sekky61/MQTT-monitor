@@ -17,8 +17,14 @@ class thermostat_tile : public dash_tile
     QLCDNumber *lcdNumber;
     QDial *dial;
 
+    int temperature;
+
 public:
     thermostat_tile();
+
+private slots:
+    void update_display();
+    void send_data();
 };
 
 #endif // THERMOSTAT_TILE_H

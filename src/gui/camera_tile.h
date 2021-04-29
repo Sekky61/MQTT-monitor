@@ -16,6 +16,10 @@ class camera_tile : public dash_tile
 
 public:
     camera_tile();
+
+private slots:
+
+    void show_camera_frame(bool);
 };
 
 #endif // CAMERA_TILE_H

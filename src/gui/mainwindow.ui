@@ -1111,17 +1111,6 @@ background-color: rgb(77, 121, 140);</string>
        <string>Nastaví se na cestu</string>
       </property>
      </widget>
-     <widget class="QWidget" name="gridLayoutWidget">
-      <property name="geometry">
-       <rect>
-        <x>0</x>
-        <y>80</y>
-        <width>1071</width>
-        <height>701</height>
-       </rect>
-      </property>
-      <layout class="QGridLayout" name="tiles_layout"/>
-     </widget>
     </widget>
    </widget>
    <widget class="QFrame" name="frame_3">

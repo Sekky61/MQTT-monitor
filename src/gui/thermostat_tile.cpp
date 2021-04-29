@@ -27,16 +27,33 @@ thermostat_tile::thermostat_tile() : dash_tile()
             lcdNumber->setFrameShape(QFrame::StyledPanel);
             lcdNumber->setDigitCount(3);
             lcdNumber->setSegmentStyle(QLCDNumber::Flat);
+            lcdNumber->setSmallDecimalPoint(true);
             heat_label = new QLabel(this); //d
             heat_label->setObjectName(QString::fromUtf8("heat_label"));
             heat_label->setGeometry(QRect(10, 10, 141, 21));
             //heat_label->setFont(font2);
             heat_label->setStyleSheet(QString::fromUtf8("color:rgb(77, 121, 140);"));
             heat_label->setText("Thermostat");
+
             dial = new QDial(this); //d
             dial->setObjectName(QString::fromUtf8("dial"));
             dial->setGeometry(QRect(10, 40, 91, 91));
             dial->setMinimum(-50);
             dial->setMaximum(50);
             dial->setInvertedAppearance(false);
+
+            QObject::connect(dial, &QAbstractSlider::valueChanged, this, &thermostat_tile::update_display);
+            QObject::connect(temp_button, &QAbstractButton::clicked, this, &thermostat_tile::send_data);
+}
+
+void thermostat_tile::update_display()
+{
+    temperature = dial->value();
+    lcdNumber->display(temperature);
+    progressBar->setValue(temperature);
+}
+
+void thermostat_tile::send_data()
+{
+    // emit temperature
 }
