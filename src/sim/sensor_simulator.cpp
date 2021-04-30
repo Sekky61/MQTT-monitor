@@ -1,14 +1,14 @@
-/**
- * Simulator provozu mqtt
- * Autor: Michal Majer xmajer21
- */ 
+/*! \file sensor_simulator.cpp
+    \brief Simulator MQTT provozu
+    
+    Trida SensorNetwork vysilajici MQTT zpravy podle konfiguracniho
+    souboru
+*/
 
 #include <iostream>
 #include <string>
-#include <unordered_map>
 #include <stdexcept>
 #include <fstream>
-#include <streambuf>
 
 #include "../logic/message_system.hpp"
 #include "sim_device.hpp"
@@ -316,7 +316,7 @@ int main(int argc, char *argv[])
 
     if (argc != 2)
     {
-        std::cerr << "Usage: ./sim file\n";
+        std::cerr << "Usage: ./sim address\n";
         return 1;
     }
 
