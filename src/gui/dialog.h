@@ -2,6 +2,7 @@
 #define DIALOG_H
 
 #include <QDialog>
+#include <QPixmap>
 
 namespace Ui {
 class Dialog;
@@ -11,8 +12,10 @@ class Dialog : public QDialog
 {
     Q_OBJECT
 
+    QPixmap screen;
+
 public:
-    explicit Dialog(QWidget *parent = nullptr);
+    explicit Dialog(QWidget *parent, QPixmap screen_map);
     ~Dialog();
 
 private slots:

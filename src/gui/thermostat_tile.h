@@ -20,7 +20,7 @@ class thermostat_tile : public dash_tile
     int temperature;
 
 public:
-    thermostat_tile(QString);
+    thermostat_tile(QWidget *, QString);
 
 signals:
 

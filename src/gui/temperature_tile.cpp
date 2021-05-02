@@ -1,6 +1,6 @@
 #include "temperature_tile.h"
 
-temperature_tile::temperature_tile(QString topic_src) : dash_tile(nullptr, topic_src)
+temperature_tile::temperature_tile(QWidget *parent, QString topic_src) : dash_tile(parent, topic_src)
 {
     lcdNumber_2 = new QLCDNumber(this);
             lcdNumber_2->setObjectName(QString::fromUtf8("lcdNumber_2"));

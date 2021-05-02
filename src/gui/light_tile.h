@@ -34,7 +34,7 @@ signals:
     void send_data(QString, QString);
 
 public:
-    light_tile(QString);
+    light_tile(QWidget *, QString);
 
 public slots:
 

@@ -1,7 +1,7 @@
 #include "camera_tile.h"
 
-camera_tile::camera_tile(QString topic_src) :
-    dash_tile(nullptr, topic_src)
+camera_tile::camera_tile(QWidget *parent, QString topic_src) :
+    dash_tile(parent, topic_src)
 {
             cameras_label = new QLabel(this);
             cameras_label->setObjectName(QString::fromUtf8("cameras_label"));

@@ -1,6 +1,6 @@
 #include "thermostat_tile.h"
 
-thermostat_tile::thermostat_tile(QString topic_src) : dash_tile(nullptr, topic_src)
+thermostat_tile::thermostat_tile(QWidget *parent, QString topic_src) : dash_tile(parent, topic_src)
 {
     std::cerr << "constructing thermostat\n";
 

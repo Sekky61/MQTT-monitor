@@ -3,8 +3,11 @@
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
 
-Dialog::Dialog(QWidget *parent) :
+#include <QStandardPaths>
+
+Dialog::Dialog(QWidget *parent, QPixmap screen_map) :
     QDialog(parent),
+    screen(screen_map),
     ui(new Ui::Dialog)
 {
     ui->setupUi(this);
@@ -19,14 +22,12 @@ Dialog::~Dialog()
 void Dialog::on_print_save_clicked()
 {
     QString location = ui->location->toPlainText();
-    QScreen *screen = QGuiApplication::primaryScreen();
-    QPixmap *map = new QPixmap(screen->grabWindow(0));
-    map->save(location, "JPG");
-
+    screen.save(location, "JPG");
+    close();
 }
 
 void Dialog::on_directory_button_clicked()
 {
-    QString dir = QFileDialog::getExistingDirectory(this, tr("Open Directory"),"/home", QFileDialog::ShowDirsOnly | QFileDialog::DontResolveSymlinks);
-    ui->location->setText(dir+"/payload.jpg");
+    QString dir = QFileDialog::getExistingDirectory(this, tr("Open Directory"), QDir::currentPath(), QFileDialog::ShowDirsOnly | QFileDialog::DontResolveSymlinks);
+    ui->location->setText(dir+"/screenshot.jpg");
 }

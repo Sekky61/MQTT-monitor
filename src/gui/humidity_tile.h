@@ -15,7 +15,7 @@ class humidity_tile : public dash_tile
     QLabel *room_label_4;
     QProgressBar *humidity_per;
 public:
-    humidity_tile(QString);
+    humidity_tile(QWidget *, QString);
 
 public slots:
     void incoming_data(QString incoming_topic, QString payload);

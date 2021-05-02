@@ -16,7 +16,7 @@ class fulltext_tile : public dash_tile
     QPlainTextEdit *value_text_2;
 
 public:
-    fulltext_tile(QString);
+    fulltext_tile(QWidget *, QString);
 
 public slots:
 

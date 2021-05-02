@@ -74,8 +74,6 @@ private slots:
 
     void on_buttonConnect_clicked();
 
-    void on_searchButton_clicked();
-
     void on_add_topic_clicked();
 
     void on_publish_button_clicked();
@@ -85,10 +83,6 @@ private slots:
     void on_Dash_button_clicked();
 
     void on_img_msg_clicked();
-
-    void on_copy_topic_path_clicked();
-
-    void on_delete_subtopics_clicked();
 
     void on_treeView_customContextMenuRequested(const QPoint &pos);
 
@@ -114,38 +108,30 @@ private slots:
 
     void add_to_dashboard_humidity();
 
+    void tree_clicked(const QModelIndex &index);
+
 
 public slots:
 
     void mqtt_data_changed_slot(QString, QString);
 
-    void display_message(const QModelIndex &index);
-
     void display_history(const QModelIndex &index);
 
     void connection_succesful_slot();
 
-    //void on_dial_valueChanged(int value);
-
-    //void on_dial_actionTriggered(int action);
-
-    //void on_light_set_button_clicked();
-
-    // void on_temp_button_clicked();
-
     void on_screenshot_button_clicked();
 
-    //void on_snapshot_button_clicked();
-
     void on_snap_button_clicked();
-
-    //void on_dashboard_add_clicked();
 
     void save_tree_structure_slot(QDir);
 
 private:
 
+    void init_tree_context_menu();
+
     void popup_picture(std::string);
+
+    void display_message();
 
     client cli;
     TopicModel mod;
@@ -155,7 +141,7 @@ private:
     QMenu *tree_context_menu;
     QModelIndex context_menu_target;
 
-    QModelIndex displayed_topic;
+    TopicNode *active_node;
 
     new_connection *connection_window;
 

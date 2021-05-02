@@ -19,7 +19,7 @@ signals:
 
 public:
 
-    camera_tile(QString);
+    camera_tile(QWidget *, QString);
 
 
 private slots:

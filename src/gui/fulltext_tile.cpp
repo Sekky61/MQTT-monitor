@@ -1,6 +1,6 @@
 #include "fulltext_tile.h"
 
-fulltext_tile::fulltext_tile(QString topic_src) : dash_tile(nullptr, topic_src)
+fulltext_tile::fulltext_tile(QWidget *parent, QString topic_src) : dash_tile(parent, topic_src)
 {
     pure_text = new QLabel(this);
             pure_text->setObjectName(QString::fromUtf8("pure_text"));

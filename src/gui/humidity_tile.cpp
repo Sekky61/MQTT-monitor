@@ -1,6 +1,6 @@
 #include "humidity_tile.h"
 
-humidity_tile::humidity_tile(QString topic_src) : dash_tile(nullptr, topic_src)
+humidity_tile::humidity_tile(QWidget *parent, QString topic_src) : dash_tile(parent, topic_src)
 {
     water_label = new QLabel(this);
             water_label->setObjectName(QString::fromUtf8("water_label"));
