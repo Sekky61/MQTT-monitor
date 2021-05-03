@@ -109,7 +109,8 @@ QVariant TopicModel::headerData(int section, Qt::Orientation orientation, int ro
     std::cout << "headerData called. section: " << section << " orientation " << orientation<< " role " << role  << "\n";
 
     if (orientation == Qt::Horizontal && role == Qt::DisplayRole){
-        return QVariant(QStringList("Topics", "Messages"));
+        QStringList header = {"Topics", "Messages"};
+        return QVariant(header);
     }
 
     return QVariant();

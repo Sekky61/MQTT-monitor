@@ -55,6 +55,7 @@ FORMS += \
     dialog.ui \
     mainwindow.ui \
     new_connection.ui \
+    aboutapplication.ui \
     snapshot.ui
 
 # Default rules for deployment.
@@ -62,7 +63,7 @@ qnx: target.path = /tmp/$${TARGET}/bin
 else: unix:!android: target.path = /opt/$${TARGET}/bin
 !isEmpty(target.path): INSTALLS += target
 
-RESOURCES += \
-    Resources.qrc
+#RESOURCES += \
+#    Resources.qrc
 
 unix|win32: LIBS += -lpaho-mqtt3c -lpaho-mqtt3a -lpaho-mqttpp3

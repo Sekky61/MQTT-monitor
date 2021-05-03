@@ -6,6 +6,7 @@
 #include <QLayout>
 #include <QPushButton>
 #include <QLabel>
+#include <memory>
 
 class dash_tile : public QFrame
 {
