@@ -1,3 +1,11 @@
+/*!
+ *  \file      light_tile.h
+ *  \brief     Widget dashboardu - ovládání světla
+ *  \author    Michal Majer - xmajer21
+ *  \author    Petr Pouč - xpoucp01
+ *  \date      Datum vytvoření: 03.05.2021
+ */
+
 #ifndef LIGHT_TILE_H
 #define LIGHT_TILE_H
 

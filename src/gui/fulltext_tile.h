@@ -1,3 +1,11 @@
+/*!
+ *  \file      fulltext_tile.h
+ *  \brief     Widget dashboardu - zobrazení textu
+ *  \author    Michal Majer - xmajer21
+ *  \author    Petr Pouč - xpoucp01
+ *  \date      Datum vytvoření: 03.05.2021
+ */
+
 #ifndef FULLTEXT_TILE_H
 #define FULLTEXT_TILE_H
 

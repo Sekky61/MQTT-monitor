@@ -1,6 +1,6 @@
   /*! 
    *  \file	 dialog.h
-   *  \brief     Soubor obsahuje definice všech použitých příkazů
+   *  \brief     Dialogové okno uložení snímku obrazovky
    *  \author    Michal Majer - xmajer21
    *  \author    Petr Pouč - xpoucp01
    *  \date      Datum vytvoření: 03.05.2021
@@ -30,7 +30,7 @@ public:
 private slots:
   /*! 
    *  \brief     Uložení snímku
-   *  \details   Pořízený snímek je ve formátu payload.JPG uložen na uživatelem zadanou lokaci 
+   *  \details   Pořízený snímek je ve formátu *.JPG uložen na uživatelem zadanou lokaci
    */
     void on_print_save_clicked();
 

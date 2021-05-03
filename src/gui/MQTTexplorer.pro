@@ -9,7 +9,6 @@ CONFIG += c++17
 #DEFINES += QT_DISABLE_DEPRECATED_BEFORE=0x060000    # disables all the APIs deprecated before Qt 6.0.0
 
 SOURCES += \
-    aboutapplication.cpp \
     client.cpp \
     error_messages.cpp \
     camera_tile.cpp \
@@ -29,7 +28,6 @@ SOURCES += \
     thermostat_tile.cpp
 
 HEADERS += \
-    aboutapplication.h \
     client.h \
     error_messages.h \
     camera_tile.h \
@@ -55,7 +53,6 @@ FORMS += \
     dialog.ui \
     mainwindow.ui \
     new_connection.ui \
-    aboutapplication.ui \
     snapshot.ui
 
 # Default rules for deployment.

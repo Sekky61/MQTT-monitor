@@ -1,6 +1,5 @@
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
-#include "aboutapplication.h"
 #include "new_connection.h"
 #include "topicmodel.h"
 #include "dialog.h"
@@ -246,8 +245,8 @@ void MainWindow::connection_succesful_slot()
 void MainWindow::on_add_topic_clicked()
 {
     //tree path - zde chceme přidat topic
-    QString topic_path = ui->topic_search->text();
-    ui->topic_search->setText("");
+    QString topic_path = ui->topic_input_line->text();
+    ui->topic_input_line->setText("");
     emit add_topic_clicked(topic_path);
 }
 
@@ -451,7 +450,6 @@ void MainWindow::delete_subtopics()
         auto node = static_cast<TopicNode *>(context_menu_target.internalPointer());
         if(node){
             node->delete_children();
-            emit tree_data_changed();
         }
     }
 }
@@ -464,7 +462,6 @@ void MainWindow::unsubscribe_context()
 
             QString topic = QString::fromStdString(node->fullTopic);
             emit delete_topic_clicked(topic);
-            emit tree_data_changed();
         }
     }
 }

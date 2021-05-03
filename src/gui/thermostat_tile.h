@@ -1,3 +1,11 @@
+/*!
+ *  \file      thermostat_tile.h
+ *  \brief     Widget dashboardu - ovládání teploty
+ *  \author    Michal Majer - xmajer21
+ *  \author    Petr Pouč - xpoucp01
+ *  \date      Datum vytvoření: 03.05.2021
+ */
+
 #ifndef THERMOSTAT_TILE_H
 #define THERMOSTAT_TILE_H
 

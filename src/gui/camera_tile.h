@@ -1,3 +1,11 @@
+/*!
+ *  \file      camera_tile.h
+ *  \brief     Widget dashboardu - zobrazení obrázků
+ *  \author    Michal Majer - xmajer21
+ *  \author    Petr Pouč - xpoucp01
+ *  \date      Datum vytvoření: 03.05.2021
+ */
+
 #ifndef CAMERA_TILE_H
 #define CAMERA_TILE_H
 

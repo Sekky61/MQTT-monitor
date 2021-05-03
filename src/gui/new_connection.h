@@ -1,6 +1,6 @@
   /*! 
    *  \file	 new_connection.h
-   *  \brief     Soubor obsahuje definice všech použitých příkazů
+   *  \brief     Okno připojení na server
    *  \author    Michal Majer - xmajer21
    *  \author    Petr Pouč - xpoucp01
    *  \date      Datum vytvoření: 03.05.2021
