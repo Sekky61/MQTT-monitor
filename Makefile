@@ -1,6 +1,16 @@
 # Makefile
+#
 # xmajer21
 # xpoucp01
+#
+# vysledky prekladu jsou ukladany do slozek build a doc (vyjma archivu)
+
+# make					vytvoreni exploreru, simulace, dokumentace
+# make mqttexplorer		vytvoreni exploreru
+# make run				vytvoreni a spusteni exploreru
+# make doxygen			vytvoreni dokumentace
+# make pack 			vytvoreni archivu pro odevzdani
+# make clean			odstraneni produktu prekladu
 
 CC = g++
 CXXFLAGS = -std=c++17 -pedantic -Wall -Wextra -O2
@@ -11,7 +21,7 @@ AUTHOR_2 = xpoucp01
 
 BUILD_DIR = build
 ZIP_NAME = 1-$(AUTHOR_1)-$(AUTHOR_2).zip
-FILES_TO_ZIP = Makefile src README.txt
+FILES_TO_ZIP = Makefile src examples README.txt
 
 all: mqttexplorer mqttsim doxygen
 
