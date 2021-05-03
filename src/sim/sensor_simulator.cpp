@@ -314,19 +314,20 @@ int main(int argc, char *argv[])
     // seeding rand
     srand(static_cast<unsigned>(time(0)));
 
-    if (argc != 2)
+    if (argc != 3)
     {
-        std::cerr << "Usage: ./sim address\n";
+        std::cerr << "Usage: ./sim address config_file\n";
         return 1;
     }
 
     std::string server_address = argv[1];
+    std::string config_file = argv[2];
 
     MessageSystem sys("Tester", server_address);
 
     SensorNetwork network(sys);
 
-    int ret = network.get_devices("test_config.cfg");
+    int ret = network.get_devices(config_file);
     if (ret)
     {
         return ret;
