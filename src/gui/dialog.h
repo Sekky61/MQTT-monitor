@@ -1,3 +1,12 @@
+  /*! 
+   *  \file	 dialog.h
+   *  \brief     Soubor obsahuje definice všech použitých příkazů
+   *  \author    Michal Majer - xmajer21
+   *  \author    Petr Pouč - xpoucp01
+   *  \date      Datum vytvoření: 03.05.2021
+   */
+
+
 #ifndef DIALOG_H
 #define DIALOG_H
 
@@ -19,8 +28,16 @@ public:
     ~Dialog();
 
 private slots:
+  /*! 
+   *  \brief     Uložení snímku
+   *  \details   Pořízený snímek je ve formátu payload.JPG uložen na uživatelem zadanou lokaci 
+   */
     void on_print_save_clicked();
 
+  /*! 
+   *  \brief     Výber adresáře
+   *  \details   Uživatel si vybere adresář pro uložení pořízeného snímku
+   */
     void on_directory_button_clicked();
 
 private:
