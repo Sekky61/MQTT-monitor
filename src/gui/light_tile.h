@@ -3,7 +3,7 @@
  *  \brief     Widget dashboardu - ovládání světla
  *  \author    Michal Majer - xmajer21
  *  \author    Petr Pouč - xpoucp01
- *  \date      Datum vytvoření: 03.05.2021
+ *  \date      Datum vytvoření: 04.05.2021
  */
 
 #ifndef LIGHT_TILE_H
@@ -14,6 +14,14 @@
 #include <QLineEdit>
 #include <QRadioButton>
 
+
+/*! 
+ *  \brief     Třída widgetu Světla
+ *  \details   Dashboard dlaždice ovládající světlo
+ *  \author    Michal Majer - xmajer21
+ *  \author    Petr Pouč - xpoucp01
+ *  \date      Datum vytvoření: 04.05.2021
+ */
 class light_tile : public dash_tile
 {
     Q_OBJECT
@@ -38,22 +46,53 @@ class light_tile : public dash_tile
     QString stylesheet_normal = "color: rgb(255, 255, 255);\n"
     "background-color: rgb(201, 201, 201);";
 
+  /*! 
+   *  \brief     Překreslí tlačítka dlaždice
+   *  \details   V jednu chvíli je barevně označen jeden z buttonu on/off, dle aktuální hodnoty
+   */
     void update_view();
 
 signals:
 
-    void send_data(QString, QString);
+  /*! 
+   *  \brief     Signál zajišťuje změnu hodnoty aktuálního tématu
+   *  \details   Uživatel si zvolí novou hodnotu, ta je poslána do sítě
+   *  \param     topic Aktuální téma ve kterém se nacházíme
+   *  \param     value Obsah tohoto tématu
+   */
+    void send_data(QString topic, QString value);
 
 public:
-    light_tile(QWidget *, QString);
+  /*!
+     * \brief Konstruktor
+     * \param parent rodič v hierarchii QT widgetů
+     * \param topic_src téma, které bude s widgetem provázané
+     */
+    light_tile(QWidget *parent, QString topic_src);
 
 public slots:
 
-    void incoming_data(QString, QString);
+  /*! 
+   *  \brief     Zpracování příchozích dat
+   *  \details   Slot přijme téma a jeho hodnotu, touto hodnotou je ovlivněn vzhled (stylesheet) buttonu
+   *  \param     topic_src Aktuální téma ve kterém se nacházíme
+   *  \param     payload Obsah tohoto tématu
+   *  \post      po následném volání update_view() je hodnota topicu zobrazena na displeji
+   */
+    void incoming_data(QString topic_src, QString payload);
 
 private slots:
 
+  /*! 
+   *  \brief     Slot zpracuje stisknutí tlačítka 'On'
+   *  \details   Zašle zprávu "on"
+   */
     void turn_on();
+
+  /*! 
+   *  \brief     Slot zpracuje stisknutí tlačítka 'Off'
+   *  \details   Zašle zprávu "off"
+   */
     void turn_off();
 };
 

@@ -11,6 +11,11 @@
 
 #include <QString>
 
-void error_message(QString);
+ /*! 
+  *  \brief     Funkce otevře nové okno značící error
+  *  \details   Otevřené okno v sobě obsahuje informaci a nastalém problému
+  *  \param     text důvod problému, nebo jeho popis
+  */
+void error_message(QString text);
 
 #endif // ERROR_MESSAGES_H

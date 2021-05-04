@@ -13,42 +13,59 @@
 #include "../logic/message_system.hpp"
 #include "sim_device.hpp"
 
+/**
+ * \class ConfigReader
+ * \brief Parser souboru s nastavením simulace
+ */
 class ConfigReader
 {
 
-    std::string config_content;
+    /**
+     * \brief buffer obsahující data souboru 
+     * Načten v konstruktoru, po řádcích čten v \ref parse_file
+     */
     std::stringstream buffer;
 
+    /**
+     * Stavy parseru
+     */
     enum Parser
     {
-        Header,
-        Empty,
-        DeviceType,
-        DeviceName,
-        Topic,
-        Rate,
-        Param
+        Header,     /**< První řádek konfigurace */
+        Empty,      /**< Povinný prázdný řádek */
+        DeviceType, /**< 1. řádek bloku zařízení - typ zařízení */
+        DeviceName, /**< 2. řádek bloku zařízení - název zařízení */
+        Topic,      /**< 3. řádek bloku zařízení - topic zařízení */
+        Rate,       /**< 4. řádek bloku zařízení - perioda zařízení */
+        Param       /**< zbytek bloku zařízení - konkrétní nastavení (závislé na typu zařízení) */
     };
 
 public:
+    /**
+     * \brief Konstruktor
+     * \param config_path cesta souboru konfigurace
+     * Načte do \ref buffer obsah souboru config_path
+     */
     ConfigReader(std::string config_path)
     {
 
         std::ifstream t(config_path);
         //std::stringstream buffer;
         buffer << t.rdbuf();
-        config_content = buffer.str();
     };
 
+    /**
+     * \brief Parser konfiguračního souboru
+     * \return Vektor zařízení vytvořených podle konfiguračního souboru
+     * Stavový parser využívá \ref Parser.
+     */
     std::vector<sim_device *> parse_file()
     {
         std::vector<sim_device *> devices;
-
         std::string line;
+        sim_device *dev = nullptr;
 
         Parser state = Parser::Header;
-
-        sim_device *dev = nullptr;
 
         while (std::getline(buffer, line))
         {
@@ -198,53 +215,75 @@ public:
 
         return devices;
     }
-
-    std::string get_content()
-    {
-        return config_content;
-    }
-
-    std::stringstream &get_buffer()
-    {
-        return buffer;
-    }
 };
 
+/**
+ * \class SensorNetwork
+ * \brief Simuluje provoz na MQTT síti
+ */
 class SensorNetwork
 {
-
+    /**
+    * \brief Reference na MQTT klient
+    */
     MessageSystem &system;
 
 public:
-    int transmitting;
-    std::string config_file_path;
+
+    /**
+     * \brief Simulovaná zařízení
+     * \ref sim_device je bázová třída, samotná zařízení jsou objekty derivované třídy
+     */
     std::vector<sim_device *> devices;
 
-    SensorNetwork(MessageSystem &sys) : system(sys),
-                                        transmitting(5)
+    /**
+     * \brief Konstruktor
+     * \param sys Reference na MQTT klient. Inicializuje \ref system
+     * \post \ref system je připojený na MQTT server (nebo je vyhozena vyjímka)
+     */
+    SensorNetwork(MessageSystem &sys) : system(sys)
     {
         if (!system.connected)
         {
             int conn = system.connect_client();
             if (conn != 0)
             {
-                throw conn; //todo
+                throw std::exception();
             }
         }
     };
 
-    int get_devices(std::string);
+    /**
+     * \brief vyvolá \ref ConfigReader, načte konfiguraci
+     * \param file_path Cesta ke konfiguračnímu souboru
+     * \post \ref devices obsahuje vytvořená zařízení
+     */
+    void get_devices(std::string file_path);
+
+    /**
+     * \brief nekonečná smyčka
+     * Posílá zprávy podle period zařízení. 
+     * Hodiny nejsou přesné, perioda místo 1s trvá 1s + dobu potřebnou k vykonání akcí smyčky (posílání zpráv, ...)
+     */
     int start_transmitting();
+
+    /**
+     * \brief klient začne odebírat témata všech zařízení
+     */
     void sub_to_all_devices();
+
+    /**
+     * \brief vyhledá zařízení spojené s tématem \ref topic
+     * \param topic MQTT téma
+     * Slouží k modifikaci hodnot zařízení příchozí MQTT zprávou 
+     */
     sim_device *get_device_by_topic(std::string topic);
 };
 
-int SensorNetwork::get_devices(std::string file_path)
+void SensorNetwork::get_devices(std::string file_path)
 {
     ConfigReader cfg(file_path);
     devices = cfg.parse_file();
-
-    return 0;
 }
 
 int SensorNetwork::start_transmitting()
@@ -327,11 +366,7 @@ int main(int argc, char *argv[])
 
     SensorNetwork network(sys);
 
-    int ret = network.get_devices(config_file);
-    if (ret)
-    {
-        return ret;
-    }
+    network.get_devices(config_file);
 
     network.sub_to_all_devices();
 

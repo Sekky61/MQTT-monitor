@@ -3,7 +3,7 @@
  *  \brief     Widget dashboardu - zobrazení teploty
  *  \author    Michal Majer - xmajer21
  *  \author    Petr Pouč - xpoucp01
- *  \date      Datum vytvoření: 03.05.2021
+ *  \date      Datum vytvoření: 04.05.2021
  */
 
 #ifndef TEMPERATURE_TILE_H
@@ -13,6 +13,14 @@
 #include <QObject>
 #include <QLCDNumber>
 
+
+/*! 
+ *  \brief     Třída widgetu zobrazující teplotu
+ *  \details   Dashboard dlaždice zobazující teplotu
+ *  \author    Michal Majer - xmajer21
+ *  \author    Petr Pouč - xpoucp01
+ *  \date      Datum vytvoření: 04.05.2021
+ */
 class temperature_tile : public dash_tile
 {
     Q_OBJECT
@@ -24,12 +32,27 @@ class temperature_tile : public dash_tile
 
     float temperature;
 
+  /*! 
+   *  \brief  Překreslí lcd displej
+   */
     void update_display();
 public:
-    temperature_tile(QWidget *, QString);
+  /*!
+     * \brief Konstruktor
+     * \param parent rodič v hierarchii QT widgetů
+     * \param topic_src téma, které bude s widgetem provázané
+     */
+    temperature_tile(QWidget *parent, QString topic_src);
 
 public slots:
-    void incoming_data(QString, QString);
+  /*! 
+   *  \brief     Zpracování příchozích dat
+   *  \details   Slot přijme téma a jeho hodnotu, tato hodnota je pak zobrazena na displeji
+   *  \param     topic_src Aktuální téma ve kterém se nacházíme
+   *  \param     payload Obsah tohoto tématu - je převedeno na float
+   *  \post      po následném volání update_display() je hodnota topicu zobrazena na displeji
+   */
+    void incoming_data(QString topic_src, QString payload);
 };
 
 #endif // TEMPERATURE_TILE_H
