@@ -18,9 +18,11 @@ class temperature_tile : public dash_tile
     Q_OBJECT
 
     QLCDNumber *lcdNumber_2;
-    QLabel *temperature_label;
 
-    int temperature;
+    QLabel *temperature_label;
+    QLabel *topic_label;
+
+    float temperature;
 
     void update_display();
 public:

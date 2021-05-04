@@ -2,48 +2,49 @@
 
 thermostat_tile::thermostat_tile(QWidget *parent, QString topic_src) : dash_tile(parent, topic_src)
 {
-    std::cerr << "constructing thermostat\n";
 
-    temp_button = new QPushButton(this); //d
-            temp_button->setObjectName(QString::fromUtf8("temp_button"));
-            temp_button->setGeometry(QRect(130, 160, 151, 31));
-            temp_button->setStyleSheet(QString::fromUtf8("color: rgb(255, 255, 255);\n"
+    temp_button = new QPushButton(this);
+    temp_button->setGeometry(QRect(130, 160, 151, 31));
+    temp_button->setStyleSheet(QString::fromUtf8("color: rgb(255, 255, 255);\n"
     "background-color: rgb(77, 121, 140);"));
-            temp_button->setText("Set temperature");
-            progressBar = new QProgressBar(this); //d
-            progressBar->setObjectName(QString::fromUtf8("progressBar"));
-            progressBar->setGeometry(QRect(130, 130, 151, 23));
-            progressBar->setMinimum(-50);
-            progressBar->setMaximum(50);
-            progressBar->setValue(24);
-            progressBar->setTextVisible(false);
-            lcdNumber = new QLCDNumber(this); //d
-            lcdNumber->setObjectName(QString::fromUtf8("lcdNumber"));
-            lcdNumber->setGeometry(QRect(130, 50, 151, 71));
-            lcdNumber->setStyleSheet(QString::fromUtf8("QLCDNumber{\n"
+    temp_button->setText("Set temperature");
+
+    progressBar = new QProgressBar(this);
+    progressBar->setGeometry(QRect(130, 130, 151, 23));
+    progressBar->setMinimum(-50);
+    progressBar->setMaximum(50);
+    progressBar->setValue(24);
+    progressBar->setTextVisible(false);
+
+    lcdNumber = new QLCDNumber(this);
+    lcdNumber->setGeometry(QRect(130, 50, 151, 71));
+    lcdNumber->setStyleSheet(QString::fromUtf8("QLCDNumber{\n"
     "border: 1px solid rgb(37,39,48);\n"
     "border-radius: 20px;\n"
     "}"));
-            lcdNumber->setFrameShape(QFrame::StyledPanel);
-            lcdNumber->setDigitCount(3);
-            lcdNumber->setSegmentStyle(QLCDNumber::Flat);
-            lcdNumber->setSmallDecimalPoint(true);
-            heat_label = new QLabel(this); //d
-            heat_label->setObjectName(QString::fromUtf8("heat_label"));
-            heat_label->setGeometry(QRect(10, 10, 141, 21));
-            //heat_label->setFont(font2);
-            heat_label->setStyleSheet(QString::fromUtf8("color:rgb(77, 121, 140);"));
-            heat_label->setText("Thermostat");
+    lcdNumber->setFrameShape(QFrame::StyledPanel);
+    lcdNumber->setDigitCount(3);
+    lcdNumber->setSegmentStyle(QLCDNumber::Flat);
+    lcdNumber->setSmallDecimalPoint(true);
 
-            dial = new QDial(this); //d
-            dial->setObjectName(QString::fromUtf8("dial"));
-            dial->setGeometry(QRect(10, 40, 91, 91));
-            dial->setMinimum(-50);
-            dial->setMaximum(50);
-            dial->setInvertedAppearance(false);
+    heat_label = new QLabel(this);
+    heat_label->setGeometry(QRect(10, 10, 141, 21));
+    heat_label->setStyleSheet(QString::fromUtf8("color:rgb(77, 121, 140);"));
+    heat_label->setText("Thermostat");
 
-            QObject::connect(dial, &QAbstractSlider::valueChanged, this, &thermostat_tile::on_dial_valueChanged);
-            QObject::connect(temp_button, &QAbstractButton::clicked, this, &thermostat_tile::handle_click_set_temp);
+    topic_label = new QLabel(this);
+    topic_label->setGeometry(QRect(10, 30, 141, 21));
+    topic_label->setStyleSheet(QString::fromUtf8("color:rgb(77, 121, 140);"));
+    topic_label->setText(topic_src);
+
+    dial = new QDial(this);
+    dial->setGeometry(QRect(10, 70, 91, 91));
+    dial->setMinimum(-50);
+    dial->setMaximum(50);
+    dial->setInvertedAppearance(false);
+
+    QObject::connect(dial, &QAbstractSlider::valueChanged, this, &thermostat_tile::on_dial_valueChanged);
+    QObject::connect(temp_button, &QAbstractButton::clicked, this, &thermostat_tile::handle_click_set_temp);
 }
 
 void thermostat_tile::on_dial_valueChanged(int value)
@@ -55,7 +56,7 @@ void thermostat_tile::on_dial_valueChanged(int value)
 void thermostat_tile::incoming_data(QString topic_src, QString payload)
 {
     if(topic_src == topic){
-        temperature = payload.toInt();
+        temperature = payload.toFloat();
         update_display();
     }
 }
@@ -63,7 +64,7 @@ void thermostat_tile::incoming_data(QString topic_src, QString payload)
 void thermostat_tile::update_display()
 {
     dial->setValue(temperature);
-    lcdNumber->display(temperature);
+    lcdNumber->display(QString("%1").arg(temperature, 0, 'f', 1));
     progressBar->setValue(temperature);
 }
 

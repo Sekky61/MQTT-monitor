@@ -178,32 +178,6 @@ background-color: rgb(218, 206, 112);</string>
      </item>
     </layout>
    </widget>
-   <widget class="QCheckBox" name="check_validate">
-    <property name="geometry">
-     <rect>
-      <x>240</x>
-      <y>30</y>
-      <width>121</width>
-      <height>41</height>
-     </rect>
-    </property>
-    <property name="text">
-     <string>Validate certificate</string>
-    </property>
-   </widget>
-   <widget class="QCheckBox" name="check_encryption">
-    <property name="geometry">
-     <rect>
-      <x>380</x>
-      <y>30</y>
-      <width>91</width>
-      <height>41</height>
-     </rect>
-    </property>
-    <property name="text">
-     <string>Encryption</string>
-    </property>
-   </widget>
    <widget class="QWidget" name="layoutWidget4">
     <property name="geometry">
      <rect>
@@ -379,8 +353,6 @@ background-color: rgb(218, 206, 112);</string>
   <tabstop>password_line</tabstop>
   <tabstop>save_f</tabstop>
   <tabstop>connect_f</tabstop>
-  <tabstop>check_validate</tabstop>
-  <tabstop>check_encryption</tabstop>
   <tabstop>delete_button</tabstop>
  </tabstops>
  <resources/>

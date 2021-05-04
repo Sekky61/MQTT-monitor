@@ -61,6 +61,8 @@ MainWindow::MainWindow(QWidget *parent):
 
     // ReadOnly zobrazovanych zprav
     ui->value_text->setReadOnly(true);
+    ui->history_text->setReadOnly(true);
+    ui->img_msg->setVisible(false);
 
     init_tree_context_menu();
 }
@@ -505,4 +507,9 @@ void MainWindow::save_tree_structure_slot(QDir root)
 {
     snapshot_manager mngr;
     mngr.create_snapshot(root, &cli);
+}
+
+void MainWindow::on_topic_input_line_textChanged(const QString &arg1)
+{
+    ui->add_topic->setDisabled(arg1.length() == 0);
 }

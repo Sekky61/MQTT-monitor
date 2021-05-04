@@ -19,6 +19,7 @@ class fulltext_tile : public dash_tile
     Q_OBJECT
 
     QLabel *pure_text;
+    QLabel *topic_label;
     QScrollArea *scrollArea_5;
     QWidget *scrollAreaWidgetContents_5;
     QPlainTextEdit *value_text_2;

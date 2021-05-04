@@ -19,7 +19,10 @@ class light_tile : public dash_tile
     Q_OBJECT
 
     QLineEdit *device_lights_opt;
+
     QLabel *lights_label;
+    QLabel *topic_label;
+
     QLineEdit *room_lights_opt;
     QLabel *room_label;
     QLabel *device_label;

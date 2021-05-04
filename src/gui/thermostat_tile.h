@@ -20,12 +20,13 @@ class thermostat_tile : public dash_tile
     Q_OBJECT
 
     QLabel *heat_label;
+    QLabel *topic_label;
     QPushButton *temp_button;
     QProgressBar *progressBar;
     QLCDNumber *lcdNumber;
     QDial *dial;
 
-    int temperature;
+    float temperature;
 
 public:
     thermostat_tile(QWidget *, QString);

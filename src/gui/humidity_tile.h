@@ -19,6 +19,8 @@ class humidity_tile : public dash_tile
     Q_OBJECT
 
     QLabel *water_label;
+    QLabel *topic_label;
+
     QLineEdit *room_lights_opt_4;
     QLabel *room_label_4;
     QProgressBar *humidity_per;

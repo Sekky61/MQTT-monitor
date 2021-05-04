@@ -248,6 +248,8 @@ private slots:
     void tree_clicked(const QModelIndex &index);
 
 
+    void on_topic_input_line_textChanged(const QString &arg1);
+
 public slots:
 
     /*!

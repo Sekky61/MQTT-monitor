@@ -10,7 +10,6 @@
 #define DASH_TILE_H
 
 #include <QFrame>
-#include <iostream>
 #include <QLayout>
 #include <QPushButton>
 #include <QLabel>
