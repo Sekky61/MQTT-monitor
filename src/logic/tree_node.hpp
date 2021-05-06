@@ -31,17 +31,22 @@ public:
 	std::string Topic;
 	std::string fullTopic;
 
+	bool is_start_of_wildcard;
+
 	unsigned long limit;
 	std::deque<T> Msgs;
 
     std::vector<std::unique_ptr<TreeNode<T> > > Children;
 	TreeNode<T> *Parent;
 
-    TreeNode(): Parent(nullptr) {}
+    TreeNode(): 
+		is_start_of_wildcard(false), 
+		Parent(nullptr) {}
 
     TreeNode(TreeNode<T> *parent_ptr, std::string topic_name, std::string full_topic) :
 		Topic(topic_name),
 		fullTopic(full_topic),
+		is_start_of_wildcard(false),
 		limit(0),
 		Msgs(),
 		Children(),
@@ -97,7 +102,7 @@ public:
 		return nullptr;
 	}
 
-	TreeNode<T> *get_child_by_index(int index){
+        TreeNode<T> *get_child_by_index(size_t index){
 		if (index >= 0 && index < Children.size()){
 			// child exists
 			return Children[index].get();
@@ -146,6 +151,10 @@ public:
 		TreeNode<T> *node = this;
 		
 		for(std::string name : cut){
+			if(name == "#"){
+				node->is_start_of_wildcard = true;
+				break;
+			}
 			node = node->get_create_child(name);
 		}
 

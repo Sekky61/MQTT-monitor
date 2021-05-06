@@ -23,15 +23,15 @@ public:
 
     explicit client(QObject *parent = nullptr);
 
-    int connect_to_server(QString, QString);
+    int connect_to_server(QString client_name, QString server_address);
 
 signals:
     void connection_succesful();
 
-    void mqtt_data_changed(QString, QString);
+    void mqtt_data_changed(QString topic, QString message);
 
 public slots:
-    void user_clicked_connect(QString client_name, QString server_address);
+    void user_clicked_connect(QString client_name, QString password, QString server_address);
 
     void user_clicked_disconnect();
 

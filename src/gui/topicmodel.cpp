@@ -51,6 +51,9 @@ QVariant TopicModel::data(const QModelIndex &index, int role) const
                 if(cli.sys->is_subscribed_topic(full_topic)){
                     f.setWeight(QFont::Weight::Bold);
                     return QVariant(f);
+                } else if(item->is_start_of_wildcard){
+                    f.setWeight(QFont::Weight::Medium);
+                    return QVariant(f);
                 } else {
                     f.setWeight(QFont::Weight::Light);
                     return QVariant(f);
@@ -86,12 +89,10 @@ QVariant TopicModel::data(const QModelIndex &index, int role) const
 
     TopicNode *item = static_cast<TopicNode*>(index.internalPointer());
 
-    //std::cout << "Valid data called. index: " << index.row() << " : " << index.column() << "\n";
-
     std::string str;
 
     if(index.row() == 0 && index.column() != 0){
-        if(index.column() - 1 < item->Msgs.size() && index.column() > 0){
+        if(index.column() - (unsigned)1 < item->Msgs.size() && index.column() > 0){
             str = item->Msgs[index.column() - 1]->get_payload();
         } else {
             return QVariant();
@@ -100,13 +101,11 @@ QVariant TopicModel::data(const QModelIndex &index, int role) const
         str = item->Topic;
     }
 
-    //std::cout << "\treturning " << str << std::endl;
     return QVariant( QString::fromStdString(str) );
 }
 
 QVariant TopicModel::headerData(int section, Qt::Orientation orientation, int role) const
 {
-    std::cout << "headerData called. section: " << section << " orientation " << orientation<< " role " << role  << "\n";
 
     if (orientation == Qt::Horizontal && role == Qt::DisplayRole){
         QStringList header = {"Topics", "Messages"};
@@ -118,7 +117,6 @@ QVariant TopicModel::headerData(int section, Qt::Orientation orientation, int ro
 
 QModelIndex TopicModel::index(int row, int column, const QModelIndex &parent) const
 {
-    //std::cout << "index called. parent: " << parent.row() << " : " << parent.column() <<  " row: " << row << " column: " << column<< "\n";
 
     if (!hasIndex(row, column, parent))
             return QModelIndex();
@@ -147,16 +145,13 @@ QModelIndex TopicModel::index(int row, int column, const QModelIndex &parent) co
 //Returns the parent of the model item with the given index.
 QModelIndex TopicModel::parent(const QModelIndex &index) const
 {
-    //std::cout << "parent called. index: " << index.row() << " : " << index.column() << "\n";
 
     if (!index.isValid()){
-        //std::cout << "null child invalid\n";
         return QModelIndex();
     }
 
     TopicNode *childItem = static_cast<TopicNode*>(index.internalPointer());
     if(childItem == nullptr){
-        //std::cout << "null child null\n";
         return QModelIndex();
     }
 
@@ -166,12 +161,13 @@ QModelIndex TopicModel::parent(const QModelIndex &index) const
         return QModelIndex();
     }
 
-    //std::cout << "child " << parentItem->get_own_index() << " : " << 0 << "\n";
     return createIndex(parentItem->get_own_index(), 0, parentItem); // index na rodice
 }
 
-void TopicModel::incoming_data_change(QString topic, QString msg)
+void TopicModel::incoming_data_change(QString topic, QString message)
 {
+    Q_UNUSED(topic);
+    Q_UNUSED(message);
     std::cout << "Slot incoming_data_change active" << std::endl;
     emit layoutChanged();
 }

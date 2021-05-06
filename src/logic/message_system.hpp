@@ -59,7 +59,7 @@ public:
 				<< "Callback: " << topic
 				<< " : " << msg << std::endl;
 			this->add_message(message);
-			print_tree(this->messages_root.get());
+			//print_tree(this->messages_root.get());
 		});
 	}
 

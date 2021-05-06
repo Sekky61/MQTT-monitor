@@ -32,7 +32,7 @@ int client::connect_to_server(QString client_name, QString server_address){
     return status;
 }
 
-void client::user_clicked_connect(QString client_name, QString server_address)
+void client::user_clicked_connect(QString client_name, QString password, QString server_address)
 {
     std::cout << "User clicked connect. " << client_name.toStdString() << "\n";
     connect_to_server(client_name, server_address);

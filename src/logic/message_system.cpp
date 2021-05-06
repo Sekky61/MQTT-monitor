@@ -44,6 +44,7 @@ void MessageSystem::set_limit_all(int new_limit){
 void MessageSystem::add_topic(std::string topic_name){
 		topics.emplace_back(topic_name);
 		client.subscribe(topic_name, QOS)->wait();
+
 		if(messages_root != nullptr){
 			messages_root->grow_tree(topic_name);
 		} else {
@@ -54,11 +55,22 @@ void MessageSystem::add_topic(std::string topic_name){
 	}
 
 void MessageSystem::remove_topic(std::string topic_name){
-        std::remove(topics.begin(),topics.end(), topic_name);
+        std::remove(topics.begin(), topics.end(), topic_name);
 		client.unsubscribe(topic_name)->wait();
 
         auto node = get_node_by_topic(topic_name);
+
+        if(node->is_start_of_wildcard){
+            std::string actual_topic = topic_name + "/#";
+            std::remove(topics.begin(), topics.end(), actual_topic);
+        }
+
         auto parent = node->Parent;
+
+        if(parent == nullptr){
+            return;
+        }
+
         auto &children = parent->Children;
 
         auto object_it = find_if(children.begin(), children.end(),
@@ -83,11 +95,8 @@ TopicNode *MessageSystem::get_node_by_topic(std::string topic){
 }
 
 bool MessageSystem::add_message(mqtt::const_message_ptr message){
-	if(!is_subscribed_topic(message->get_topic())){
-		return false;
-	}
 
-	TopicNode *correct_node = get_node_by_topic(message->get_topic()); // pripadne vytvori node
+	TopicNode *correct_node = get_node_by_topic(message->get_topic()); // pripadne vytvori node - pripad wildcard
 	if(correct_node == nullptr){
 		return false;
 	}

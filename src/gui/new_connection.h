@@ -85,10 +85,11 @@ signals:
   /*!
    *  \brief     Signál zajištující připojení na uživatelem zadaný server
    *  \pre       Signál proběhne pouze pokud byly zadány všechny pořebné parametry pro připojení
-   *  \param[in] server_name	Název serveru na který se chceme připojit, typu Qstring
-   *  \param[in] client_id	Platné identifikační číslo klienta, id je typu Qstring
+   *  \param     client_id      Identifikační jméno klienta
+   *  \param     password       Heslo pro připojení na server
+   *  \param     server_name	Název serveru na který se chceme připojit
    */
-    void connect_to_server(QString server_name, QString client_id);
+    void connect_to_server(QString client_id, QString password, QString server_name);
 
 private slots:
   /*!
@@ -126,7 +127,6 @@ private slots:
 private:
     Ui::new_connection *ui;
     ProfilesListModel *model_con;
-    //QMessageBox *mBox = new QMessageBox;
 };
 
 #endif // NEW_CONNECTION_H

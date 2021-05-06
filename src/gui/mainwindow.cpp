@@ -461,7 +461,6 @@ void MainWindow::unsubscribe_context()
     if (context_menu_target.isValid()) {
         auto node = static_cast<TopicNode *>(context_menu_target.internalPointer());
         if(node){
-
             QString topic = QString::fromStdString(node->fullTopic);
             emit delete_topic_clicked(topic);
         }
