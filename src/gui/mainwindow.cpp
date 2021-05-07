@@ -52,6 +52,7 @@ MainWindow::MainWindow(QWidget *parent):
     QObject::connect(this, &MainWindow::add_topic_clicked, &cli, &client::add_topic_slot);
     QObject::connect(this, &MainWindow::delete_topic_clicked, &cli, &client::delete_topic_slot);
     QObject::connect(this, &MainWindow::publish_clicked, &cli, &client::publish_slot);
+    QObject::connect(this, &MainWindow::change_history_limit, &cli, &client::change_limit_slot);
 
     // Dashboard layout
     tiles_layout = new FlowLayout(ui->dashboard_widget);
@@ -158,26 +159,41 @@ void MainWindow::display_message()
     }
 }
 
-void MainWindow::display_history(const QModelIndex &index)
+void MainWindow::display_history()
 {
-    auto node_ptr = static_cast<TopicNode*>(index.internalPointer());
-    if(node_ptr == nullptr){
-        std::cerr << "zadne zpravy\n";
-        //ui->value_text->setPlainText(QString());
+    // Pokud neni vybran topic, nic nezobrazovat
+    if(active_node == nullptr){
+        ui->history_text->setPlainText(QString());
         return;
     }
 
-    auto &messages = node_ptr->Msgs;
+    auto &messages = active_node->Msgs;
 
-    QString res;
+    QString history_text;
 
-    for(auto msg: messages){
-        res += QString::fromStdString(msg->get_payload()) + "\n";
+    for(auto &msg: messages){
+        history_text += QString::fromStdString(msg->get_payload()) + "\n";
     }
 
-    //ui-> HISTORY FIELD
+    ui->history_text->setPlainText(history_text);
 
-    //todo pics
+    /*
+    // Zjistit, zda jde o obrazek
+    // Zkusit precist jako obrazek a zjistit, jestli bylo precteni uspesne
+    QImage img;
+    img.loadFromData(reinterpret_cast<const uchar*>(payload.data()), payload.size());
+
+    if(img.format() == QImage::Format_Invalid){
+        // Neni obrazek, zobrazit zpravu jako text
+        QString qmsg = QString::fromStdString(payload);
+        ui->value_text->setPlainText(qmsg);
+        ui->img_msg->setVisible(false);
+    } else {
+        // Je obrazek, zobrazit tlacitko "Zobrazit obrazek"
+        ui->value_text->setPlainText(QString());
+        ui->img_msg->setVisible(true);
+    }
+    */
 }
 
 void MainWindow::on_actionQuit_triggered()
@@ -433,6 +449,7 @@ void MainWindow::tree_clicked(const QModelIndex &index)
     }
 
     display_message();
+    display_history();
 }
 
 void MainWindow::context_copy_topic()
@@ -474,6 +491,7 @@ void MainWindow::mqtt_data_changed_slot(QString topic, QString msg)
     Q_UNUSED(topic);
     Q_UNUSED(msg);
     display_message();
+    display_history();
 }
 
 void MainWindow::on_screenshot_button_clicked()
@@ -511,4 +529,13 @@ void MainWindow::save_tree_structure_slot(QDir root)
 void MainWindow::on_topic_input_line_textChanged(const QString &arg1)
 {
     ui->add_topic->setDisabled(arg1.length() == 0);
+}
+
+void MainWindow::on_set_limit_btn_clicked()
+{
+    QString text = ui->history_limit_line->text();
+
+    int limit = text.toInt();
+
+    emit change_history_limit(limit);
 }

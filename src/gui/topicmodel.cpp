@@ -106,6 +106,7 @@ QVariant TopicModel::data(const QModelIndex &index, int role) const
 
 QVariant TopicModel::headerData(int section, Qt::Orientation orientation, int role) const
 {
+    Q_UNUSED(section);
 
     if (orientation == Qt::Horizontal && role == Qt::DisplayRole){
         QStringList header = {"Topics", "Messages"};

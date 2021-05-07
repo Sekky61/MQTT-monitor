@@ -85,6 +85,12 @@ signals:
    */
     void publish_clicked(QString topic_string, QString content_string);
 
+    /*!
+     * \brief Změní maximální počet zpráv v historii
+     * \param limit nový limit
+     */
+    void change_history_limit(int limit);
+
 private slots:
 
   /*! 
@@ -247,8 +253,16 @@ private slots:
    */
     void tree_clicked(const QModelIndex &index);
 
-
+    /*!
+     * \brief blokuje přidání tématu, pokud je řádek prázdný
+     * \param arg1 obsah řádku
+     */
     void on_topic_input_line_textChanged(const QString &arg1);
+
+    /*!
+     * \brief nastaví nový limit délky historie zpráv
+     */
+    void on_set_limit_btn_clicked();
 
 public slots:
 
@@ -259,11 +273,9 @@ public slots:
 
   /*! 
    *  \brief     Zobrazí historii zpráv
-   *  \details   Je zaznamenána historie odeslaných zpráv 
-   *  \pre	 Validní index
-   *  \param[in] index udává polohu stromové struktury, index je typu QModelIndex
+   *  \details   Je zaznamenána historie odeslaných zpráv
    */
-    void display_history(const QModelIndex &index);
+    void display_history();
 
     /*!
      * \brief Slot po připojení na server zavírá okno \ref new_connection

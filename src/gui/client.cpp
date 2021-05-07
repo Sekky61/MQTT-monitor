@@ -6,7 +6,6 @@
 
 client::client(QObject *parent) : QObject(parent), connected(false), sys(nullptr)
 {
-    //sys = new MessageSystem();
 }
 
 int client::connect_to_server(QString client_name, QString server_address){
@@ -19,7 +18,6 @@ int client::connect_to_server(QString client_name, QString server_address){
                     << "QT callback: " << topic
                     << " : " << msg << std::endl;*/
                 emit mqtt_data_changed(QString::fromStdString(topic), QString::fromStdString(msg));
-                std::cerr << "Emited mqtt_data_changed\n";
                 this->sys->add_message(message);
 
                 //print_tree(this->sys->messages_root.get());
@@ -95,5 +93,15 @@ void client::publish_slot(QString topic_string, QString content)
         emit mqtt_data_changed(topic_string, content);
     } else {
         std::cerr << "Nelze publishnout topic " << topic_string.toStdString() << " - client neni pripojeny\n";
+    }
+}
+
+void client::change_limit_slot(int limit)
+{
+    if(connected){
+        sys->set_limit_all(limit);
+        emit mqtt_data_changed("", "");
+    } else {
+        std::cerr << "Momentálně nelze nastavit limit\n";
     }
 }
