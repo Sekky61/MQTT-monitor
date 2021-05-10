@@ -18,8 +18,6 @@
 
 #include "message_system.hpp"
 
-const std::string DEFAULT_SERVER_ADDRESS	{ "tcp://localhost:1888" };
-
 std::ostream& operator<< (std::ostream &out, TopicNode *node) {
     out << node->Topic << ": (";
     out << node->Msgs.size() << " msgs; " << node->Children.size() << " chldrn)";
@@ -31,10 +29,6 @@ std::ostream& operator<< (std::ostream &out, TopicNode *node) {
 		out << "\n";
 	}
     return out;
-}
-
-void MessageSystem::set_subscribe_all(bool subscribeAll){
-		SubscribeAll = subscribeAll;
 }
 
 void MessageSystem::set_limit_all(int new_limit){
@@ -82,9 +76,6 @@ void MessageSystem::remove_topic(std::string topic_name){
 	}
 
 bool MessageSystem::is_subscribed_topic(std::string topic){
-	if(SubscribeAll){
-		return true;
-	}
 	auto x = std::find(topics.begin(), topics.end(), topic);
 	return x != topics.end();
 }
