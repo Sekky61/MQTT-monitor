@@ -1,3 +1,11 @@
+/*!
+ *  \file      dash_tile.cpp
+ *  \brief     Widget dashboardu
+ *  \author    Michal Majer - xmajer21
+ *  \author    Petr Pouč - xpoucp01
+ *  \date      Datum vytvoření: 03.05.2021
+ */
+
 #include "dash_tile.h"
 
 #include <QLayout>

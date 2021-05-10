@@ -248,7 +248,7 @@ public:
             int conn = system.connect_client();
             if (conn != 0)
             {
-                throw std::exception();
+                throw std::runtime_error("Nepodarilo se pripojit");
             }
         }
     };

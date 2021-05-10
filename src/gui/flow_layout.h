@@ -62,7 +62,11 @@
 #include <QLayout>
 #include <QRect>
 #include <QStyle>
-//! [0]
+
+/**
+ * \brief Layout pro dlaždice
+ * \details Widgety umisťuje do prostoru po řádcích
+ */
 class FlowLayout : public QLayout
 {
 public:

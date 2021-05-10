@@ -1,3 +1,11 @@
+/*!
+ *  \file      thermostat_tile.cpp
+ *  \brief     Widget dashboardu - ovládání teploty
+ *  \author    Michal Majer - xmajer21
+ *  \author    Petr Pouč - xpoucp01
+ *  \date      Datum vytvoření: 03.05.2021
+ */
+
 #include "thermostat_tile.h"
 
 thermostat_tile::thermostat_tile(QWidget *parent, QString topic_src) : dash_tile(parent, topic_src)

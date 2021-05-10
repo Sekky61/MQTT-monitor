@@ -11,10 +11,18 @@
 #include <string>
 #include <sstream>
 
+/**
+ * \brief Generický strom
+ * \details 
+ */
 template<typename T>
 class TreeNode
 {
-
+	/**
+	 * \brief rozdělí název tématu podle znaku '/'
+	 * \param topic_name název tématu
+	 * \return Vektor řetězců 
+	 */
 	std::vector<std::string> cut_topic_path(std::string topic_name){
 		std::istringstream input;
     	input.str(topic_name);
@@ -43,6 +51,9 @@ public:
 		is_start_of_wildcard(false), 
 		Parent(nullptr) {}
 
+	/**
+	 * \brief Konstruktor.
+	 */
     TreeNode(TreeNode<T> *parent_ptr, std::string topic_name, std::string full_topic) :
 		Topic(topic_name),
 		fullTopic(full_topic),
@@ -52,6 +63,9 @@ public:
 		Children(),
 		Parent(parent_ptr) {} // const T& value // todo move && ?
 
+	/**
+	 * \brief vrací nejnovější zprávu
+	 */
 	T *get_latest_msg(){
 		if (Msgs.empty()){
 			return nullptr;
@@ -59,6 +73,9 @@ public:
 		return &Msgs.back();
 	}
 
+	/**
+	 * \brief Rekurzivně nastaví nový limit historie
+	 */
 	void set_limit_recursive(int new_limit){
 		set_limit(new_limit);
 
@@ -67,6 +84,9 @@ public:
 		}
 	}
 
+	/**
+	 * \brief nastaví nový limit historie
+	 */
 	void set_limit(int new_limit){
 		limit = new_limit;
 
@@ -81,6 +101,11 @@ public:
 		Topic = topic;
 	}
 
+	/**
+	 * \brief přidá zprávu do historie
+	 * \details podle omezení na velikost historie může odebrat zprávu
+	 * \param message zpráva přidávaná do historie
+	 */
 	void add_message(T message){
 		if(limit != 0 && limit <= Msgs.size()){
 			Msgs.pop_front();
@@ -90,6 +115,10 @@ public:
 		}
 	}
 
+	/**
+	 * \brief Vrací odkaz na potomka podle jeho tématu
+	 * \param name název podtématu
+	 */
 	TreeNode<T> *get_child(std::string name){
 		auto x = std::find_if(
 			Children.begin(), 
@@ -114,6 +143,9 @@ public:
 		return Children.size();
 	}
 
+	/**
+	 * \brief získá vlastní index (u rodiče)
+	 */
 	int get_own_index(){
 		if(!Parent){
 			return -1;
@@ -132,6 +164,11 @@ public:
     	}
 	}
 
+	/**
+	 * \brief Vrací uzel podle \ref name.
+	 * \details Najde potomka, nebo takový uzel vytvoří
+	 * \param name Název podtématu potomka
+	 */
 	TreeNode<T> *get_create_child(std::string name){
 		auto *child_node = get_child(name);
 		if (child_node == nullptr){

@@ -14,8 +14,8 @@
 #include "../logic/message_system.hpp"
 
 /*!
- * \brief Klient
- * Obálka třídy \ref MessageSystem. Přidává komunikaci pomocí
+ * \brief Obálka třídy \ref MessageSystem.
+ * \details Přidává komunikaci pomocí
  * signálů a slotů, což umožňuje lepší práci v prostředí QT.
  */
 class client : public QObject

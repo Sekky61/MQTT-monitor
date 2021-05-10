@@ -30,6 +30,9 @@ namespace Ui {
 class new_connection;
 }
 
+/**
+ * \brief Struktura pro uložení parametrů připojení
+ */
 class Profile {
 public:
     Profile() {}

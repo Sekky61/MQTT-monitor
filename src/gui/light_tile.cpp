@@ -1,3 +1,11 @@
+/*!
+ *  \file      light_tile.cpp
+ *  \brief     Widget dashboardu - ovládání světla
+ *  \author    Michal Majer - xmajer21
+ *  \author    Petr Pouč - xpoucp01
+ *  \date      Datum vytvoření: 04.05.2021
+ */
+
 #include "light_tile.h"
 
 light_tile::light_tile(QWidget *parent, QString topic_src) : dash_tile(parent, topic_src)

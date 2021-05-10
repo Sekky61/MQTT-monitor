@@ -1,3 +1,11 @@
+/*!
+ *  \file      temperature_tile.cpp
+ *  \brief     Widget dashboardu - zobrazení teploty
+ *  \author    Michal Majer - xmajer21
+ *  \author    Petr Pouč - xpoucp01
+ *  \date      Datum vytvoření: 04.05.2021
+ */
+
 #include "temperature_tile.h"
 
 temperature_tile::temperature_tile(QWidget *parent, QString topic_src) : dash_tile(parent, topic_src)

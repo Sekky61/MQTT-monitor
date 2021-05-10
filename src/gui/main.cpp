@@ -1,3 +1,11 @@
+/*!
+ *  \file      main.cpp
+ *  \brief     Vstupní bod aplikace
+ *  \author    Michal Majer - xmajer21
+ *  \author    Petr Pouč - xpoucp01
+ *  \date      Datum vytvoření: 04.05.2021
+ */
+
 #include "mainwindow.h"
 #include "client.h"
 #include "topicmodel.h"

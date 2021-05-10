@@ -1,3 +1,11 @@
+  /*! 
+   *  \file	 mainwindow.cpp
+   *  \brief     Hlavní okno aplikace
+   *  \author    Michal Majer - xmajer21
+   *  \author    Petr Pouč - xpoucp01
+   *  \date      Datum vytvoření: 03.05.2021
+   */
+
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
 #include "new_connection.h"

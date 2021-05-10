@@ -1,3 +1,11 @@
+/*!
+ *  \file      humidity_tile.cpp
+ *  \brief     Widget dashboardu - zobrazení vlhkosti
+ *  \author    Michal Majer - xmajer21
+ *  \author    Petr Pouč - xpoucp01
+ *  \date      Datum vytvoření: 03.05.2021
+ */
+
 #include "humidity_tile.h"
 
 humidity_tile::humidity_tile(QWidget *parent, QString topic_src) : dash_tile(parent, topic_src)

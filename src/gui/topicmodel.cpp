@@ -1,3 +1,11 @@
+/**
+ *  \file      topicmodel.cpp
+ *  \brief     Model - adapter mezi message_system a Qt views
+ *  \author    Michal Majer - xmajer21
+ *  \author    Petr Pouč - xpoucp01
+ *  \date      Datum vytvoření: 03.05.2021
+ */
+
 #include "topicmodel.h"
 
 #include <iostream>

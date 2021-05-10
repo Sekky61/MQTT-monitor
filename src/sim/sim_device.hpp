@@ -137,7 +137,8 @@ public:
 };
 
 /**
- * Zarizeni hlasici ciselnou hodnotu
+ * \brief Simulátor zařízení vysílající data ve formátu desetinných čísel
+ * \details Zarizeni hlasici číselnou hodnotu
  */
 class float_sim_device : public sim_device {
 
@@ -255,7 +256,7 @@ public:
 };
 
 /**
- * Zarizeni hlasici jednu z mnoziny definovanych hodnot
+ * \brief Zařízení hlasící jednu z množiny definovanych hodnot
  */
 class value_set_device : public sim_device {
 
@@ -357,9 +358,9 @@ public:
 };
 
 /**
- * Zarizeni zasilajici obrazek (obecne soubor)
+ * \brief Zarizeni zasilajici obrazek (obecne soubor)
  * 
- * Misto obrazku jsou v konfiguracnim souboru uvedeny jejich cesty.
+ * \details Misto obrazku jsou v konfiguracnim souboru uvedeny jejich cesty.
  * Ty se funkci \ref file_paths_to_pictures nactou
  */
 class picture_device : public sim_device {

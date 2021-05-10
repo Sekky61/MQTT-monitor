@@ -16,8 +16,8 @@
 #include "../logic/message_system.hpp"
 
 /**
- * \class Model pro TreeView
- * \brief Vrstva nad stromem \ref message_system
+ * \brief Model pro TreeView
+ * \details Vrstva nad stromem \ref message_system
  */
 class TopicModel : public QAbstractItemModel
 {

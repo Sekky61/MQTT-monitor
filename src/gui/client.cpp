@@ -1,3 +1,11 @@
+/*!
+ *  \file      client.cpp
+ *  \brief     MQTT klient - QT adaptér
+ *  \author    Michal Majer - xmajer21
+ *  \author    Petr Pouč - xpoucp01
+ *  \date      Datum vytvoření: 03.05.2021
+ */
+
 #include "client.h"
 #include "error_messages.h"
 #include <QMessageBox>

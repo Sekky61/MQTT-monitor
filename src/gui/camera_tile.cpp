@@ -1,3 +1,11 @@
+/*!
+ *  \file      camera_tile.cpp
+ *  \brief     Widget dashboardu - zobrazení obrázků
+ *  \author    Michal Majer - xmajer21
+ *  \author    Petr Pouč - xpoucp01
+ *  \date      Datum vytvoření: 03.05.2021
+ */
+
 #include "camera_tile.h"
 
 camera_tile::camera_tile(QWidget *parent, QString topic_src) :

@@ -1,3 +1,11 @@
+  /*! 
+   *  \file	 dialog.cpp
+   *  \brief     Dialogové okno uložení snímku obrazovky
+   *  \author    Michal Majer - xmajer21
+   *  \author    Petr Pouč - xpoucp01
+   *  \date      Datum vytvoření: 03.05.2021
+   */
+
 #include "dialog.h"
 #include "ui_dialog.h"
 #include "mainwindow.h"

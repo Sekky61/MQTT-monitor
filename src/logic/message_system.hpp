@@ -37,8 +37,8 @@ std::ostream& operator<< (std::ostream &out, TopicNode const& node);
 void print_tree(TopicNode *root);
 
 /**
- * \class Klient MQTT
- * Ukládá zprávy do stromu podle témat, přijímá a odesílá zprávy
+ * \brief Klient MQTT
+ * \details Ukládá zprávy do stromu podle témat, přijímá a odesílá zprávy
  */
 class MessageSystem
 {

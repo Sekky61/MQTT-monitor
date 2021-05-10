@@ -1,3 +1,11 @@
+/*!
+ *  \file      flow_layout.cpp
+ *  \brief     Layout widgetů dashboardu - převzato
+ *  \author    Michal Majer - xmajer21
+ *  \author    Petr Pouč - xpoucp01
+ *  \date      Datum vytvoření: 03.05.2021
+ */
+
 /****************************************************************************
 **
 ** Copyright (C) 2016 The Qt Company Ltd.
