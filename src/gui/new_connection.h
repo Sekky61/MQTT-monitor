@@ -55,12 +55,19 @@ public:
     QString port;
 };
 
+/*! 
+ *  \brief     Model pro zobrazení uložených připojení
+ *  \details   Okno new_connection umí ukládat připojení. Levý sloupec (list view) využívá tento model.
+ *  \author    Michal Majer - xmajer21
+ *  \author    Petr Pouč - xpoucp01
+ *  \date      Datum vytvoření: 03.05.2021
+ */
 class ProfilesListModel : public QAbstractListModel {
 public:
 
     int rowCount(const QModelIndex &parent = QModelIndex()) const override;
     QVariant data(const QModelIndex &index, int role = Qt::DisplayRole) const override;
-
+  
     QList<Profile> profile_list;
 };
 

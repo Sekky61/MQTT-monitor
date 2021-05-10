@@ -17,6 +17,9 @@ namespace Ui {
 class Dialog;
 }
 
+/**
+  * \brief Dialogové okno pro screenshot
+  */
 class Dialog : public QDialog
 {
     Q_OBJECT

@@ -14,6 +14,14 @@
 #include <QScrollArea>
 #include <QPlainTextEdit>
 
+
+/*! 
+ *  \brief     Třída widgetu textové dlaždice
+ *  \details   Dashboard dlaždice zobrazující textová data
+ *  \author    Michal Majer - xmajer21
+ *  \author    Petr Pouč - xpoucp01
+ *  \date      Datum vytvoření: 04.05.2021
+ */
 class fulltext_tile : public dash_tile
 {
     Q_OBJECT
@@ -29,6 +37,9 @@ public:
 
 public slots:
 
+    /**
+     * \brief Slot reagující na změnu v MQTT datech
+     */
     void incoming_data(QString topic, QString payload);
 };
 

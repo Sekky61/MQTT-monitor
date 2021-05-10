@@ -26,6 +26,8 @@ void Snapshot::on_print_save_clicked()
     QDir root = QDir(path);
 
     emit save_tree_structure(root);
+
+    close();
 }
 
 void Snapshot::on_directory_button_clicked()
